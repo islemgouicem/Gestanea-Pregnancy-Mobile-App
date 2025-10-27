@@ -1,0 +1,21 @@
+{
+  "@@locale": "ar",
+  "appTitle": "رعاية الحمل والطفل",
+  "welcome": "أهلا وسهلا",
+  "login": "دخول",
+  "signup": "إنشاء حساب",
+  "email": "البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "logout": "تسجيل الخروج",
+  "settings": "الإعدادات",
+  "language": "اللغة",
+  "darkMode": "الوضع الليلي",
+  "notifications": "الإشعارات",
+  "help": "المساعدة",
+  "about": "حول",
+  "version": "الإصدار",
+  "pregnant": "حامل",
+  "postpartum": "ما بعد الولادة",
+  "week": "الأسبوع {week}",
+  "daysLeft": "{days} أيام متبقية"
+}

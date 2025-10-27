@@ -1,0 +1,32 @@
+{
+  "@@locale": "en",
+  "appTitle": "Pregnancy & Baby Care",
+  "welcome": "Welcome",
+  "login": "Login",
+  "signup": "Sign Up",
+  "email": "Email",
+  "password": "Password",
+  "logout": "Logout",
+  "settings": "Settings",
+  "language": "Language",
+  "darkMode": "Dark Mode",
+  "notifications": "Notifications",
+  "help": "Help",
+  "about": "About",
+  "version": "Version",
+  "pregnant": "Pregnant",
+  "postpartum": "Postpartum",
+  "week": "Week {week}",
+  "@week": {
+    "description": "Week number",
+    "placeholders": {
+      "week": {"type": "int"}
+    }
+  },
+  "daysLeft": "{days} days left",
+  "@daysLeft": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  }
+}

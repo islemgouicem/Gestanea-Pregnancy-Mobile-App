@@ -1,0 +1,21 @@
+{
+  "@@locale": "fr",
+  "appTitle": "Soins de la Grossesse et du Bébé",
+  "welcome": "Bienvenue",
+  "login": "Connexion",
+  "signup": "S'inscrire",
+  "email": "Email",
+  "password": "Mot de passe",
+  "logout": "Déconnexion",
+  "settings": "Paramètres",
+  "language": "Langue",
+  "darkMode": "Mode Sombre",
+  "notifications": "Notifications",
+  "help": "Aide",
+  "about": "À propos",
+  "version": "Version",
+  "pregnant": "Enceinte",
+  "postpartum": "Après l'accouchement",
+  "week": "Semaine {week}",
+  "daysLeft": "{days} jours restants"
+}
