@@ -5,12 +5,11 @@ publish_to: none
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
- 
 
   # State Management
   riverpod: ^2.4.0
@@ -25,7 +24,7 @@ dependencies:
   # Local Storage
   sqflite: ^2.3.0
   path_provider: ^2.1.0
-  shared_preferences: ^2.2.0
+  shared_preferences: ^2.5.3
 
   # API & Networking
   dio: ^5.3.0
@@ -61,23 +60,26 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  
   generate: true
 
   assets:
     - assets/images/
-    - assets/images/splash/
-    - assets/images/illustrations/
-    - assets/images/icons/
-    - assets/lottie/
+    - assets/images/onboarding1.png
+    - assets/images/onboarding2.png
+    - assets/images/onboarding3.png
+    - assets/images/fetus-inside-heart-shape-womb.png
+  #   - assets/images/splash/
+  #   - assets/images/illustrations/
+  #   - assets/images/icons/
+  #   - assets/lottie/
 
-  fonts:
-    - family: Poppins
-      fonts:
-        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
-        - asset: assets/fonts/Poppins/Poppins-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/Poppins/Poppins-Light.ttf
-          weight: 300
+  # fonts:
+  #   - family: Poppins
+  #     fonts:
+  #       - asset: assets/fonts/Poppins/Poppins-Regular.ttf
+  #       - asset: assets/fonts/Poppins/Poppins-Bold.ttf
+  #         weight: 700
+  #       - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
+  #         weight: 600
+  #       - asset: assets/fonts/Poppins/Poppins-Light.ttf
+  #         weight: 300

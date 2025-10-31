@@ -1,15 +1,22 @@
-class AppRoutes {
-  static const String splash = '/splash';
-  static const String login = '/login';
-  static const String signup = '/signup';
-  static const String onboarding = '/onboarding';
-  static const String dashboard = '/dashboard';
-  static const String pregnancy = '/pregnancy';
-  static const String baby = '/baby';
-  static const String healthLog = '/health-log';
-  static const String plan = '/plan';
-  static const String education = '/education';
-  static const String doctors = '/doctors';
-  static const String marketplace = '/marketplace';
-  static const String profile = '/profile';
-}
+import 'package:flutter/material.dart';
+import 'package:pregnancy_baby_app/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:pregnancy_baby_app/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:pregnancy_baby_app/features/onboarding/presentation/pages/splash_screen.dart';
+
+import 'core/constants/app_routes.dart'; // your AppRoutes class
+
+Map<String, WidgetBuilder> appRoutes = {
+  AppRoutes.splash: (context) => const SplashScreen(),
+  AppRoutes.onboarding: (context) => const OnboardingScreen(),
+  // AppRoutes.login: (context) => const LoginScreen(),
+  // AppRoutes.signup: (context) => const SignupScreen(),
+  AppRoutes.dashboard: (context) => const DashboardScreen(),
+  // AppRoutes.pregnancy: (context) => const PregnancyScreen(),
+  // AppRoutes.baby: (context) => const BabyScreen(),
+  // AppRoutes.healthLog: (context) => const HealthLogScreen(),
+  // AppRoutes.plan: (context) => const PlanScreen(),
+  // AppRoutes.education: (context) => const EducationScreen(),
+  // AppRoutes.doctors: (context) => const DoctorsScreen(),
+  // AppRoutes.marketplace: (context) => const MarketplaceScreen(),
+  // AppRoutes.profile: (context) => const ProfileScreen(),
+};
