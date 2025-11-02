@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pregnancy_baby_app/core/constants/app_colors.dart';
+import 'package:Gestanea/core/constants/app_colors.dart';
 
 class BMICard extends StatelessWidget {
   const BMICard({super.key});

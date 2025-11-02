@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pregnancy_baby_app/core/constants/app_colors.dart';
+import 'package:Gestanea/core/constants/app_colors.dart';
 
 class HealthMetricCard extends StatelessWidget {
   final IconData icon;
@@ -20,7 +20,7 @@ class HealthMetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
+      constraints: BoxConstraints(minHeight: 100), // Use minHeight instead of fixed height
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.main300,
@@ -29,38 +29,47 @@ class HealthMetricCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min, // Important: let content determine size
         children: [
           Row(
             children: [
               Icon(
                 icon,
                 color: iconColor,
-                size: 24,
+                size: 22,
               ),
               const SizedBox(width: 8),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
           ),
+          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                value,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+              Flexible(
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
+              const SizedBox(width: 8),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: Color(0xFF90EE90),
                   borderRadius: BorderRadius.circular(12),
@@ -68,7 +77,7 @@ class HealthMetricCard extends StatelessWidget {
                 child: Text(
                   status,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 11,
                     fontWeight: FontWeight.w600,
                     color: Colors.green[900],
                   ),
