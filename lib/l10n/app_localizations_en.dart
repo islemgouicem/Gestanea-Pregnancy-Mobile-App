@@ -95,4 +95,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get upgradeNow => 'Upgrade Now';
+  String get healthLog => 'Health Log';
+
+  @override
+  String get trackYourWellness => 'Track your wellness';
+
+  @override
+  String get vitals => 'Vitals';
+
+  @override
+  String get symptoms => 'Symptoms';
+
+  @override
+  String get labResults => 'Lab\nResults';
+
+  @override
+  String get riskAlerts => 'Risk\nAlerts';
+
+  @override
+  String get mood => 'Mood';
+
+  @override
+  String get weight => 'Weight';
+
+  @override
+  String get heartRate => 'Heart Rate';
+
+  @override
+  String get bloodPressure => 'Blood Pressure';
+
+  @override
+  String get normal => 'Normal';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get measurement => 'Measurement';
+
+  @override
+  String get healthTipMessage =>
+      'Great job! You\'re maintaining a healthy weight gain pace. Keep up with your balanced diet and gentle exercise routine.';
+
+  @override
+  String get onTrack => 'On Track';
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pregnancy_baby_app/core/constants/app_colors.dart';
-import 'package:pregnancy_baby_app/core/constants/app_text_styles.dart';
-import 'package:pregnancy_baby_app/l10n/app_localizations.dart';
+import 'package:gestanea/core/constants/app_colors.dart';
+import 'package:gestanea/core/constants/app_text_styles.dart';
 import '../widgets/header.dart';
 import '../widgets/search_bar.dart';
 import '../widgets/category_sidebar.dart';
