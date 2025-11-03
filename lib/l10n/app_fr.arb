@@ -1,5 +1,4 @@
 {
-  "@@locale": "fr",
   "appTitle": "Soins de la Grossesse et du Bébé",
   "welcome": "Bienvenue",
   "login": "Connexion",
@@ -17,5 +16,15 @@
   "pregnant": "Enceinte",
   "postpartum": "Après l'accouchement",
   "week": "Semaine {week}",
-  "daysLeft": "{days} jours restants"
+  "daysLeft": "{days} jours restants",
+  "market": "Marché",
+  "maternityWear": "Vêtements de Maternité",
+  "painRelief": "Soulagement de la Douleur",
+  "skinCare": "Soins de la Peau",
+  "pregnancyPillow": "Oreiller de Grossesse",
+  "backSupportBelt": "Ceinture de Soutien Dorsal",
+  "searchHint": "Trouvez ce dont vous avez besoin...",
+  "dontMissOut": "Ne manquez pas!",
+  "discountUpTo": "Réduction jusqu'à 50%",
+  "upgradeNow": "Mettre à niveau maintenant"
 }
