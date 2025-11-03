@@ -1,41 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:gestanea/core/constants/app_colors.dart';
 
 class VitalsCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String value;
   final String status;
-  final Color color;
+  final Color statusColor;
+  final Color textColor;
 
   const VitalsCard({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.value,
     required this.status,
-    required this.color,
-  }) : super(key: key);
+    required this.statusColor,
+    required this.textColor,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF3E5F5),
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x3F000000),
+            blurRadius: 4,
+            offset: Offset(2, 2),
+            spreadRadius: 0,
+          ),
+          BoxShadow(
+            color: AppColors.white,
+            blurRadius: 6,
+            offset: Offset(-3, -3),
+            spreadRadius: 0,
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(icon, color: color, size: 24),
+              Icon(icon, color: AppColors.main500, size: 24),
               const SizedBox(width: 8),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
               ),
             ],
@@ -46,20 +66,22 @@ class VitalsCard extends StatelessWidget {
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 4),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
-              color: const Color(0xFFB8E6B8),
+              color: statusColor,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
               status,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
-                color: Color(0xFF2D5F2D),
+                color: textColor,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),

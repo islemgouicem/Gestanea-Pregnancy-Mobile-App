@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gestanea/features/dashboard/presentation/pages/home_screen.dart';
 import 'package:gestanea/features/health/presentation/pages/health_log_screen.dart';
+import 'package:gestanea/features/marketplace/presentation/pages/marketplace_page.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -14,8 +15,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   List<Widget> get _pages => [
         const HomeScreen(),
-        const HealthLogPage(), // Add Health Log here
-        Container(child: Center(child: Text('Coming Soon'))), // Placeholder
+        const HealthLogPage(),
+        const MarketplacePage(),
       ];
 
   @override
@@ -25,6 +26,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (index) => setState(() => _selectedIndex = index),
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: const Color(0xFF9D6DB8),
+        unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -35,8 +39,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             label: 'Health',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
-            label: 'More',
+            icon: Icon(Icons.shopping_bag),
+            label: 'Market',
           ),
         ],
       ),
