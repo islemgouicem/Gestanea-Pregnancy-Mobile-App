@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/features/dashboard/presentation/pages/notificationsPage.dart';
-import 'package:gestanea/features/dashboard/presentation/widgets/notificationsCard.dart';
+import 'package:gestanea/core/widgets/notificationsCard.dart';
 import 'package:gestanea/features/profile/presentation/pages/profile_page.dart';
 
 class HomeScreen extends StatelessWidget {
