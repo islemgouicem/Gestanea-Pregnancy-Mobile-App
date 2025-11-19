@@ -21,9 +21,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get signup => 'إنشاء حساب';
 
   @override
-  String get email => 'البريد الإلكتروني';
-
-  @override
   String get password => 'كلمة المرور';
 
   @override
@@ -46,6 +43,46 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get about => 'حول';
+
+  @override
+  String get welcome_back => 'Welcome Back!';
+
+  @override
+  String get or => '— OR —';
+
+  @override
+  String get register => 'Register';
+
+  @override
+  String get auth => 'Your trusted companion for every stage of motherhood';
+
+  @override
+  String get auth2 =>
+      'Let Gestanéa guide you through pregnancy, baby care, and beyond.';
+
+  @override
+  String get forgot => 'Forgot Password?';
+
+  @override
+  String get notRegistered => 'Not registered yet?';
+
+  @override
+  String get createAccount => 'Create an Account';
+
+  @override
+  String get your_name => 'Your Name';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get enter_email => 'Enter your email';
+
+  @override
+  String get enter_name => 'Enter your Name';
+
+  @override
+  String get rememberMe => 'Remember me';
 
   @override
   String get version => 'الإصدار';

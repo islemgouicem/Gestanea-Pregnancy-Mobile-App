@@ -1,6 +1,6 @@
 // lib/features/dashboard/presentation/pages/dashboard_page.dart
 import 'package:flutter/material.dart';
-import 'pregnancy_dashboard_page.dart';
+import 'package:gestanea/features/dashboard/presentation/pages/home_screen.dart';
 import 'postpartum_dashboard_page.dart';
 import '../../../pregnancy/presentation/pages/week_tracker_page.dart';
 import 'postpartum_track_page.dart';
@@ -23,7 +23,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     final pages = [
       isPregnant
-          ? const PregnancyDashboardPage()
+          ? const HomeScreen()
           : PostpartumDashboardPage(babyGender: babyGender),
       isPregnant
           ? const WeekTrackerPage()

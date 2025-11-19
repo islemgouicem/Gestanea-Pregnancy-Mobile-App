@@ -29,6 +29,7 @@ dependencies:
 
   shared_preferences: ^2.5.3
   fl_chart: ^0.69.0
+  flutter_svg: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -40,10 +41,13 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/icons/
     - assets/images/onboarding1.png
     - assets/images/onboarding2.png
     - assets/images/onboarding3.png
-    - assets/images/fetus-inside-heart-shape-womb.png
+    - assets/images/onboarding4.png
+    - assets/images/kickcounter.png
+    - assets/images/fetus.png
   generate: true
   fonts:
     - family: Lato

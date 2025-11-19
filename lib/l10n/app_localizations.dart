@@ -124,12 +124,6 @@ abstract class AppLocalizations {
   /// **'Sign Up'**
   String get signup;
 
-  /// No description provided for @email.
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get email;
-
   /// No description provided for @password.
   ///
   /// In en, this message translates to:
@@ -177,6 +171,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'About'**
   String get about;
+
+  /// No description provided for @welcome_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back!'**
+  String get welcome_back;
+
+  /// No description provided for @or.
+  ///
+  /// In en, this message translates to:
+  /// **'— OR —'**
+  String get or;
+
+  /// No description provided for @register.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register;
+
+  /// No description provided for @auth.
+  ///
+  /// In en, this message translates to:
+  /// **'Your trusted companion for every stage of motherhood'**
+  String get auth;
+
+  /// No description provided for @auth2.
+  ///
+  /// In en, this message translates to:
+  /// **'Let Gestanéa guide you through pregnancy, baby care, and beyond.'**
+  String get auth2;
+
+  /// No description provided for @forgot.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgot;
+
+  /// No description provided for @notRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'Not registered yet?'**
+  String get notRegistered;
+
+  /// No description provided for @createAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an Account'**
+  String get createAccount;
+
+  /// No description provided for @your_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Name'**
+  String get your_name;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @enter_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email'**
+  String get enter_email;
+
+  /// No description provided for @enter_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your Name'**
+  String get enter_name;
+
+  /// No description provided for @rememberMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Remember me'**
+  String get rememberMe;
 
   /// No description provided for @version.
   ///
