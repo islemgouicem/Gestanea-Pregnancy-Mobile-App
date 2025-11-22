@@ -200,12 +200,12 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  _doctor['name'] ?? 'Dr. Sarah Johnson',
+                                  _doctor['name'],
                                   style: AppTextStyles.headline2,
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  _doctor['specialty'] ?? 'Cardiologist',
+                                  _doctor['specialty'],
                                   style: AppTextStyles.body1,
                                 ),
                                 const SizedBox(height: 8),
@@ -218,16 +218,13 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                     ),
                                     const SizedBox(width: 4),
                                     Text(
-                                      '${_doctor['rating'] ?? 4.8}',
+                                      '${_doctor['rating']}',
                                       style: AppTextStyles.body1.copyWith(
                                         fontWeight: FontWeight.w600,
                                         color: AppColors.textPrimary,
                                       ),
                                     ),
-                                    Text(
-                                      ' (${_doctor['total_reviews'] ?? 124})',
-                                      style: AppTextStyles.body1,
-                                    ),
+
                                     const SizedBox(width: 12),
                                     Container(
                                       padding: const EdgeInsets.symmetric(
@@ -478,7 +475,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    // How to Get There Section (Neumorphic)
+                    // How to Get There Section
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 16),
                       padding: const EdgeInsets.all(20),

@@ -100,12 +100,11 @@ class DoctorCard extends StatelessWidget {
       'rating': doctor.rating,
       'total_reviews': doctor.reviews,
       'distance_km': doctor.distanceInKm,
-      'address': '123 Medical Center Blvd, ${doctor.specialty} Department',
-      'phone_number': '(555) 789-456-438',
-      'latitude': 36.753769,
-      'longitude': 3.058756,
-      'opening_hours':
-          'Open Now\nMon-Fri: 9:00 AM - 6:00 PM\nSat: 10:00 AM - 4:00 PM\nSun: Closed',
+      'address': doctor.address,
+      'phone_number': doctor.phoneNumber,
+      'latitude': doctor.latitude,
+      'longitude': doctor.longitude,
+      'opening_hours': doctor.openingHours,
     };
   }
 }
