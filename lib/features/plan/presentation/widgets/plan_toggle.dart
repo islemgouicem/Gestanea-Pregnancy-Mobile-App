@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/l10n/app_localizations.dart';
+import '../pages/medicines_page.dart';
+import '../pages/appointments_page.dart';
 
 class PlanToggle extends StatelessWidget {
   final bool showMedicine;
@@ -48,7 +50,13 @@ class PlanToggle extends StatelessWidget {
         children: [
           Expanded(
             child: GestureDetector(
-              onTap: () => onToggle(true),
+              onTap: () {
+                onToggle(false);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MedicinesPage()),
+                );
+              },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
                 decoration: BoxDecoration(
@@ -80,7 +88,13 @@ class PlanToggle extends StatelessWidget {
           ),
           Expanded(
             child: GestureDetector(
-              onTap: () => onToggle(false),
+              onTap: () {
+                onToggle(false);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AppointmentsPage()),
+                );
+              },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
                 decoration: BoxDecoration(

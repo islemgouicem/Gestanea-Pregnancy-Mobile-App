@@ -70,7 +70,7 @@ class _PlanMainPageState extends State<PlanMainPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Header(title: localization.plan, showBackButton: false),
+            Header(title: 'Plan', showBackButton: false),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
