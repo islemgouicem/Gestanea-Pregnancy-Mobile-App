@@ -9,6 +9,108 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
+  String get plan => 'Plan';
+
+  @override
+  String get sundayShort => 'D';
+
+  @override
+  String get mondayShort => 'L';
+
+  @override
+  String get tuesdayShort => 'M';
+
+  @override
+  String get wednesdayShort => 'M';
+
+  @override
+  String get thursdayShort => 'J';
+
+  @override
+  String get fridayShort => 'V';
+
+  @override
+  String get saturdayShort => 'S';
+
+  @override
+  String get todaysMedicine => 'Médicaments du jour';
+
+  @override
+  String get upcomingAppointments => 'Rendez-vous à venir';
+
+  @override
+  String get scheduled => 'Prévu';
+
+  @override
+  String get addNewMedicine => 'Ajouter un médicament';
+
+  @override
+  String get addNewAppointment => 'Ajouter un rendez-vous';
+
+  @override
+  String get medicine => 'Médicaments';
+
+  @override
+  String get appointments => 'Rendez-vous';
+
+  @override
+  String get sunday => 'Dimanche';
+
+  @override
+  String get monday => 'Lundi';
+
+  @override
+  String get tuesday => 'Mardi';
+
+  @override
+  String get wednesday => 'Mercredi';
+
+  @override
+  String get thursday => 'Jeudi';
+
+  @override
+  String get friday => 'Vendredi';
+
+  @override
+  String get saturday => 'Samedi';
+
+  @override
+  String get jan => 'Janv';
+
+  @override
+  String get feb => 'Févr';
+
+  @override
+  String get mar => 'Mars';
+
+  @override
+  String get apr => 'Avr';
+
+  @override
+  String get may => 'Mai';
+
+  @override
+  String get jun => 'Juin';
+
+  @override
+  String get jul => 'Juil';
+
+  @override
+  String get aug => 'Août';
+
+  @override
+  String get sep => 'Sept';
+
+  @override
+  String get oct => 'Oct';
+
+  @override
+  String get nov => 'Nov';
+
+  @override
+  String get dec => 'Déc';
+
+  @override
   String get appTitle => 'Grossesse et soins du bébé';
 
   @override

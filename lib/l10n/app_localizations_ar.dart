@@ -9,6 +9,108 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
+  String get plan => 'الخطة';
+
+  @override
+  String get sundayShort => 'ح';
+
+  @override
+  String get mondayShort => 'ن';
+
+  @override
+  String get tuesdayShort => 'ث';
+
+  @override
+  String get wednesdayShort => 'ر';
+
+  @override
+  String get thursdayShort => 'خ';
+
+  @override
+  String get fridayShort => 'ج';
+
+  @override
+  String get saturdayShort => 'س';
+
+  @override
+  String get todaysMedicine => 'دواء اليوم';
+
+  @override
+  String get upcomingAppointments => 'المواعيد القادمة';
+
+  @override
+  String get scheduled => 'مجدول';
+
+  @override
+  String get addNewMedicine => 'إضافة دواء جديد';
+
+  @override
+  String get addNewAppointment => 'إضافة موعد جديد';
+
+  @override
+  String get medicine => 'الأدوية';
+
+  @override
+  String get appointments => 'المواعيد';
+
+  @override
+  String get sunday => 'الأحد';
+
+  @override
+  String get monday => 'الاثنين';
+
+  @override
+  String get tuesday => 'الثلاثاء';
+
+  @override
+  String get wednesday => 'الأربعاء';
+
+  @override
+  String get thursday => 'الخميس';
+
+  @override
+  String get friday => 'الجمعة';
+
+  @override
+  String get saturday => 'السبت';
+
+  @override
+  String get jan => 'يناير';
+
+  @override
+  String get feb => 'فبراير';
+
+  @override
+  String get mar => 'مارس';
+
+  @override
+  String get apr => 'أبريل';
+
+  @override
+  String get may => 'مايو';
+
+  @override
+  String get jun => 'يونيو';
+
+  @override
+  String get jul => 'يوليو';
+
+  @override
+  String get aug => 'أغسطس';
+
+  @override
+  String get sep => 'سبتمبر';
+
+  @override
+  String get oct => 'أكتوبر';
+
+  @override
+  String get nov => 'نوفمبر';
+
+  @override
+  String get dec => 'ديسمبر';
+
+  @override
   String get appTitle => 'رعاية الحمل والطفل';
 
   @override
