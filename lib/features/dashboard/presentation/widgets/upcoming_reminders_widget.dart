@@ -1,6 +1,6 @@
 // lib/features/dashboard/presentation/widgets/upcoming_reminders_widget.dart
 import 'package:flutter/material.dart';
-import '../../logic/entities/pregnancy_dashboard.dart';
+import '../../domain/entities/pregnancy_dashboard.dart';
 
 class UpcomingRemindersWidget extends StatelessWidget {
   final List<AppointmentReminder> appointments;

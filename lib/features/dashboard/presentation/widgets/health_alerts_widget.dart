@@ -1,6 +1,6 @@
 // lib/features/dashboard/presentation/widgets/health_alerts_widget.dart
 import 'package:flutter/material.dart';
-import '../../logic/entities/pregnancy_dashboard.dart';
+import '../../domain/entities/pregnancy_dashboard.dart';
 
 class HealthAlertsWidget extends StatelessWidget {
   final List<HealthAlert> alerts;

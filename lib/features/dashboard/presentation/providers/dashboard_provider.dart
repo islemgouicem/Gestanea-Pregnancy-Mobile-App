@@ -1,9 +1,9 @@
 // lib/features/dashboard/presentation/providers/dashboard_provider.dart
 import 'package:flutter/foundation.dart';
-import '../../logic/entities/pregnancy_dashboard.dart';
-import '../../logic/entities/postpartum_dashboard.dart';
-import '../../logic/usecases/get_pregnancy_dashboard_usecase.dart';
-import '../../logic/usecases/get_postpartum_dashboard_usecase.dart';
+import '../../domain/entities/pregnancy_dashboard.dart';
+import '../../domain/entities/postpartum_dashboard.dart';
+import '../../domain/usecases/get_pregnancy_dashboard_usecase.dart';
+import '../../domain/usecases/get_postpartum_dashboard_usecase.dart';
 
 class DashboardProvider extends ChangeNotifier {
   final GetPregnancyDashboardUseCase _getPregnancyDashboardUseCase;
