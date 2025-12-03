@@ -6,6 +6,7 @@ import 'package:gestanea/features/plan/presentation/widgets/medicine_card.dart';
 import 'package:gestanea/core/database/models/medicine_model.dart';
 import 'package:gestanea/core/database/models/medicine_logged_model.dart';
 import 'package:gestanea/features/plan/data/repositories/plan_local_data_source.dart';
+import 'package:gestanea/features/plan/data/repositories/plan_database_initializer.dart';
 import 'package:gestanea/features/plan/data/mock_data/plan_mock_data.dart';
 import 'package:uuid/uuid.dart';
 
@@ -21,6 +22,7 @@ class _MedicinesPageState extends State<MedicinesPage> {
   bool _showFilters = true;
   final ScrollController _scrollController = ScrollController();
   final PlanLocalDataSource _dataSource = PlanLocalDataSource();
+  final PlanDatabaseInitializer _dbInitializer = PlanDatabaseInitializer();
   List<MedicineModel> _medicines = [];
   List<MedicineLoggedModel> _medicineLogs = [];
   bool _isLoading = true;
@@ -34,19 +36,22 @@ class _MedicinesPageState extends State<MedicinesPage> {
 
   Future<void> _loadMedicines() async {
     // TODO: Replace with actual user ID from auth
-    // final userId = PlanMockData.mockUserId;
+    final userId = PlanMockData.mockUserId;
 
     try {
-      // Use mock data for now
-      // final medicines = await _dataSource.getMedicines(userId);
-      // final logs = await _dataSource.getMedicineLogs(userId, DateTime.now());
+      // Initialize database with mock data if empty
+      await _dbInitializer.initializeWithMockData(userId);
 
-      final mockMedicines = PlanMockData.getMockMedicines();
-      final mockLogs = PlanMockData.getMockMedicineLogs(mockMedicines);
+      // Load from database
+      final medicines = await _dataSource.getMedicinesByDate(
+        userId,
+        DateTime.now(),
+      );
+      final logs = await _dataSource.getMedicineLogs(userId, DateTime.now());
 
       setState(() {
-        _medicines = mockMedicines;
-        _medicineLogs = mockLogs;
+        _medicines = medicines;
+        _medicineLogs = logs;
         _isLoading = false;
       });
     } catch (e) {
@@ -115,12 +120,21 @@ class _MedicinesPageState extends State<MedicinesPage> {
       loggedAt: DateTime.now(),
     );
 
-    // TODO: Save to database
-    // await _dataSource.logMedicine(log);
+    try {
+      // Save to database
+      await _dataSource.logMedicine(log);
 
-    setState(() {
-      _medicineLogs.add(log);
-    });
+      setState(() {
+        _medicineLogs.add(log);
+      });
+    } catch (e) {
+      // Show error message
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error logging medicine: $e')));
+      }
+    }
   }
 
   @override
