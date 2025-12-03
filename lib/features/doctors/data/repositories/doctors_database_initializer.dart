@@ -21,17 +21,6 @@ class DoctorsDatabaseInitializer {
     }
   }
 
-  /// Clear all data and reinitialize with mock data
-  Future<void> resetWithMockData() async {
-    try {
-      await _dataSource.clearAllDoctors();
-      await initializeWithMockData();
-    } catch (e) {
-      print('Error resetting doctors database: $e');
-      rethrow;
-    }
-  }
-
   /// Get all doctors from database
   Future<dynamic> getDoctors() async {
     try {

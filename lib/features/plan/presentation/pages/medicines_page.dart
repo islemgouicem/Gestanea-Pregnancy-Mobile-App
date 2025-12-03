@@ -342,6 +342,4 @@ class _MedicinesPageState extends State<MedicinesPage> {
       ),
     );
   }
-
-  // ...existing code...
 }
