@@ -54,16 +54,8 @@ class RiskRepository {
       if (maps.isEmpty) return Result.failure('Risk alert not found');
       
       final alert = RiskAlert.fromMap(maps.first);
-      final updated = RiskAlert(
-        id: alert.id,
-        userId: alert.userId,
-        pregnancyId: alert.pregnancyId,
-        alertType: alert.alertType,
-        severity: alert.severity,
-        message: alert.message,
-        recommendations: alert.recommendations,
+      final updated = alert.copyWith(
         isResolved: true,
-        createdAt: alert.createdAt,
         resolvedAt: DateTime.now(),
       );
       

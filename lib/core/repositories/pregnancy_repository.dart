@@ -62,17 +62,7 @@ class PregnancyRepository {
   Future<Result<Pregnancy>> updatePregnancy(Pregnancy pregnancy) async {
     try {
       final db = await _dbHelper.database;
-      final updated = Pregnancy(
-        id: pregnancy.id,
-        userId: pregnancy.userId,
-        startDate: pregnancy.startDate,
-        dueDate: pregnancy.dueDate,
-        isActive: pregnancy.isActive,
-        medicalConditions: pregnancy.medicalConditions,
-        notes: pregnancy.notes,
-        createdAt: pregnancy.createdAt,
-        updatedAt: DateTime.now(),
-      );
+      final updated = pregnancy.copyWith(updatedAt: DateTime.now());
       await db.update('pregnancies', updated.toMap(), where: 'id = ?', whereArgs: [pregnancy.id]);
       return Result.success(updated, 'Pregnancy updated successfully');
     } catch (e) {

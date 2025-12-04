@@ -74,17 +74,7 @@ class ReminderRepository {
       if (maps.isEmpty) return Result.failure('Reminder not found');
       
       final reminder = Reminder.fromMap(maps.first);
-      final updated = Reminder(
-        id: reminder.id,
-        userId: reminder.userId,
-        title: reminder.title,
-        description: reminder.description,
-        date: reminder.date,
-        time: reminder.time,
-        type: reminder.type,
-        isCompleted: true,
-        createdAt: reminder.createdAt,
-      );
+      final updated = reminder.copyWith(isCompleted: true);
       
       await db.update('reminders', updated.toMap(), where: 'id = ?', whereArgs: [id]);
       return Result.success(updated, 'Reminder marked as completed');
