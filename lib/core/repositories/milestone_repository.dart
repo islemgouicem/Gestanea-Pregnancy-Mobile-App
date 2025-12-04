@@ -58,17 +58,9 @@ class MilestoneRepository {
       if (maps.isEmpty) return Result.failure('Milestone not found');
       
       final milestone = Milestone.fromMap(maps.first);
-      final updated = Milestone(
-        id: milestone.id,
-        babyId: milestone.babyId,
-        title: milestone.title,
-        description: milestone.description,
-        category: milestone.category,
-        expectedAgeMonths: milestone.expectedAgeMonths,
+      final updated = milestone.copyWith(
         achieved: true,
         achievedDate: achievedDate,
-        notes: milestone.notes,
-        createdAt: milestone.createdAt,
       );
       
       await db.update('milestones', updated.toMap(), where: 'id = ?', whereArgs: [id]);
