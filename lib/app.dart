@@ -14,6 +14,8 @@ import 'features/marketplace/logic/cart_cubit.dart';
 import 'features/education/logic/education_cubit.dart';
 import 'features/profile/logic/profile_cubit.dart';
 import 'features/dashboard/logic/dashboard_cubit.dart';
+import 'features/plan/logic/appointments_cubit.dart';
+import 'features/plan/logic/medicine_cubit.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -52,6 +54,8 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => CartCubit()),
         BlocProvider(create: (_) => EducationCubit()),
         BlocProvider(create: (_) => ProfileCubit()),
+        BlocProvider(create: (_) => AppointmentsCubit()),
+        BlocProvider(create: (_) => MedicineCubit()),
       ],
       child: MaterialApp(
         title: 'Gestanéa',
