@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/features/dashboard/presentation/pages/notificationsPage.dart';
 import 'package:gestanea/features/profile/presentation/pages/languages_page.dart';
+import 'package:gestanea/features/profile/logic/profile_cubit.dart';
+import 'package:gestanea/features/profile/logic/profile_state.dart';
 
 class HeaderCurveClipper extends CustomClipper<Path> {
   final double curveStartRatio = 0.8824;
@@ -145,71 +148,81 @@ class ProfileSettingsScreen extends StatelessWidget {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double headerHeight = screenHeight * 0.3;
 
-    return ClipPath(
-      clipper: HeaderCurveClipper(),
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: const [
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.3),
-              blurRadius: 10,
-              offset: Offset(0, 6),
-            ),
-            BoxShadow(
-              color: Color.fromRGBO(255, 255, 255, 0.3),
-              blurRadius: 10,
-              offset: Offset(0, -5),
-            ),
-          ],
-        ),
-        height: headerHeight,
-        width: double.infinity,
-        child: SafeArea(
-          bottom: false,
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, state) {
+        String userName = 'Loading...';
+        
+        if (state is ProfileLoaded) {
+          userName = state.user.name;
+        }
+
+        return ClipPath(
+          clipper: HeaderCurveClipper(),
           child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFFFFFFFF),
-                  Color(0xFFBAA0D2),
-                  Color(0xFFB599CE),
-                ],
-                stops: [0.0, 0.5529, 1.0],
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.black),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.3),
+                  blurRadius: 10,
+                  offset: Offset(0, 6),
                 ),
-                const SizedBox(height: 20), // Top spacing
-                _buildProfileAvatar(),
-                const SizedBox(height: 10),
-                const Text(
-                  'Puerto Rico',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
+                BoxShadow(
+                  color: Color.fromRGBO(255, 255, 255, 0.3),
+                  blurRadius: 10,
+                  offset: Offset(0, -5),
                 ),
               ],
             ),
+            height: headerHeight,
+            width: double.infinity,
+            child: SafeArea(
+              bottom: false,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFFFFFFFF),
+                      Color(0xFFBAA0D2),
+                      Color(0xFFB599CE),
+                    ],
+                    stops: [0.0, 0.5529, 1.0],
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: IconButton(
+                          icon: const Icon(Icons.arrow_back, color: Colors.black),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20), // Top spacing
+                    _buildProfileAvatar(),
+                    const SizedBox(height: 10),
+                    Text(
+                      userName,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
