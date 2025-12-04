@@ -10,6 +10,8 @@ import 'package:gestanea/core/widgets/notificationsCard.dart';
 import 'package:gestanea/features/doctors/presentation/pages/doctors_page.dart';
 import 'package:gestanea/features/doctors/logic/bloc/doctors_bloc.dart';
 import 'package:gestanea/features/profile/presentation/pages/profile_page.dart';
+import 'package:gestanea/features/dashboard/logic/dashboard_cubit.dart';
+import 'package:gestanea/features/dashboard/logic/dashboard_state.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, required this.onNavigate});
@@ -38,33 +40,44 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // 👤 Profile section (tap -> Profile page)
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ProfileSettingsScreen(),
+                    BlocBuilder<DashboardCubit, DashboardState>(
+                      builder: (context, state) {
+                        String userName = 'Hello!';
+                        
+                        if (state is DashboardLoaded) {
+                          userName = 'Hello ${state.user.name}!';
+                        }
+                        
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const ProfileSettingsScreen(),
+                              ),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 24,
+                                backgroundColor: Colors.grey.shade300,
+                                child: Image.asset("assets/images/profile.png"),
+                              ),
+                              SizedBox(width: screenWidth * 0.03),
+                              Text(
+                                userName,
+                                style: TextStyle(
+                                  fontSize: screenWidth * 0.045,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ],
                           ),
                         );
                       },
-                      child: Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 24,
-                            backgroundColor: Colors.grey.shade300,
-                            child: Image.asset("assets/images/profile.png"),
-                          ),
-                          SizedBox(width: screenWidth * 0.03),
-                          Text(
-                            'Hello Sara!',
-                            style: TextStyle(
-                              fontSize: screenWidth * 0.045,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black87,
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
 
                     // 🔔 Notification icon (tap -> Notifications page)
