@@ -32,14 +32,19 @@ class MedicineCubit extends Cubit<MedicineState> {
     final medicinesResult = await _medicineRepository.getMedicines(userId);
 
     if (medicinesResult.isSuccess) {
-      // Load logs for each medicine
       final medicines = medicinesResult.data ?? [];
-      final List<MedicineLog> allLogs = [];
       
-      for (var medicine in medicines) {
-        final logsResult = await _medicineRepository.getMedicineLogs(medicine.id);
-        if (logsResult.isSuccess) {
-          allLogs.addAll(logsResult.data ?? []);
+      // Load logs for all medicines concurrently
+      final logFutures = medicines.map(
+        (medicine) => _medicineRepository.getMedicineLogs(medicine.id)
+      ).toList();
+      
+      final logResults = await Future.wait(logFutures);
+      
+      final allLogs = <MedicineLog>[];
+      for (var result in logResults) {
+        if (result.isSuccess) {
+          allLogs.addAll(result.data ?? []);
         }
       }
 

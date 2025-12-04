@@ -137,7 +137,7 @@ class BabyProfilePage extends StatelessWidget {
                     const SizedBox(height: 12),
                     _buildInfoCard(
                       'Age',
-                      '${baby.ageInMonths} months',
+                      _formatAge(baby.ageInMonths),
                       Icons.access_time,
                       const Color(0xFF87CEEB),
                     ),
@@ -240,6 +240,20 @@ class BabyProfilePage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  String _formatAge(int ageInMonths) {
+    if (ageInMonths < 12) {
+      return '$ageInMonths ${ageInMonths == 1 ? 'month' : 'months'}';
+    } else {
+      final years = ageInMonths ~/ 12;
+      final months = ageInMonths % 12;
+      if (months == 0) {
+        return '$years ${years == 1 ? 'year' : 'years'}';
+      } else {
+        return '$years ${years == 1 ? 'year' : 'years'} $months ${months == 1 ? 'month' : 'months'}';
+      }
+    }
   }
 
   Widget _buildInfoCard(String label, String value, IconData icon, Color color) {

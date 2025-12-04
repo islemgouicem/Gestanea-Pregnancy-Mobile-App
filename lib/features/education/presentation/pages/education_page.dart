@@ -75,14 +75,14 @@ class EducationPage extends StatelessWidget {
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Icons.lightbulb_outline,
                         size: 64,
                         color: Colors.grey,
                       ),
-                      SizedBox(height: 16),
-                      Text(
+                      const SizedBox(height: 16),
+                      const Text(
                         'No tips available',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -90,8 +90,8 @@ class EducationPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 8),
-                      Text(
+                      const SizedBox(height: 8),
+                      const Text(
                         'Check back later for helpful tips!',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 14, color: Colors.grey),
