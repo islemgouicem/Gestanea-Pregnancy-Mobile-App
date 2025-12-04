@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:gestanea/features/dashboard/presentation/pages/home_screen.dart';
 import 'postpartum_dashboard_page.dart';
-import '../../../pregnancy/presentation/pages/week_tracker_page.dart';
+import 'package:gestanea/features/pregnancy/presentation/pages/week_tracker_page.dart';
 import 'postpartum_track_page.dart';
-import '../../../health/presentation/pages/health_log_screen.dart'; // ✅ Add this
-import '../../../marketplace/presentation/pages/marketplace_page.dart'; // ✅ Add this
+import 'package:gestanea/features/health/presentation/pages/health_log_screen.dart';
+import 'package:gestanea/features/plan/presentation/pages/plan_page.dart';
+import 'package:gestanea/features/marketplace/presentation/pages/marketplace_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -34,9 +35,9 @@ class _DashboardPageState extends State<DashboardPage> {
       isPregnant
           ? const WeekTrackerPage()
           : PostpartumTrackPage(babyGender: babyGender),
-      const HealthLogScreen(), // ✅ Replace placeholder with actual Health page
-      _buildPlaceholderPage('Plan', Icons.calendar_today),
-      const MarketplacePage(), // ✅ Replace placeholder with actual Market page
+      const HealthLogScreen(),
+      const PlanMainPage(),
+      const MarketplacePage(),
     ];
 
     return Scaffold(
@@ -107,35 +108,7 @@ class _DashboardPageState extends State<DashboardPage> {
       //     : null,
     );
   }
-
-  Widget _buildPlaceholderPage(String title, IconData icon) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 80, color: Colors.grey),
-            const SizedBox(height: 20),
-            Text(
-              '$title Page',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              'To be implemented',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+}
 
   // void _showModeDialog() {
   //   showDialog(
@@ -177,4 +150,4 @@ class _DashboardPageState extends State<DashboardPage> {
   //     ),
   //   );
   // }
-}
+
