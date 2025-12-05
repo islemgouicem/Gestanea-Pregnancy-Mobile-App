@@ -42,13 +42,15 @@ class _DashboardPageState extends State<DashboardPage> {
       const PlanMainPage(),
       const MarketplacePage(),
     ];
-
+    final double h = MediaQuery.of(context).size.height *0.09;
     return Scaffold(
       body: Stack(
         children: [
-          IndexedStack(index: _currentIndex, children: pages),
+          Padding(
+            padding: EdgeInsets.only(bottom: h),
+            child: IndexedStack(index: _currentIndex, children: pages),
+          ),
 
-          // NAVBAR FLOATING ON TOP WITH TRUE TRANSPARENCY
           Positioned(
             left: 0,
             right: 0,
@@ -68,6 +70,7 @@ class _DashboardPageState extends State<DashboardPage> {
         ],
       ),
     );
+    ;
   }
 }
 
