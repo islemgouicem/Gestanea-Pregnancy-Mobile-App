@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/core/constants/app_text_styles.dart';
 import 'package:gestanea/l10n/app_localizations.dart';
+import 'dialogs/upload_lab_results_dialog.dart';
 
 class LabResultsTabContent extends StatelessWidget {
   const LabResultsTabContent({super.key});
@@ -69,12 +70,12 @@ class LabResultsTabContent extends StatelessWidget {
                   range: 'Negative',
                 ),
 
-                const SizedBox(height: 20),
+const SizedBox(height: 20),
 
-                // Upload Results Button
-                _buildUploadButton(),
+// Upload Results Button
+_buildUploadButton(),
 
-                const SizedBox(height: 20),
+const SizedBox(height: 20),
 
                 // Next Appointment Card
                 _buildNextAppointmentCard(),

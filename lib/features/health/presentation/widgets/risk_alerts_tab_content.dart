@@ -2,10 +2,99 @@ import 'package:flutter/material.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/core/constants/app_text_styles.dart';
 import 'package:gestanea/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class RiskAlertsTabContent extends StatelessWidget {
-  const RiskAlertsTabContent({super.key});
+class RiskAlertsTabContent extends StatefulWidget {
+  const RiskAlertsTabContent({super. key});
+  
+  @override
+  State<RiskAlertsTabContent> createState() => _RiskAlertsTabContentState();
+}
 
+class _RiskAlertsTabContentState extends State<RiskAlertsTabContent> {
+
+Future<void> _makeEmergencyCall(BuildContext context) async {
+  // Show confirmation dialog first
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      backgroundColor: const Color(0xFFFAF0FF),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      title: Row(
+        children: [
+          const Icon(Icons.warning, color: Colors.red, size: 28),
+          const SizedBox(width: 8),
+          Text(
+            'Emergency Call',
+            style: AppTextStyles. headline2.copyWith(
+              color: AppColors.textDark,
+              fontSize: 18,
+            ),
+          ),
+        ],
+      ),
+      content: Text(
+        'Are you sure you want to call 911?\n\nThis will dial emergency services.',
+        style: AppTextStyles.body1.copyWith(
+          fontSize: 14,
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context, false),
+          child: Text(
+            'Cancel',
+            style: TextStyle(color: AppColors.textSecondary),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () => Navigator.pop(context, true),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          ),
+          child: const Text(
+            'Call Now',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+
+  if (confirmed == true) {
+    final Uri phoneUri = Uri(scheme: 'tel', path: '911');
+    try {
+      if (await canLaunchUrl(phoneUri)) {
+        await launchUrl(phoneUri);
+      } else {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Could not make emergency call'),
+              backgroundColor: Colors. red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+            backgroundColor: Colors. red,
+          ),
+        );
+      }
+    }
+  }
+}
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
@@ -61,17 +150,17 @@ class RiskAlertsTabContent extends StatelessWidget {
                   description: 'No protein in urine',
                 ),
 
-                const SizedBox(height: 20),
+const SizedBox(height: 20),
 
-                // Warning Signs
-                _buildWarningSignsCard(),
+// Warning Signs
+_buildWarningSignsCard(),
 
-                const SizedBox(height: 16),
+const SizedBox(height: 16),
 
-                // Emergency Contact
-                _buildEmergencyContactCard(),
+// Emergency Contact
+_buildEmergencyContactCard(),
 
-                const SizedBox(height: 16),
+const SizedBox(height: 16),
 
                 // Tip Card
                 _buildTipCard(

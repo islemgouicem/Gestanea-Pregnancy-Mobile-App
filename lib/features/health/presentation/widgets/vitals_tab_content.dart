@@ -6,6 +6,7 @@ import 'bmi_card.dart';
 import 'weight_progress_chart.dart';
 import 'add_measurement_card.dart';
 import 'health_tip_card.dart';
+import 'dialogs/add_measurment_dialog.dart';
 
 class VitalsTabContent extends StatelessWidget {
   const VitalsTabContent({super.key});
@@ -69,12 +70,17 @@ class VitalsTabContent extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: AddMeasurementCard(
-                        onTap: () {
-                          // Handle add measurement
-                        },
-                      ),
-                    ),
+  child: AddMeasurementCard(
+    onTap: () {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (context) => const AddMeasurementDialog(),
+      );
+    },
+  ),
+),
                   ],
                 ),
 

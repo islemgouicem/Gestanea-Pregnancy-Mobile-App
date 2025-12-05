@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/core/constants/app_text_styles.dart';
 import 'package:gestanea/l10n/app_localizations.dart';
+import 'dialogs/add_mood_dialog.dart';
 
 class MoodTabContent extends StatelessWidget {
   const MoodTabContent({super.key});
@@ -32,10 +33,9 @@ class MoodTabContent extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
 
-                // Mood Selector
-                _buildMoodSelector(),
-
-                const SizedBox(height: 20),
+// Mood Selector
+_buildMoodSelector(),
+const SizedBox(height: 20),
 
                 // Recent Mood Entries
                 Text(
