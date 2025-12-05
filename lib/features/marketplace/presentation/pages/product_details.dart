@@ -13,6 +13,7 @@ import '../widgets/neumorphic_section.dart';
 import '../widgets/review_card.dart';
 import '../widgets/quantity_button.dart';
 import '../../logic/product_quantity_bloc.dart';
+import 'order.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final ProductModel product;
@@ -507,13 +508,23 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: GestureDetector(
                     onTap: () {
-                      // Handle buy now
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CompleteOrderScreen(),
+                        ),
+                      );
                     },
                     child: NeumorphicButton(
                       screenWidth: screenWidth,
                       screenHeight: screenHeight,
                       onPressed: () {
-                        // Handle buy now
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CompleteOrderScreen(),
+                          ),
+                        );
                       },
                       text: 'Buy Now',
                       icon: const Icon(
