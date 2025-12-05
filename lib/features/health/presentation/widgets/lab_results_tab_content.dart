@@ -9,7 +9,7 @@ class LabResultsTabContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return Stack(
       children: [
@@ -21,11 +21,11 @@ class LabResultsTabContent extends StatelessWidget {
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment. start,
               children: [
                 // Recent Lab Results
                 Text(
-                  'Recent Lab Results',
+                  l10n. recentLabResults,
                   style: AppTextStyles.headline2.copyWith(
                     fontSize: 18,
                     color: AppColors.textDark,
@@ -35,57 +35,59 @@ class LabResultsTabContent extends StatelessWidget {
 
                 // Lab Result Cards
                 _buildLabResultCard(
-                  test: 'Hemoglobin',
+                  context,
+                  test: l10n.hemoglobin,
                   value: '12.5 g/dL',
-                  status: 'Normal',
+                  status: l10n.normal,
                   statusColor: const Color(0xFFB8E6B8),
                   date: 'Oct 28, 2025',
                   range: '12-16 g/dL',
                 ),
                 const SizedBox(height: 12),
                 _buildLabResultCard(
-                  test: 'Glucose',
+                  context,
+                  test: l10n.glucose,
                   value: '95 mg/dL',
-                  status: 'Normal',
+                  status: l10n.normal,
                   statusColor: const Color(0xFFB8E6B8),
                   date: 'Oct 28, 2025',
                   range: '70-100 mg/dL',
                 ),
                 const SizedBox(height: 12),
                 _buildLabResultCard(
-                  test: 'Blood Pressure',
+                  context,
+                  test: l10n.bloodPressure,
                   value: '120/80 mmHg',
-                  status: 'Normal',
+                  status: l10n. normal,
                   statusColor: const Color(0xFFB8E6B8),
                   date: 'Oct 25, 2025',
                   range: '<120/80 mmHg',
                 ),
                 const SizedBox(height: 12),
                 _buildLabResultCard(
-                  test: 'Protein (Urine)',
-                  value: 'Negative',
-                  status: 'Normal',
+                  context,
+                  test: l10n.proteinUrine,
+                  value: l10n.negative,
+                  status: l10n.normal,
                   statusColor: const Color(0xFFB8E6B8),
                   date: 'Oct 25, 2025',
-                  range: 'Negative',
+                  range: l10n.negative,
                 ),
 
-const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-// Upload Results Button
-_buildUploadButton(context),
+                // Upload Results Button
+                _buildUploadButton(context),
 
-const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Next Appointment Card
-                _buildNextAppointmentCard(),
+                _buildNextAppointmentCard(context),
 
                 const SizedBox(height: 16),
 
                 // Tip Card
-                _buildTipCard(
-                  'Keep all lab results organized. Share them with your healthcare provider during checkups.',
-                ),
+                _buildTipCard(l10n.keepLabResultsOrganized),
               ],
             ),
           ),
@@ -140,7 +142,8 @@ const SizedBox(height: 20),
     );
   }
 
-  Widget _buildLabResultCard({
+  Widget _buildLabResultCard(
+    BuildContext context, {
     required String test,
     required String value,
     required String status,
@@ -148,11 +151,13 @@ const SizedBox(height: 20),
     required String date,
     required String range,
   }) {
+    final l10n = AppLocalizations. of(context)!;
+    
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius. circular(16),
         boxShadow: const [
           BoxShadow(
             color: Color(0x3F000000),
@@ -190,7 +195,7 @@ const SizedBox(height: 20),
                 ),
                 child: Text(
                   status,
-                  style: AppTextStyles.smallLabel.copyWith(
+                  style: AppTextStyles. smallLabel.copyWith(
                     fontSize: 11,
                     color: const Color(0xFF2D5F2D),
                   ),
@@ -204,7 +209,7 @@ const SizedBox(height: 20),
             children: [
               Text(
                 value,
-                style: AppTextStyles.headline2.copyWith(
+                style: AppTextStyles.headline2. copyWith(
                   fontSize: 18,
                   color: AppColors.textDark,
                 ),
@@ -220,7 +225,7 @@ const SizedBox(height: 20),
           ),
           const SizedBox(height: 4),
           Text(
-            'Normal range: $range',
+            '${l10n.normalRangeLabel}: $range',
             style: AppTextStyles.smallLabel.copyWith(
               fontSize: 11,
               color: AppColors.textDark,
@@ -231,57 +236,62 @@ const SizedBox(height: 20),
     );
   }
 
-Widget _buildUploadButton(BuildContext context) {
-  return GestureDetector(
-    onTap: () {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (context) => const UploadLabResultsDialog(),
-      );
-    },
-    child: Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.blue600, AppColors.blue500],
-        ),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x3F000000),
-            blurRadius: 4,
-            offset: Offset(2, 2),
-            spreadRadius: 0,
+  Widget _buildUploadButton(BuildContext context) {
+    final l10n = AppLocalizations. of(context)!;
+    
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          builder: (context) => const UploadLabResultsDialog(),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [AppColors.blue600, AppColors.blue500],
           ),
-          BoxShadow(
-            color: AppColors.white,
-            blurRadius: 6,
-            offset: Offset(-3, -3),
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons. upload_file, color: AppColors.white, size: 24),
-          const SizedBox(width: 8),
-          Text(
-            'Upload Lab Results',
-            style: AppTextStyles.subtitle1.copyWith(
-              color: AppColors.white,
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x3F000000),
+              blurRadius: 4,
+              offset: Offset(2, 2),
+              spreadRadius: 0,
             ),
-          ),
-        ],
+            BoxShadow(
+              color: AppColors.white,
+              blurRadius: 6,
+              offset: Offset(-3, -3),
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.upload_file, color: AppColors.white, size: 24),
+            const SizedBox(width: 8),
+            Text(
+              l10n.uploadLabResults,
+              style: AppTextStyles.subtitle1.copyWith(
+                color: AppColors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
-  Widget _buildNextAppointmentCard() {
+    );
+  }
+
+  Widget _buildNextAppointmentCard(BuildContext context) {
+    final l10n = AppLocalizations.of(context)! ;
+    
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -320,7 +330,7 @@ Widget _buildUploadButton(BuildContext context) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Next Lab Appointment',
+                  l10n.nextLabAppointment,
                   style: AppTextStyles.body1.copyWith(
                     color: AppColors.white,
                     fontSize: 13,

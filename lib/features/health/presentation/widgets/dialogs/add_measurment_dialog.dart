@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/core/constants/app_text_styles.dart';
 import 'package:gestanea/core/widgets/custom_button.dart';
+import 'package:gestanea/l10n/app_localizations.dart';
 
 class AddMeasurementDialog extends StatefulWidget {
   const AddMeasurementDialog({super.key});
@@ -29,7 +30,9 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
   }
 
   void _handleSave() {
-    if (_formKey.currentState! .validate()) {
+    final l10n = AppLocalizations.of(context)!;
+    
+    if (_formKey.currentState!.validate()) {
       print('Weight: ${_weightController.text} kg');
       print('Heart Rate: ${_heartRateController. text} bpm');
       print('Blood Pressure: ${_systolicController.text}/${_diastolicController.text}');
@@ -38,8 +41,8 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
       Navigator.pop(context);
       
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Measurement saved successfully!'),
+        SnackBar(
+          content: Text(l10n.measurementSavedSuccessfully),
           backgroundColor: Colors.green,
         ),
       );
@@ -76,9 +79,11 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations. of(context)!;
+    
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context). viewInsets.bottom,
+        bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
       child: Container(
         decoration: const BoxDecoration(
@@ -96,15 +101,15 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: AppColors.textSecondary. withOpacity(0.3),
+                    color: Colors.grey. shade600. withOpacity(0.3),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
                 const SizedBox(height: 20),
                 
                 Text(
-                  'Add Measurement',
-                  style: AppTextStyles.headline2. copyWith(
+                  l10n. addMeasurement,
+                  style: AppTextStyles.headline2.copyWith(
                     fontSize: 20,
                     color: AppColors.textDark,
                   ),
@@ -112,37 +117,39 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
                 const SizedBox(height: 24),
                 
                 _buildInputField(
-                  label: 'Weight (kg)',
+                  l10n,
+                  label: l10n.weightKg,
                   controller: _weightController,
                   icon: Icons.monitor_weight_outlined,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   validator: (value) {
-                    if (value == null || value.isEmpty) return 'Please enter weight';
+                    if (value == null || value.isEmpty) return l10n.pleaseEnterWeight;
                     final weight = double.tryParse(value);
-                    if (weight == null) return 'Please enter a valid number';
-                    if (weight < 30 || weight > 200) return 'Weight must be between 30-200 kg';
+                    if (weight == null) return l10n.pleaseEnterValidNumber;
+                    if (weight < 30 || weight > 200) return l10n.weightRange;
                     return null;
                   },
                 ),
                 const SizedBox(height: 16),
                 
                 _buildInputField(
-                  label: 'Heart Rate (bpm)',
+                  l10n,
+                  label: l10n.heartRateBpm,
                   controller: _heartRateController,
                   icon: Icons.favorite,
                   keyboardType: TextInputType.number,
                   validator: (value) {
-                    if (value == null || value.isEmpty) return 'Please enter heart rate';
+                    if (value == null || value.isEmpty) return l10n.pleaseEnterHeartRate;
                     final hr = int.tryParse(value);
-                    if (hr == null) return 'Please enter a valid number';
-                    if (hr < 40 || hr > 200) return 'Heart rate must be between 40-200 bpm';
+                    if (hr == null) return l10n.pleaseEnterValidNumber;
+                    if (hr < 40 || hr > 200) return l10n.heartRateRange;
                     return null;
                   },
                 ),
                 const SizedBox(height: 16),
                 
                 Text(
-                  'Blood Pressure',
+                  l10n. bloodPressure,
                   style: AppTextStyles.subtitle1.copyWith(
                     fontSize: 14,
                     color: AppColors.textDark,
@@ -153,15 +160,16 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
                   children: [
                     Expanded(
                       child: _buildInputField(
-                        label: 'Systolic',
+                        l10n,
+                        label: l10n.systolic,
                         controller: _systolicController,
                         icon: Icons.arrow_upward,
                         keyboardType: TextInputType.number,
                         validator: (value) {
-                          if (value == null || value.isEmpty) return 'Required';
+                          if (value == null || value.isEmpty) return l10n.required;
                           final sys = int.tryParse(value);
-                          if (sys == null) return 'Invalid';
-                          if (sys < 70 || sys > 190) return '70-190';
+                          if (sys == null) return l10n.invalid;
+                          if (sys < 70 || sys > 190) return l10n.systolicRange;
                           return null;
                         },
                       ),
@@ -169,15 +177,16 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: _buildInputField(
-                        label: 'Diastolic',
+                        l10n,
+                        label: l10n.diastolic,
                         controller: _diastolicController,
                         icon: Icons.arrow_downward,
                         keyboardType: TextInputType.number,
                         validator: (value) {
-                          if (value == null || value.isEmpty) return 'Required';
+                          if (value == null || value.isEmpty) return l10n.required;
                           final dia = int.tryParse(value);
-                          if (dia == null) return 'Invalid';
-                          if (dia < 40 || dia > 130) return '40-130';
+                          if (dia == null) return l10n.invalid;
+                          if (dia < 40 || dia > 130) return l10n.diastolicRange;
                           return null;
                         },
                       ),
@@ -227,7 +236,7 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
                     Expanded(
                       child: AppButton(
                         onPressed: () => Navigator.pop(context),
-                        text: 'Cancel',
+                        text: l10n. cancel,
                         filled: false,
                       ),
                     ),
@@ -235,7 +244,7 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
                     Expanded(
                       child: AppButton(
                         onPressed: _handleSave,
-                        text: 'Save',
+                        text: l10n. save,
                         filled: true,
                       ),
                     ),
@@ -249,7 +258,8 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
     );
   }
 
-  Widget _buildInputField({
+  Widget _buildInputField(
+    AppLocalizations l10n, {
     required String label,
     required TextEditingController controller,
     required IconData icon,
@@ -257,7 +267,7 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
     String? Function(String?)? validator,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: const EdgeInsets. symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -276,7 +286,7 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
       ),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.main500, size: 20),
+          Icon(icon, color: AppColors. main500, size: 20),
           const SizedBox(width: 12),
           Expanded(
             child: TextFormField(
@@ -285,10 +295,10 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: label,
-                hintStyle: AppTextStyles.body1. copyWith(
-  color: Colors.grey. shade600,  // Much more readable!
-  fontSize: 14,
-),
+                hintStyle: AppTextStyles.body1.copyWith(
+                  color: Colors.grey.shade600,
+                  fontSize: 14,
+                ),
               ),
               style: AppTextStyles.body1. copyWith(
                 color: AppColors.textDark,

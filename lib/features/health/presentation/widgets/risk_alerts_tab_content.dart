@@ -5,7 +5,7 @@ import 'package:gestanea/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RiskAlertsTabContent extends StatefulWidget {
-  const RiskAlertsTabContent({super. key});
+  const RiskAlertsTabContent({super.key});
   
   @override
   State<RiskAlertsTabContent> createState() => _RiskAlertsTabContentState();
@@ -13,92 +13,95 @@ class RiskAlertsTabContent extends StatefulWidget {
 
 class _RiskAlertsTabContentState extends State<RiskAlertsTabContent> {
 
-Future<void> _makeEmergencyCall(BuildContext context) async {
-  // Show confirmation dialog first
-  final confirmed = await showDialog<bool>(
-    context: context,
-    builder: (context) => AlertDialog(
-      backgroundColor: const Color(0xFFFAF0FF),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      title: Row(
-        children: [
-          const Icon(Icons.warning, color: Colors.red, size: 28),
-          const SizedBox(width: 8),
-          Text(
-            'Emergency Call',
-            style: AppTextStyles. headline2.copyWith(
-              color: AppColors.textDark,
-              fontSize: 18,
+  Future<void> _makeEmergencyCall(BuildContext context) async {
+    final l10n = AppLocalizations. of(context)!;
+    
+    // Show confirmation dialog first
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFFFAF0FF),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Row(
+          children: [
+            const Icon(Icons.warning, color: Colors.red, size: 28),
+            const SizedBox(width: 8),
+            Text(
+              l10n.emergencyCall,
+              style: AppTextStyles.headline2.copyWith(
+                color: AppColors.textDark,
+                fontSize: 18,
+              ),
+            ),
+          ],
+        ),
+        content: Text(
+          l10n.areYouSureCall911,
+          style: AppTextStyles.body1.copyWith(
+            color: Colors.grey. shade600,
+            fontSize: 14,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(
+              l10n.cancel,
+              style: TextStyle(color: Colors.grey. shade600),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            ),
+            child: Text(
+              l10n. callNow,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],
       ),
-      content: Text(
-        'Are you sure you want to call 911?\n\nThis will dial emergency services.',
-        style: AppTextStyles.body1.copyWith(
-          color: Colors.grey. shade600,
-          fontSize: 14,
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context, false),
-          child: Text(
-            'Cancel',
-            style: TextStyle(color: Colors.grey. shade600,),
-          ),
-        ),
-        ElevatedButton(
-          onPressed: () => Navigator.pop(context, true),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          ),
-          child: const Text(
-            'Call Now',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
+    );
 
-  if (confirmed == true) {
-    final Uri phoneUri = Uri(scheme: 'tel', path: '911');
-    try {
-      if (await canLaunchUrl(phoneUri)) {
-        await launchUrl(phoneUri);
-      } else {
+    if (confirmed == true) {
+      final Uri phoneUri = Uri(scheme: 'tel', path: '911');
+      try {
+        if (await canLaunchUrl(phoneUri)) {
+          await launchUrl(phoneUri);
+        } else {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(l10n.couldNotMakeEmergencyCall),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        }
+      } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Could not make emergency call'),
+            SnackBar(
+              content: Text('Error: $e'),
               backgroundColor: Colors. red,
             ),
           );
         }
       }
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error: $e'),
-            backgroundColor: Colors. red,
-          ),
-        );
-      }
     }
   }
-}
+
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations. of(context)!;
 
     return Stack(
       children: [
@@ -113,13 +116,13 @@ Future<void> _makeEmergencyCall(BuildContext context) async {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Overall Risk Status
-                _buildOverallRiskCard(),
+                _buildOverallRiskCard(context),
 
                 const SizedBox(height: 20),
 
                 // Risk Factors
                 Text(
-                  'Risk Factors to Monitor',
+                  l10n. riskFactorsToMonitor,
                   style: AppTextStyles.headline2.copyWith(
                     fontSize: 18,
                     color: AppColors.textDark,
@@ -128,45 +131,46 @@ Future<void> _makeEmergencyCall(BuildContext context) async {
                 const SizedBox(height: 12),
 
                 _buildRiskFactorCard(
+                  context,
                   icon: Icons.favorite,
-                  factor: 'Blood Pressure',
-                  level: 'Low Risk',
+                  factor: l10n.bloodPressure,
+                  level: l10n.lowRisk,
                   levelColor: const Color(0xFFB8E6B8),
-                  description: 'Within normal range',
+                  description: l10n.withinNormalRange,
                 ),
                 const SizedBox(height: 12),
                 _buildRiskFactorCard(
+                  context,
                   icon: Icons.science,
-                  factor: 'Gestational Diabetes',
-                  level: 'Low Risk',
+                  factor: l10n.gestationalDiabetes,
+                  level: l10n.lowRisk,
                   levelColor: const Color(0xFFB8E6B8),
-                  description: 'Glucose levels normal',
+                  description: l10n.glucoseLevelsNormal,
                 ),
                 const SizedBox(height: 12),
                 _buildRiskFactorCard(
+                  context,
                   icon: Icons.water_drop,
-                  factor: 'Preeclampsia',
-                  level: 'Low Risk',
+                  factor: l10n.preeclampsia,
+                  level: l10n.lowRisk,
                   levelColor: const Color(0xFFB8E6B8),
-                  description: 'No protein in urine',
+                  description: l10n.noProteinInUrine,
                 ),
 
-const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-// Warning Signs
-_buildWarningSignsCard(),
+                // Warning Signs
+                _buildWarningSignsCard(context),
 
-const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-// Emergency Contact
-_buildEmergencyContactCard(),
+                // Emergency Contact
+                _buildEmergencyContactCard(context),
 
-const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
                 // Tip Card
-                _buildTipCard(
-                  'If you experience any warning signs, contact your healthcare provider immediately.',
-                ),
+                _buildTipCard(l10n.ifYouExperienceWarnings),
               ],
             ),
           ),
@@ -206,10 +210,10 @@ const SizedBox(height: 16),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(topLeft: Radius.circular(15)),
                 gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
+                  begin: Alignment. centerLeft,
                   end: Alignment.centerRight,
                   colors: [
-                    Colors.black.withValues(alpha: 0.12),
+                    Colors. black.withValues(alpha: 0.12),
                     Colors.transparent,
                   ],
                 ),
@@ -221,7 +225,9 @@ const SizedBox(height: 16),
     );
   }
 
-  Widget _buildOverallRiskCard() {
+  Widget _buildOverallRiskCard(BuildContext context) {
+    final l10n = AppLocalizations.of(context)! ;
+    
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -260,7 +266,7 @@ const SizedBox(height: 16),
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Overall Risk Level',
+                  l10n. overallRiskLevel,
                   style: AppTextStyles.body1.copyWith(
                     color: AppColors.white,
                     fontSize: 13,
@@ -268,7 +274,7 @@ const SizedBox(height: 16),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Low Risk',
+                  l10n.lowRisk,
                   style: AppTextStyles.headline2.copyWith(
                     color: AppColors.white,
                     fontSize: 24,
@@ -276,9 +282,9 @@ const SizedBox(height: 16),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'All indicators within normal range',
+                  l10n.allIndicatorsNormal,
                   style: AppTextStyles.smallLabel.copyWith(
-                    color: Colors.white.withValues(alpha: 0.9),
+                    color: Colors.white. withValues(alpha: 0.9),
                     fontSize: 12,
                   ),
                 ),
@@ -290,7 +296,8 @@ const SizedBox(height: 16),
     );
   }
 
-  Widget _buildRiskFactorCard({
+  Widget _buildRiskFactorCard(
+    BuildContext context, {
     required IconData icon,
     required String factor,
     required String level,
@@ -301,7 +308,7 @@ const SizedBox(height: 16),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius. circular(16),
         boxShadow: const [
           BoxShadow(
             color: Color(0x3F000000),
@@ -370,7 +377,9 @@ const SizedBox(height: 16),
     );
   }
 
-  Widget _buildWarningSignsCard() {
+  Widget _buildWarningSignsCard(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -384,7 +393,7 @@ const SizedBox(height: 16),
             spreadRadius: 0,
           ),
           BoxShadow(
-            color: AppColors.white,
+            color: AppColors. white,
             blurRadius: 6,
             offset: Offset(-3, -3),
             spreadRadius: 0,
@@ -399,7 +408,7 @@ const SizedBox(height: 16),
               const Icon(Icons.warning_amber, color: Color(0xFF856404), size: 24),
               const SizedBox(width: 8),
               Text(
-                'Warning Signs to Watch',
+                l10n.warningSignsToWatch,
                 style: AppTextStyles.subtitle1.copyWith(
                   fontSize: 14,
                   color: const Color(0xFF856404),
@@ -409,11 +418,11 @@ const SizedBox(height: 16),
             ],
           ),
           const SizedBox(height: 12),
-          _buildWarningSignItem('Severe headache'),
-          _buildWarningSignItem('Blurred vision'),
-          _buildWarningSignItem('Severe abdominal pain'),
-          _buildWarningSignItem('Decreased fetal movement'),
-          _buildWarningSignItem('Vaginal bleeding'),
+          _buildWarningSignItem(l10n.severeHeadache),
+          _buildWarningSignItem(l10n.blurredVision),
+          _buildWarningSignItem(l10n.severeAbdominalPain),
+          _buildWarningSignItem(l10n.decreasedFetalMovement),
+          _buildWarningSignItem(l10n.vaginalBleeding),
         ],
       ),
     );
@@ -438,71 +447,74 @@ const SizedBox(height: 16),
     );
   }
 
-Widget _buildEmergencyContactCard() {
-  return GestureDetector(
-    onTap: () => _makeEmergencyCall(context),
-    child: Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFE53935), Color(0xFFEF5350)],
+  Widget _buildEmergencyContactCard(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
+    return GestureDetector(
+      onTap: () => _makeEmergencyCall(context),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFFE53935), Color(0xFFEF5350)],
+          ),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x3F000000),
+              blurRadius: 4,
+              offset: Offset(2, 2),
+              spreadRadius: 0,
+            ),
+            BoxShadow(
+              color: AppColors. white,
+              blurRadius: 6,
+              offset: Offset(-3, -3),
+              spreadRadius: 0,
+            ),
+          ],
         ),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x3F000000),
-            blurRadius: 4,
-            offset: Offset(2, 2),
-            spreadRadius: 0,
-          ),
-          BoxShadow(
-            color: AppColors.white,
-            blurRadius: 6,
-            offset: Offset(-3, -3),
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(12),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(Icons.phone, color: AppColors.white, size: 24),
             ),
-            child: const Icon(Icons.phone, color: AppColors.white, size: 24),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Emergency Contact',
-                  style: AppTextStyles. body1.copyWith(
-                    color: AppColors.white,
-                    fontSize: 13,
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.emergencyContact,
+                    style: AppTextStyles.body1.copyWith(
+                      color: AppColors.white,
+                      fontSize: 13,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Call 911 or your provider',
-                  style: AppTextStyles.subtitle1.copyWith(
-                    color: AppColors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(height: 4),
+                  Text(
+                    l10n. call911OrProvider,
+                    style: AppTextStyles.subtitle1.copyWith(
+                      color: AppColors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const Icon(Icons.arrow_forward, color: AppColors.white, size: 24),
-        ],
+            const Icon(Icons.arrow_forward, color: AppColors.white, size: 24),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
+
   Widget _buildTipCard(String message) {
     return Container(
       padding: const EdgeInsets.all(12),

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/core/constants/app_text_styles.dart';
 import 'package:gestanea/core/widgets/custom_button.dart';
+import 'package:gestanea/l10n/app_localizations.dart';
 
 class AddSymptomDialog extends StatefulWidget {
-  const AddSymptomDialog({super.key});
+  const AddSymptomDialog({super. key});
 
   @override
   State<AddSymptomDialog> createState() => _AddSymptomDialogState();
@@ -16,21 +17,9 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
   final _notesController = TextEditingController();
   final _otherSymptomController = TextEditingController();
   
-  String? _selectedSymptom;
+  String?  _selectedSymptom;
   String? _selectedSeverity;
   DateTime _selectedDate = DateTime.now();
-
-  final List<String> _symptoms = [
-    'Nausea',
-    'Headache',
-    'Back Pain',
-    'Swelling',
-    'Fatigue',
-    'Dizziness',
-    'Heartburn',
-    'Leg Cramps',
-    'Other',
-  ];
 
   @override
   void dispose() {
@@ -40,36 +29,53 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
     super.dispose();
   }
 
+  List<String> _getSymptoms(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return [
+      l10n.nausea,
+      l10n. headache,
+      l10n. backPain,
+      l10n.swelling,
+      l10n.fatigue,
+      l10n. dizziness,
+      l10n.heartburn,
+      l10n. legCramps,
+      l10n. other,
+    ];
+  }
+
   void _handleSave() {
+    final l10n = AppLocalizations.of(context)!;
+    
     if (_formKey.currentState!.validate()) {
       if (_selectedSymptom == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select a symptom')),
+          SnackBar(content: Text(l10n.pleaseSelectSymptom)),
         );
         return;
       }
       if (_selectedSeverity == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select severity')),
+          SnackBar(content: Text(l10n.pleaseSelectSeverity)),
         );
         return;
       }
 
-      final symptom = _selectedSymptom == 'Other' 
+      final symptom = _selectedSymptom == l10n.other 
           ? _otherSymptomController.text 
           : _selectedSymptom;
       
       print('Symptom: $symptom');
       print('Severity: $_selectedSeverity');
       print('Duration: ${_durationController.text}');
-      print('Notes: ${_notesController. text}');
+      print('Notes: ${_notesController.text}');
       print('Date: $_selectedDate');
       
       Navigator.pop(context);
       
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Symptom logged successfully!'),
+        SnackBar(
+          content: Text(l10n.symptomLoggedSuccessfully),
           backgroundColor: Colors.green,
         ),
       );
@@ -81,13 +87,13 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
       context: context,
       initialDate: _selectedDate,
       firstDate: DateTime(2020),
-      lastDate: DateTime.now(),
+      lastDate: DateTime. now(),
     );
     
     if (date != null) {
       final time = await showTimePicker(
         context: context,
-        initialTime: TimeOfDay. fromDateTime(_selectedDate),
+        initialTime: TimeOfDay.fromDateTime(_selectedDate),
       );
       
       if (time != null) {
@@ -106,9 +112,12 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final symptoms = _getSymptoms(context);
+
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
+        bottom: MediaQuery.of(context). viewInsets.bottom,
       ),
       child: Container(
         decoration: const BoxDecoration(
@@ -128,8 +137,8 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
                     width: 40,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: Colors.grey. shade600.withOpacity(0.3),
-                      borderRadius: BorderRadius. circular(2),
+                      color: Colors.grey. shade600. withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(2),
                     ),
                   ),
                 ),
@@ -137,7 +146,7 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
                 
                 Center(
                   child: Text(
-                    'Add Symptom',
+                    l10n.addSymptom,
                     style: AppTextStyles.headline2.copyWith(
                       fontSize: 20,
                       color: AppColors. textDark,
@@ -147,7 +156,7 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
                 const SizedBox(height: 24),
                 
                 Text(
-                  'Symptom Type',
+                  l10n. symptomType,
                   style: AppTextStyles.subtitle1.copyWith(
                     fontSize: 14,
                     color: AppColors. textDark,
@@ -157,7 +166,7 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: Colors. white,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: const [
                       BoxShadow(
@@ -176,13 +185,13 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
                     child: DropdownButton<String>(
                       isExpanded: true,
                       hint: Text(
-                        'Select symptom',
+                        l10n.selectSymptom,
                         style: AppTextStyles.body1.copyWith(
-                          color: Colors.grey. shade600,
+                          color: Colors.grey.shade600,
                         ),
                       ),
                       value: _selectedSymptom,
-                      items: _symptoms.map((symptom) {
+                      items: symptoms.map((symptom) {
                         return DropdownMenuItem(
                           value: symptom,
                           child: Text(symptom),
@@ -195,14 +204,14 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
                   ),
                 ),
                 
-                if (_selectedSymptom == 'Other') ...[
+                if (_selectedSymptom == l10n.other) ...[
                   const SizedBox(height: 12),
                   _buildTextField(
                     controller: _otherSymptomController,
-                    label: 'Specify symptom',
+                    label: l10n.specifySymptom,
                     validator: (value) {
-                      if (_selectedSymptom == 'Other' && (value == null || value.isEmpty)) {
-                        return 'Please specify the symptom';
+                      if (_selectedSymptom == l10n.other && (value == null || value.isEmpty)) {
+                        return l10n.pleaseSpecifySymptom;
                       }
                       return null;
                     },
@@ -212,25 +221,25 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
                 const SizedBox(height: 20),
                 
                 Text(
-                  'Severity',
+                  l10n.severity,
                   style: AppTextStyles.subtitle1.copyWith(
                     fontSize: 14,
-                    color: AppColors.textDark,
+                    color: AppColors. textDark,
                   ),
                 ),
                 const SizedBox(height: 12),
                 Row(
                   children: [
                     Expanded(
-                      child: _buildSeverityButton('Mild', const Color(0xFFB8E6B8)),
+                      child: _buildSeverityButton(l10n.mild, const Color(0xFFB8E6B8)),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
-                      child: _buildSeverityButton('Moderate', const Color(0xFFFFE4B5)),
+                      child: _buildSeverityButton(l10n.moderate, const Color(0xFFFFE4B5)),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
-                      child: _buildSeverityButton('Severe', const Color(0xFFFFB8B8)),
+                      child: _buildSeverityButton(l10n.severe, const Color(0xFFFFB8B8)),
                     ),
                   ],
                 ),
@@ -238,10 +247,10 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
                 
                 _buildTextField(
                   controller: _durationController,
-                  label: 'Duration (e.g., 2 hours, All day)',
+                  label: l10n.duration,
                   validator: (value) {
-                    if (value == null || value. isEmpty) {
-                      return 'Please enter duration';
+                    if (value == null || value.isEmpty) {
+                      return l10n. pleaseEnterDuration;
                     }
                     return null;
                   },
@@ -250,7 +259,7 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
                 
                 _buildTextField(
                   controller: _notesController,
-                  label: 'Notes (optional)',
+                  label: l10n.notes,
                   maxLines: 3,
                 ),
                 const SizedBox(height: 16),
@@ -261,7 +270,7 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius. circular(16),
+                      borderRadius: BorderRadius.circular(16),
                       boxShadow: const [
                         BoxShadow(
                           color: Color(0x3F000000),
@@ -280,8 +289,8 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
                         const Icon(Icons.calendar_today, color: AppColors.main500, size: 20),
                         const SizedBox(width: 12),
                         Text(
-                          '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year} ${_selectedDate.hour}:${_selectedDate.minute.toString().padLeft(2, '0')}',
-                          style: AppTextStyles.body1.copyWith(
+                          '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year} ${_selectedDate.hour}:${_selectedDate.minute. toString().padLeft(2, '0')}',
+                          style: AppTextStyles.body1. copyWith(
                             color: AppColors.textDark,
                           ),
                         ),
@@ -296,7 +305,7 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
                     Expanded(
                       child: AppButton(
                         onPressed: () => Navigator.pop(context),
-                        text: 'Cancel',
+                        text: l10n.cancel,
                         filled: false,
                       ),
                     ),
@@ -304,7 +313,7 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
                     Expanded(
                       child: AppButton(
                         onPressed: _handleSave,
-                        text: 'Save',
+                        text: l10n.save,
                         filled: true,
                       ),
                     ),
@@ -355,8 +364,8 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
           textAlign: TextAlign.center,
           style: AppTextStyles.body1.copyWith(
             fontSize: 13,
-            fontWeight: isSelected ? FontWeight. w600 : FontWeight.w500,
-            color: isSelected ?  AppColors.textDark : AppColors.textSecondary,
+            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+            color: isSelected ? AppColors. textDark : Colors.grey.shade600,
           ),
         ),
       ),
@@ -393,12 +402,12 @@ class _AddSymptomDialogState extends State<AddSymptomDialog> {
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: label,
-          hintStyle: AppTextStyles.body1. copyWith(
-  color: Colors.grey. shade600,  // Much more readable!
-  fontSize: 14,
-),
+          hintStyle: AppTextStyles.body1.copyWith(
+            color: Colors.grey.shade600,
+            fontSize: 14,
+          ),
         ),
-        style: AppTextStyles.body1.copyWith(
+        style: AppTextStyles.body1. copyWith(
           color: AppColors.textDark,
           fontSize: 14,
         ),

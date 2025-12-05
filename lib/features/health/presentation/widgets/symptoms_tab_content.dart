@@ -25,8 +25,8 @@ class SymptomsTabContent extends StatelessWidget {
               children: [
                 // Recent Symptoms
                 Text(
-                  'Recent Symptoms',
-                  style: AppTextStyles.headline2.copyWith(
+                  localizations.recentSymptoms,
+                  style: AppTextStyles.headline2. copyWith(
                     fontSize: 18,
                     color: AppColors.textDark,
                   ),
@@ -35,53 +35,55 @@ class SymptomsTabContent extends StatelessWidget {
 
                 // Symptom Cards - realistic for week 24
                 _buildSymptomCard(
+                  context,
                   icon: Icons.airline_seat_flat,
-                  symptom: 'Back Pain',
-                  severity: 'Mild',
+                  symptom: localizations.backPain,
+                  severity: localizations.mild,
                   severityColor: const Color(0xFFFFF3CD),
-                  time: '3 hours ago',
+                  time: localizations.hoursAgo(3),
                 ),
                 const SizedBox(height: 12),
                 _buildSymptomCard(
+                  context,
                   icon: Icons.nights_stay,
-                  symptom: 'Trouble Sleeping',
-                  severity: 'Moderate',
+                  symptom: localizations.troubleSleeping,
+                  severity: localizations.moderate,
                   severityColor: const Color(0xFFFFE0B2),
-                  time: 'Today, 2:00 AM',
+                  time: '${localizations.today}, 2:00 AM',
                 ),
                 const SizedBox(height: 12),
                 _buildSymptomCard(
+                  context,
                   icon: Icons.water_drop,
-                  symptom: 'Swollen Feet',
-                  severity: 'Mild',
+                  symptom: localizations.swollenFeet,
+                  severity: localizations.mild,
                   severityColor: const Color(0xFFFFF3CD),
-                  time: 'Yesterday',
+                  time: localizations.yesterday,
                 ),
                 const SizedBox(height: 12),
                 _buildSymptomCard(
+                  context,
                   icon: Icons.food_bank,
-                  symptom: 'Heartburn',
-                  severity: 'Mild',
+                  symptom: localizations.heartburn,
+                  severity: localizations.mild,
                   severityColor: const Color(0xFFFFF3CD),
-                  time: '2 days ago',
+                  time: localizations. daysAgo(2),
                 ),
 
-const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-// Add Symptom Button
-_buildAddSymptomButton(context),
+                // Add Symptom Button
+                _buildAddSymptomButton(context),
 
-const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Symptom Frequency Chart - updated for week 24
-                _buildFrequencyChart(),
+                _buildFrequencyChart(context),
 
                 const SizedBox(height: 16),
 
                 // Tip Card
-                _buildTipCard(
-                  'Common symptoms at 24 weeks include back pain, swelling, and sleep difficulties. Stay hydrated and rest when possible.',
-                ),
+                _buildTipCard(localizations.commonSymptomsWeek24),
               ],
             ),
           ),
@@ -124,7 +126,7 @@ const SizedBox(height: 20),
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: [
-                    Colors.black.withValues(alpha: 0.12),
+                    Colors. black.withValues(alpha: 0.12),
                     Colors.transparent,
                   ],
                 ),
@@ -136,7 +138,8 @@ const SizedBox(height: 20),
     );
   }
 
-  Widget _buildSymptomCard({
+  Widget _buildSymptomCard(
+    BuildContext context, {
     required IconData icon,
     required String symptom,
     required String severity,
@@ -215,61 +218,66 @@ const SizedBox(height: 20),
     );
   }
 
- Widget _buildAddSymptomButton(BuildContext context) {
-  return GestureDetector(
-    onTap: () {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (context) => const AddSymptomDialog(),
-      );
-    },
-    child: Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.pink600, AppColors.pink500],
-        ),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x3F000000),
-            blurRadius: 4,
-            offset: Offset(2, 2),
-            spreadRadius: 0,
+  Widget _buildAddSymptomButton(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          builder: (context) => const AddSymptomDialog(),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [AppColors.pink600, AppColors.pink500],
           ),
-          BoxShadow(
-            color: AppColors. white,
-            blurRadius: 6,
-            offset: Offset(-3, -3),
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.add, color: AppColors. white, size: 24),
-          const SizedBox(width: 8),
-          Text(
-            'Log New Symptom',
-            style: AppTextStyles.subtitle1.copyWith(
-              color: AppColors.white,
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x3F000000),
+              blurRadius: 4,
+              offset: Offset(2, 2),
+              spreadRadius: 0,
             ),
-          ),
-        ],
+            BoxShadow(
+              color: AppColors.white,
+              blurRadius: 6,
+              offset: Offset(-3, -3),
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.add, color: AppColors.white, size: 24),
+            const SizedBox(width: 8),
+            Text(
+              localizations.logNewSymptom,
+              style: AppTextStyles.subtitle1.copyWith(
+                color: AppColors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
-  Widget _buildFrequencyChart() {
+    );
+  }
+
+  Widget _buildFrequencyChart(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors. white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [
           BoxShadow(
@@ -290,26 +298,28 @@ const SizedBox(height: 20),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Symptom Frequency (Last 7 Days)',
+            localizations.symptomFrequency,
             style: AppTextStyles.subtitle1.copyWith(
               fontSize: 14,
-              color: AppColors.textDark,
+              color: AppColors. textDark,
             ),
           ),
           const SizedBox(height: 16),
-          _buildFrequencyBar('Back Pain', 0.85),
+          _buildFrequencyBar(context, localizations.backPain, 0.85),
           const SizedBox(height: 10),
-          _buildFrequencyBar('Swollen Feet', 0.6),
+          _buildFrequencyBar(context, localizations.swollenFeet, 0.6),
           const SizedBox(height: 10),
-          _buildFrequencyBar('Heartburn', 0.5),
+          _buildFrequencyBar(context, localizations.heartburn, 0.5),
           const SizedBox(height: 10),
-          _buildFrequencyBar('Sleep Issues', 0.7),
+          _buildFrequencyBar(context, localizations.sleepIssues, 0.7),
         ],
       ),
     );
   }
 
-  Widget _buildFrequencyBar(String label, double value) {
+  Widget _buildFrequencyBar(BuildContext context, String label, double value) {
+    final localizations = AppLocalizations.of(context)!;
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -320,14 +330,14 @@ const SizedBox(height: 20),
               label,
               style: AppTextStyles.smallLabel.copyWith(
                 fontSize: 12,
-                color: AppColors.textDark,
+                color: AppColors. textDark,
               ),
             ),
             Text(
-              '${(value * 7).toInt()} times',
+              '${(value * 7).toInt()} ${localizations.times}',
               style: AppTextStyles.smallLabel.copyWith(
                 fontSize: 11,
-                color: AppColors.textDark,
+                color: AppColors. textDark,
               ),
             ),
           ],
@@ -362,7 +372,7 @@ const SizedBox(height: 20),
             spreadRadius: 0,
           ),
           BoxShadow(
-            color: AppColors.white,
+            color: AppColors. white,
             blurRadius: 6,
             offset: Offset(-3, -3),
             spreadRadius: 0,
