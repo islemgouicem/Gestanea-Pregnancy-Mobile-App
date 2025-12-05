@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/l10n/app_localizations.dart';
-import '../widgets/health_header.dart';
+import 'package:gestanea/core/widgets/header.dart';
+import 'package:gestanea/features/dashboard/presentation/pages/notificationsPage.dart'; // ✅ Import notifications page
 import '../widgets/health_tab_sidebar.dart';
 import '../widgets/vitals_tab_content.dart';
 import '../widgets/symptoms_tab_content.dart';
@@ -53,13 +54,32 @@ class _HealthLogScreenState extends State<HealthLogScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Header
-            HealthHeader(
+            // ✅ Use common Header widget with notification navigation
+            Header(
               title: localizations.healthLog,
-              subtitle: localizations.trackYourWellness,
               onNotificationTapped: () {
-                // Handle notification tap
+                // ✅ Navigate to Notifications Page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationsPage(),
+                  ),
+                );
               },
+            ),
+
+            // Subtitle
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                localizations.trackYourWellness,
+                style: TextStyle(
+                  color: AppColors.main500,
+                  fontSize: 14,
+                  fontFamily: 'Lato',
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
 
             // Main content with sidebar and tab content
