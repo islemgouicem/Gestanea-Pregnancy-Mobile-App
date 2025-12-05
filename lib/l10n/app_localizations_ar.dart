@@ -9,6 +9,69 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
+  String get security => 'الأمان';
+
+  @override
+  String get i_gave_birth => 'لقد ولدت';
+
+  @override
+  String get no_longer_pregnant => 'لم أعد حاملاً';
+
+  @override
+  String get help_support => 'المساعدة والدعم';
+
+  @override
+  String get contact_us => 'اتصل بنا';
+
+  @override
+  String get privacy_policy => 'سياسة الخصوصية';
+
+  @override
+  String get about_app => 'حول التطبيق';
+
+  @override
+  String get change => 'تغيير';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get save_changes => 'حفظ التغييرات';
+
+  @override
+  String get logout_confirmation => 'هل أنت متأكد أنك تريد تسجيل الخروج؟';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get unknown => 'غير معروف';
+
+  @override
+  String get profile => 'الملف الشخصي';
+
+  @override
+  String get profile_updated => 'تم تحديث الملف الشخصي';
+
+  @override
+  String get edit_profile => 'تعديل الملف الشخصي';
+
+  @override
+  String get change_profile_photo => 'تغيير صورة الملف الشخصي';
+
+  @override
+  String get full_name => 'الاسم الكامل';
+
+  @override
+  String get enable_notifications => 'تفعيل الإشعارات';
+
+  @override
+  String get phone => 'الهاتف';
+
+  @override
+  String get country => 'البلد';
+
+  @override
   String get plan => 'الخطة';
 
   @override
@@ -356,9 +419,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String atLeastReviews(int count) {
     return 'على الأقل $count مراجعة';
   }
-
-  @override
-  String get cancel => 'إلغاء';
 
   @override
   String get applyFilters => 'تطبيق التصفية';

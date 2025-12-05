@@ -2,6 +2,31 @@
 
 
 {
+
+"full_name": "الاسم الكامل",
+"enable_notifications": "تفعيل الإشعارات",
+"phone": "الهاتف",
+"country": "البلد",
+  "logout_confirmation": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "cancel": "إلغاء",
+  "unknown": "غير معروف",
+  "profile": "الملف الشخصي",
+  "profile_updated": "تم تحديث الملف الشخصي",
+  "edit_profile": "تعديل الملف الشخصي",
+  "change_profile_photo": "تغيير صورة الملف الشخصي",
+  "full_name": "الاسم الكامل",
+    "save_changes": "حفظ التغييرات",
+  "save": "حفظ",
+  "enable_notifications": "تفعيل الإشعارات",
+  "security": "الأمان",
+  "i_gave_birth": "لقد ولدت",
+  "no_longer_pregnant": "لم أعد حاملاً",
+  "help_support": "المساعدة والدعم",
+  "contact_us": "اتصل بنا",
+  "privacy_policy": "سياسة الخصوصية",
+  "about_app": "حول التطبيق",
+  "change": "تغيير",
+
     "plan": "الخطة",
   
     "sundayShort": "ح",

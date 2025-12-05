@@ -9,6 +9,69 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
+  String get security => 'Sécurité';
+
+  @override
+  String get i_gave_birth => 'J\'ai accouché';
+
+  @override
+  String get no_longer_pregnant => 'Je ne suis plus enceinte';
+
+  @override
+  String get help_support => 'Aide & Support';
+
+  @override
+  String get contact_us => 'Contactez-nous';
+
+  @override
+  String get privacy_policy => 'Politique de confidentialité';
+
+  @override
+  String get about_app => 'À propos de l\'application';
+
+  @override
+  String get change => 'Modifier';
+
+  @override
+  String get save => 'Enregistrer';
+
+  @override
+  String get save_changes => 'Enregistrer les modifications';
+
+  @override
+  String get logout_confirmation => 'Voulez-vous vraiment vous déconnecter ?';
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String get unknown => 'Inconnu';
+
+  @override
+  String get profile => 'Profil';
+
+  @override
+  String get profile_updated => 'Profil mis à jour';
+
+  @override
+  String get edit_profile => 'Modifier le profil';
+
+  @override
+  String get change_profile_photo => 'Changer la photo de profil';
+
+  @override
+  String get full_name => 'Nom complet';
+
+  @override
+  String get enable_notifications => 'Activer les notifications';
+
+  @override
+  String get phone => 'Téléphone';
+
+  @override
+  String get country => 'Pays';
+
+  @override
   String get plan => 'Plan';
 
   @override
@@ -358,9 +421,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String atLeastReviews(int count) {
     return 'Au moins $count avis';
   }
-
-  @override
-  String get cancel => 'Annuler';
 
   @override
   String get applyFilters => 'Appliquer les filtres';

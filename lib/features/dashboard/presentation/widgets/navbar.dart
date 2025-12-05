@@ -16,37 +16,51 @@ class FancyNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width / items.length;
+    final w = MediaQuery.of(context).size.width;
+    final h = MediaQuery.of(context).size.height;
+
+    // --- RESPONSIVE VALUES ---
+    final barHeight = h * 0.09; // responsive bottom bar height
+    final notchSize = w * 0.10; // size of notch curve
+    final circleSize = w * 0.18; // floating circle size
+    final iconSizeActive = w * 0.09; // active middle icon size
+    final iconSizeInactive = w * 0.065; // inactive icons
+    final itemWidth = w / items.length;
+    final bottomPadding = h * 0.015; // space for labels
 
     return SizedBox(
-      height: 130,
+      height: barHeight + circleSize * 0.6,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
+          // -------------------------
           // WHITE BAR WITH NOTCH
+          // -------------------------
           Positioned(
             bottom: 0,
             left: 0,
             right: 0,
             child: CustomPaint(
               painter: _NotchedBarPainter(
-                notchCenterX: width * currentIndex + width / 2,
-                notchRadius: 40, // deeper notch
-                borderRadius: 20
+                notchCenterX: itemWidth * currentIndex + itemWidth / 2,
+                notchRadius: notchSize,
+                borderRadius: 20,
               ),
-              child: Container(height: 75),
+              child: Container(height: barHeight),
             ),
           ),
 
+          // -------------------------
           // FLOATING CIRCLE
+          // -------------------------
           AnimatedPositioned(
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeOut,
-            bottom: 45, // pushed deeper inside notch
-            left: width * currentIndex + (width - 75) / 2,
+            bottom: barHeight - circleSize * 0.40,
+            left: itemWidth * currentIndex + (itemWidth - circleSize) / 2,
             child: Container(
-              width: 75,
-              height: 75,
+              width: circleSize,
+              height: circleSize,
               decoration: BoxDecoration(
                 color: AppColors.main500,
                 shape: BoxShape.circle,
@@ -61,8 +75,8 @@ class FancyNavBar extends StatelessWidget {
               child: Center(
                 child: SvgPicture.asset(
                   items[currentIndex].icon,
-                  width: 40,
-                  height: 40,
+                  width: iconSizeActive,
+                  height: iconSizeActive,
                   colorFilter: const ColorFilter.mode(
                     Colors.white,
                     BlendMode.srcIn,
@@ -72,9 +86,11 @@ class FancyNavBar extends StatelessWidget {
             ),
           ),
 
-          // BOTTOM ICONS + LABELS
+          // -------------------------
+          // ICONS & LABELS
+          // -------------------------
           Positioned(
-            bottom: 10,
+            bottom: bottomPadding,
             left: 0,
             right: 0,
             child: Row(
@@ -85,29 +101,29 @@ class FancyNavBar extends StatelessWidget {
                 return GestureDetector(
                   onTap: () => onTap(i),
                   child: SizedBox(
-                    width: width,
+                    width: itemWidth,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         if (!active)
                           SvgPicture.asset(
                             items[i].icon,
-                            width: 30,
-                            height: 30,
-                            colorFilter: const ColorFilter.mode(
-                              Color(0xff999EA7),
+                            width: iconSizeInactive,
+                            height: iconSizeInactive,
+                            colorFilter: ColorFilter.mode(
+                              Colors.grey.shade500,
                               BlendMode.srcIn,
                             ),
                           )
                         else
-                          const SizedBox(height: 26), // keeps layout aligned
+                          SizedBox(height: iconSizeInactive),
 
-                        const SizedBox(height: 8),
+                        SizedBox(height: h * 0.005),
 
                         Text(
                           items[i].label,
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: w * 0.033, // responsive
                             fontWeight: FontWeight.w600,
                             color: active
                                 ? AppColors.main500
@@ -137,12 +153,12 @@ class NavBarItem {
 class _NotchedBarPainter extends CustomPainter {
   final double notchCenterX;
   final double notchRadius;
-  final double borderRadius; // new parameter for corner radius
+  final double borderRadius;
 
   _NotchedBarPainter({
     required this.notchCenterX,
     required this.notchRadius,
-    required this.borderRadius, // default radius
+    required this.borderRadius,
   });
 
   @override
@@ -153,14 +169,11 @@ class _NotchedBarPainter extends CustomPainter {
 
     final path = Path();
 
-    // top-left corner
     path.moveTo(0, borderRadius);
     path.quadraticBezierTo(0, 0, borderRadius, 0);
 
-    // left side of notch
     path.lineTo(notchCenterX - notchRadius * 1.2, 0);
 
-    // smooth arc
     path.quadraticBezierTo(
       notchCenterX,
       notchRadius * 1.9,
@@ -168,16 +181,17 @@ class _NotchedBarPainter extends CustomPainter {
       0,
     );
 
-    // top-right corner
     path.lineTo(size.width - borderRadius, 0);
     path.quadraticBezierTo(size.width, 0, size.width, borderRadius);
 
-    // right side
     path.lineTo(size.width, size.height - borderRadius);
     path.quadraticBezierTo(
-        size.width, size.height, size.width - borderRadius, size.height);
+      size.width,
+      size.height,
+      size.width - borderRadius,
+      size.height,
+    );
 
-    // bottom side
     path.lineTo(borderRadius, size.height);
     path.quadraticBezierTo(0, size.height, 0, size.height - borderRadius);
 
