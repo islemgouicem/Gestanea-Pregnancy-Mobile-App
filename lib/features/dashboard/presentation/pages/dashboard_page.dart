@@ -2,10 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gestanea/core/database/db_helper.dart';
+import 'package:gestanea/features/auth/logic/auth_bloc.dart';
+import 'package:gestanea/features/auth/logic/auth_state.dart';
 import 'package:gestanea/features/baby/data/datasources/baby_local_data_source.dart';
 import 'package:gestanea/features/baby/logic/cubit/baby_cubit.dart';
 import 'package:gestanea/features/baby/logic/repositories/baby_repository.dart';
 import 'package:gestanea/features/dashboard/logic/cubit/dashboard_cubit.dart';
+import 'package:gestanea/features/dashboard/logic/cubit/dashboard_state.dart';
 import 'package:gestanea/features/dashboard/presentation/pages/home_screen.dart';
 import 'package:gestanea/features/dashboard/presentation/widgets/navbar.dart';
 import 'postpartum_dashboard_page.dart';
@@ -24,8 +27,8 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   int _currentIndex = 0;
-  bool isPregnant = true;
   String babyGender = 'girl';
+  String? _userId;
 
   void _setPageIndex(index) {
     setState(() {
@@ -33,60 +36,87 @@ class _DashboardPageState extends State<DashboardPage> {
     });
   }
 
+  String _getUserId(BuildContext context) {
+    final authState = context.read<AuthBloc>().state;
+    if (authState is AuthAuthenticated) {
+      return authState.user.id;
+    }
+    return '0'; // Default if not authenticated
+  }
+
   @override
   Widget build(BuildContext context) {
-    final pages = [
-      isPregnant
-          ? HomeScreen(onNavigate: _setPageIndex)
-          : PostpartumDashboardPage(babyGender: babyGender),
-      isPregnant
-          ? const WeekTrackerPage()
-          : PostpartumTrackPage(babyGender: babyGender),
-      const HealthLogScreen(),
-      const PlanMainPage(),
-      const MarketplacePage(),
-    ];
-    final double h = MediaQuery.of(context).size.height *0.09;
+    _userId = _getUserId(context);
+    final double h = MediaQuery.of(context).size.height * 0.09;
+    
     return MultiBlocProvider(
       providers: [
         BlocProvider<DashboardCubit>(
-          create: (context) => DashboardCubit(),
+          create: (context) {
+            final cubit = DashboardCubit();
+            // Load dashboard with user ID
+            final userIdInt = int.tryParse(_userId ?? '0') ?? 0;
+            if (userIdInt > 0) {
+              cubit.loadDashboard(userIdInt);
+            }
+            return cubit;
+          },
         ),
         BlocProvider<BabyCubit>(
           create: (context) => BabyCubit(
             repository: BabyRepository(
               BabyLocalDataSource(DatabaseHelper.instance),
             ),
-            userId: 'current_user', // TODO: Get actual user ID from auth
+            userId: _userId ?? '0',
           ),
         ),
       ],
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(bottom: h),
-              child: IndexedStack(index: _currentIndex, children: pages),
-            ),
+      child: BlocBuilder<DashboardCubit, DashboardState>(
+        builder: (context, dashboardState) {
+          // Determine if user is pregnant based on dashboard state
+          final bool isPregnant = dashboardState is PregnancyDashboardLoaded ||
+              dashboardState is DashboardInitial ||
+              dashboardState is DashboardLoading;
 
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: FancyNavBar(
-                currentIndex: _currentIndex,
-                onTap: (i) => setState(() => _currentIndex = i),
-                items: [
-                  NavBarItem(icon: "assets/icons/home.svg", label: "Home"),
-                  NavBarItem(icon: "assets/icons/track.svg", label: "Track"),
-                  NavBarItem(icon: "assets/icons/health.svg", label: "Health"),
-                  NavBarItem(icon: "assets/icons/plan.svg", label: "Plan"),
-                  NavBarItem(icon: "assets/icons/market.svg", label: "Market"),
-                ],
-              ),
+          final pages = [
+            isPregnant
+                ? HomeScreen(onNavigate: _setPageIndex)
+                : PostpartumDashboardPage(babyGender: babyGender),
+            isPregnant
+                ? const WeekTrackerPage()
+                : PostpartumTrackPage(babyGender: babyGender),
+            const HealthLogScreen(),
+            const PlanMainPage(),
+            const MarketplacePage(),
+          ];
+
+          return Scaffold(
+            body: Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: h),
+                  child: IndexedStack(index: _currentIndex, children: pages),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: FancyNavBar(
+                    currentIndex: _currentIndex,
+                    onTap: (i) => setState(() => _currentIndex = i),
+                    items: [
+                      NavBarItem(icon: "assets/icons/home.svg", label: "Home"),
+                      NavBarItem(icon: "assets/icons/track.svg", label: "Track"),
+                      NavBarItem(icon: "assets/icons/health.svg", label: "Health"),
+                      NavBarItem(icon: "assets/icons/plan.svg", label: "Plan"),
+                      NavBarItem(icon: "assets/icons/market.svg", label: "Market"),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

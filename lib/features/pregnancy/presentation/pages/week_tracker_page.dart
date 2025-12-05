@@ -1,5 +1,9 @@
 // lib/features/pregnancy/presentation/pages/week_tracker_page.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gestanea/features/auth/logic/auth_bloc.dart';
+import 'package:gestanea/features/auth/logic/auth_state.dart';
+import 'package:gestanea/features/pregnancy/data/repositories/pregnancy_repository.dart';
 import '../../../../main.dart' show routeObserver;
 import '../widgets/week_selector_widget.dart';
 import '../widgets/fetal_visualization_widget.dart';
@@ -14,12 +18,21 @@ class WeekTrackerPage extends StatefulWidget {
 }
 
 class _WeekTrackerPageState extends State<WeekTrackerPage> with RouteAware {
-  int selectedWeek = 12; // TODO: Get from provider
-  bool showWeight = true;
-  bool _showForm = false; // ✅ Controls form visibility
+  int selectedWeek = 1;
+  int currentDay = 0;
+  String trimester = '1st Trimester';
+  int daysLeft = 280;
+  double progressPercentage = 0;
+  DateTime? dueDate;
+  bool _isLoading = true;
 
-  final TextEditingController _weightController = TextEditingController();
-  final TextEditingController _lengthController = TextEditingController();
+  final PregnancyRepository _repository = PregnancyRepository();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPregnancyData();
+  }
 
   @override
   void didChangeDependencies() {
@@ -30,21 +43,73 @@ class _WeekTrackerPageState extends State<WeekTrackerPage> with RouteAware {
   @override
   void dispose() {
     routeObserver.unsubscribe(this);
-    _weightController.dispose();
-    _lengthController.dispose();
     super.dispose();
   }
 
-  // ✅ When returning from another page, reset the form visibility
+  int _getUserId() {
+    final authState = context.read<AuthBloc>().state;
+    if (authState is AuthAuthenticated) {
+      return int.tryParse(authState.user.id) ?? 0;
+    }
+    return 0;
+  }
+
+  Future<void> _loadPregnancyData() async {
+    final userId = _getUserId();
+    if (userId > 0) {
+      try {
+        final data = await _repository.getPregnancyInfo(userId);
+        if (mounted) {
+          setState(() {
+            selectedWeek = data['currentWeek'] ?? 1;
+            currentDay = data['currentDay'] ?? 0;
+            trimester = data['trimester'] ?? '1st Trimester';
+            daysLeft = data['daysLeft'] ?? 280;
+            progressPercentage = data['progressPercentage'] ?? 0;
+            dueDate = data['dueDate'];
+            _isLoading = false;
+          });
+        }
+      } catch (e) {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  // When returning from another page, refresh data
   @override
   void didPopNext() {
-    setState(() {
-      _showForm = false;
-    });
+    _loadPregnancyData();
+  }
+
+  String _formatDueDate() {
+    if (dueDate == null) return 'Not set';
+    final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return '${months[dueDate!.month - 1]} ${dueDate!.day.toString().padLeft(2, '0')}, ${dueDate!.year}';
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: const Color(0xFFF5F5F5),
+        body: const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFF9B7FDB),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
@@ -74,126 +139,6 @@ class _WeekTrackerPageState extends State<WeekTrackerPage> with RouteAware {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Weight and Length Toggle
-              Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          showWeight = true;
-                          _showForm = true;
-                        });
-                      },
-                      child: _buildToggleButton('Weight', showWeight),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          showWeight = false;
-                          _showForm = true;
-                        });
-                      },
-                      child: _buildToggleButton('Length', !showWeight),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-
-              // ✅ Only show the form when a toggle is tapped
-              if (_showForm)
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        showWeight ? 'Baby Weight' : 'Baby Length',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      TextField(
-                        controller: showWeight
-                            ? _weightController
-                            : _lengthController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintText: showWeight
-                              ? 'Enter weight in grams'
-                              : 'Enter length in cm',
-                          suffixText: showWeight ? 'g' : 'cm',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(
-                              color: Color(0xFF9B7FDB),
-                              width: 2,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            final value = showWeight
-                                ? _weightController.text
-                                : _lengthController.text;
-                            if (value.isNotEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    showWeight
-                                        ? 'Weight saved: $value g'
-                                        : 'Length saved: $value cm',
-                                  ),
-                                  backgroundColor: const Color(0xFF9B7FDB),
-                                ),
-                              );
-                              setState(() {
-                                _showForm = false; // ✅ Hide after submit
-                                 _weightController.clear();
-                                 _lengthController.clear();
-                              });
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF9B7FDB),
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          child: const Text('Save Measurement',style: TextStyle(color:Colors.white),),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-              const SizedBox(height: 24),
-
               FetalVisualizationWidget(week: selectedWeek),
               const SizedBox(height: 24),
 
@@ -205,12 +150,12 @@ class _WeekTrackerPageState extends State<WeekTrackerPage> with RouteAware {
               ),
               const SizedBox(height: 24),
 
-              const PregnancyProgressBar(
-                currentWeek: 12,
-                currentDay: 3,
-                trimester: '1st Trimester',
-                daysLeft: 228,
-                dueDate: 'Jul 07, 2024',
+              PregnancyProgressBar(
+                currentWeek: selectedWeek,
+                currentDay: currentDay,
+                trimester: trimester,
+                daysLeft: daysLeft,
+                dueDate: _formatDueDate(),
               ),
               const SizedBox(height: 32),
 
@@ -224,33 +169,6 @@ class _WeekTrackerPageState extends State<WeekTrackerPage> with RouteAware {
               const SizedBox(height: 16),
               const KickCounterWidget(),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildToggleButton(String text, bool isSelected) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      decoration: BoxDecoration(
-        color: isSelected ? const Color(0xFF9B7FDB) : Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Center(
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: isSelected ? Colors.white : Colors.grey,
           ),
         ),
       ),
