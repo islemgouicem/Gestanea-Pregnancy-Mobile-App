@@ -3,12 +3,18 @@
 // =============================================================================
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/core/constants/app_text_styles.dart';
+import 'package:gestanea/core/database/models/feeding_log_model.dart';
+import 'package:gestanea/features/baby/logic/cubit/baby_cubit.dart';
+import 'package:gestanea/features/baby/logic/cubit/baby_state.dart';
+import 'package:intl/intl.dart';
 
 class FeedingLogPage extends StatefulWidget {
+  final String? babyId;
   
-  const FeedingLogPage({super.key});
+  const FeedingLogPage({super.key, this.babyId});
 
   @override
   State<FeedingLogPage> createState() => _FeedingLogPageState();
@@ -17,159 +23,177 @@ class FeedingLogPage extends StatefulWidget {
 class _FeedingLogPageState extends State<FeedingLogPage> {
   String selectedType = 'Breastfeed';
 
-  // TODO: Load from database
-  final List<Map<String, dynamic>> feedingLogs = [
-    {
-      'type': 'Breastfeed',
-      'time': '2:30 PM',
-      'duration': '15 min',
-      'side': 'Left'
-    },
-    {
-      'type': 'Bottle',
-      'time': '11:00 AM',
-      'amount': '120 ml',
-      'side': null
-    },
-    {
-      'type': 'Breastfeed',
-      'time': '8:30 AM',
-      'duration': '20 min',
-      'side': 'Right'
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    context.read<BabyCubit>().loadFeedingLogs();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bg_1,
       body: SafeArea(
-        child: Column(
-          children: [
-            // Header
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back_ios, color: AppColors.main500, size: 24),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        'Feeding Log',
-                        style: AppTextStyles.headline1.copyWith(color: AppColors.main500),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 48),
-                ],
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+        child: BlocBuilder<BabyCubit, BabyState>(
+          builder: (context, state) {
+            List<FeedingLogModel> feedingLogs = [];
+            if (state is FeedingLoaded) {
+              feedingLogs = state.feedingLogs;
+            }
+            
+            // Filter by selected type and today
+            final today = DateTime.now();
+            final todayLogs = feedingLogs.where((log) {
+              final logDate = log.loggedAt;
+              return logDate.year == today.year && 
+                     logDate.month == today.month && 
+                     logDate.day == today.day;
+            }).toList();
+            
+            // Calculate totals
+            final totalFeedings = todayLogs.length;
+            final totalMinutes = todayLogs.fold<int>(0, (sum, log) => sum + (log.durationMinutes ?? 0));
+            final hours = totalMinutes ~/ 60;
+            final minutes = totalMinutes % 60;
+
+            return Column(
+              children: [
+                // Header
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Today's Summary
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [AppColors.pink500, AppColors.pink300],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                      IconButton(
+                        icon: Icon(Icons.arrow_back_ios, color: AppColors.main500, size: 24),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            'Feeding Log',
+                            style: AppTextStyles.headline1.copyWith(color: AppColors.main500),
                           ),
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: AppColors.shadow1,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                Icon(Icons.restaurant, color: AppColors.white, size: 32),
-                                const SizedBox(height: 8),
-                                Text(
-                                  '8 times', // TODO: Calculate from today's data
-                                  style: AppTextStyles.headline2.copyWith(color: AppColors.white),
-                                ),
-                                Text(
-                                  'Today',
-                                  style: AppTextStyles.smallLabel.copyWith(color: AppColors.white.withValues(alpha: 0.7)),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              width: 1,
-                              height: 60,
-                              color: AppColors.white.withValues(alpha: 0.3),
-                            ),
-                            Column(
-                              children: [
-                                Icon(Icons.timer, color: AppColors.white, size: 32),
-                                const SizedBox(height: 8),
-                                Text(
-                                  '2h 15m', // TODO: Calculate from today's data
-                                  style: AppTextStyles.headline2.copyWith(color: AppColors.white),
-                                ),
-                                Text(
-                                  'Total Time',
-                                  style: AppTextStyles.smallLabel.copyWith(color: AppColors.white.withValues(alpha: 0.7)),
-                                ),
-                              ],
-                            ),
-                          ],
                         ),
                       ),
-                      const SizedBox(height: 24),
-
-                      // Feeding Type Selector
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildTypeButton('Breastfeed', Icons.child_care),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _buildTypeButton('Bottle', Icons.baby_changing_station),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-
-                      // Recent Logs
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Recent Feedings',
-                            style: AppTextStyles.headline2,
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              // TODO: Navigate to all feeding logs page
-                              debugPrint('Navigate to All Feeding Logs');
-                            },
-                            child: Text(
-                              'View All',
-                              style: AppTextStyles.body1.copyWith(color: AppColors.main500),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      ...feedingLogs.map((log) => _buildFeedingLogItem(log)),
+                      const SizedBox(width: 48),
                     ],
                   ),
                 ),
-              ),
-            ),
-          ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Today's Summary
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [AppColors.pink500, AppColors.pink300],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: AppColors.shadow1,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  children: [
+                                    Icon(Icons.restaurant, color: AppColors.white, size: 32),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      '$totalFeedings times',
+                                      style: AppTextStyles.headline2.copyWith(color: AppColors.white),
+                                    ),
+                                    Text(
+                                      'Today',
+                                      style: AppTextStyles.smallLabel.copyWith(color: AppColors.white.withValues(alpha: 0.7)),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  width: 1,
+                                  height: 60,
+                                  color: AppColors.white.withValues(alpha: 0.3),
+                                ),
+                                Column(
+                                  children: [
+                                    Icon(Icons.timer, color: AppColors.white, size: 32),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      '${hours}h ${minutes}m',
+                                      style: AppTextStyles.headline2.copyWith(color: AppColors.white),
+                                    ),
+                                    Text(
+                                      'Total Time',
+                                      style: AppTextStyles.smallLabel.copyWith(color: AppColors.white.withValues(alpha: 0.7)),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+
+                          // Feeding Type Selector
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _buildTypeButton('Breastfeed', Icons.child_care),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: _buildTypeButton('Bottle', Icons.baby_changing_station),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+
+                          // Recent Logs
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Recent Feedings',
+                                style: AppTextStyles.headline2,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  // TODO: Navigate to all feeding logs page
+                                },
+                                child: Text(
+                                  'View All',
+                                  style: AppTextStyles.body1.copyWith(color: AppColors.main500),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          if (feedingLogs.isEmpty)
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Text(
+                                  'No feeding logs yet',
+                                  style: AppTextStyles.body1.copyWith(color: AppColors.textSecondary),
+                                ),
+                              ),
+                            )
+                          else
+                            ...feedingLogs.take(10).map((log) => _buildFeedingLogItem(log)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -220,7 +244,10 @@ class _FeedingLogPageState extends State<FeedingLogPage> {
     );
   }
 
-  Widget _buildFeedingLogItem(Map<String, dynamic> log) {
+  Widget _buildFeedingLogItem(FeedingLogModel log) {
+    final startTime = log.loggedAt;
+    final timeStr = DateFormat('h:mm a').format(startTime);
+    
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -238,7 +265,7 @@ class _FeedingLogPageState extends State<FeedingLogPage> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
-              log['type'] == 'Breastfeed'
+              log.feedingType == 'Breastfeed'
                   ? Icons.child_care
                   : Icons.baby_changing_station,
               color: AppColors.pink500,
@@ -251,7 +278,7 @@ class _FeedingLogPageState extends State<FeedingLogPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  log['type'],
+                  log.feedingType,
                   style: AppTextStyles.subtitle1.copyWith(
                     color: AppColors.textPrimary,
                     fontWeight: FontWeight.w600,
@@ -259,16 +286,16 @@ class _FeedingLogPageState extends State<FeedingLogPage> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  log['side'] != null
-                      ? '${log['duration']} - ${log['side']} side'
-                      : '${log['amount']}',
+                  log.feedingType == 'Breastfeed'
+                      ? '${log.durationMinutes ?? 0} min${log.breastSide != null ? ' - ${log.breastSide} side' : ''}'
+                      : '${log.amountMl ?? 0} ml',
                   style: AppTextStyles.body1,
                 ),
               ],
             ),
           ),
           Text(
-            log['time'],
+            timeStr,
             style: AppTextStyles.body1,
           ),
         ],
@@ -278,13 +305,15 @@ class _FeedingLogPageState extends State<FeedingLogPage> {
 
   void _showAddFeedingDialog(BuildContext context) {
     String feedingType = 'Breastfeed';
-    final TextEditingController durationController = TextEditingController();
+    String? selectedSide;
+    final durationController = TextEditingController();
+    TimeOfDay selectedTime = TimeOfDay.now();
 
     showDialog(
       context: context,
       builder: (BuildContext dialogContext) {
         return StatefulBuilder(
-          builder: (context, setState) {
+          builder: (context, setDialogState) {
             return AlertDialog(
               backgroundColor: AppColors.white,
               shape: RoundedRectangleBorder(
@@ -296,88 +325,130 @@ class _FeedingLogPageState extends State<FeedingLogPage> {
                   color: AppColors.textPrimary,
                 ),
               ),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  DropdownButtonFormField<String>(
-                    value: feedingType,
-                    decoration: InputDecoration(
-                      labelText: 'Feeding Type',
-                      labelStyle: AppTextStyles.body1.copyWith(
-                        color: AppColors.textSecondary,
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    DropdownButtonFormField<String>(
+                      value: feedingType,
+                      decoration: InputDecoration(
+                        labelText: 'Feeding Type',
+                        labelStyle: AppTextStyles.body1.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: AppColors.purpleGrey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: AppColors.main500),
+                        ),
                       ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: AppColors.purpleGrey),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: AppColors.main500),
+                      items: ['Breastfeed', 'Bottle'].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value, style: AppTextStyles.body1),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setDialogState(() {
+                          feedingType = value!;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: durationController,
+                      keyboardType: TextInputType.number,
+                      style: AppTextStyles.body1,
+                      decoration: InputDecoration(
+                        labelText: feedingType == 'Breastfeed'
+                            ? 'Duration (minutes)'
+                            : 'Amount (ml)',
+                        labelStyle: AppTextStyles.body1.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: AppColors.purpleGrey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: AppColors.main500),
+                        ),
                       ),
                     ),
-                    items: ['Breastfeed', 'Bottle'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value, style: AppTextStyles.body1),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        feedingType = value!;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: durationController,
-                    keyboardType: TextInputType.number,
-                    style: AppTextStyles.body1,
-                    decoration: InputDecoration(
-                      labelText: feedingType == 'Breastfeed'
-                          ? 'Duration (minutes)'
-                          : 'Amount (ml)',
-                      labelStyle: AppTextStyles.body1.copyWith(
-                        color: AppColors.textSecondary,
+                    if (feedingType == 'Breastfeed') ...[
+                      const SizedBox(height: 16),
+                      DropdownButtonFormField<String>(
+                        value: selectedSide,
+                        decoration: InputDecoration(
+                          labelText: 'Side (optional)',
+                          labelStyle: AppTextStyles.body1.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(color: AppColors.purpleGrey),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(color: AppColors.main500),
+                          ),
+                        ),
+                        items: [null, 'Left', 'Right', 'Both'].map((String? value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value ?? 'Not specified', style: AppTextStyles.body1),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setDialogState(() {
+                            selectedSide = value;
+                          });
+                        },
                       ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: AppColors.purpleGrey),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: AppColors.main500),
+                    ],
+                    const SizedBox(height: 16),
+                    GestureDetector(
+                      onTap: () async {
+                        final picked = await showTimePicker(
+                          context: context,
+                          initialTime: selectedTime,
+                        );
+                        if (picked != null) {
+                          setDialogState(() {
+                            selectedTime = picked;
+                          });
+                        }
+                      },
+                      child: AbsorbPointer(
+                        child: TextField(
+                          style: AppTextStyles.body1,
+                          decoration: InputDecoration(
+                            labelText: 'Time',
+                            labelStyle: AppTextStyles.body1.copyWith(
+                              color: AppColors.textSecondary,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: AppColors.purpleGrey),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: AppColors.main500),
+                            ),
+                            suffixIcon: Icon(Icons.access_time, color: AppColors.main500),
+                          ),
+                          controller: TextEditingController(
+                            text: selectedTime.format(context),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    readOnly: true,
-                    style: AppTextStyles.body1,
-                    decoration: InputDecoration(
-                      labelText: 'Time',
-                      labelStyle: AppTextStyles.body1.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: AppColors.purpleGrey),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: AppColors.main500),
-                      ),
-                      suffixIcon: Icon(Icons.access_time, color: AppColors.main500),
-                      hintText: TimeOfDay.now().format(context),
-                      hintStyle: AppTextStyles.body1.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                    onTap: () {
-                      // TODO: Show time picker
-                      debugPrint('Show time picker');
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
               actions: [
                 TextButton(
@@ -391,8 +462,21 @@ class _FeedingLogPageState extends State<FeedingLogPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // TODO: Save to database
-                    debugPrint('Saving feeding: $feedingType - ${durationController.text}');
+                    final now = DateTime.now();
+                    final loggedAt = DateTime(
+                      now.year, now.month, now.day,
+                      selectedTime.hour, selectedTime.minute,
+                    );
+                    
+                    final value = int.tryParse(durationController.text) ?? 0;
+                    
+                    context.read<BabyCubit>().addFeedingLog(
+                      feedingType: feedingType,
+                      durationMinutes: feedingType == 'Breastfeed' ? value : null,
+                      amountMl: feedingType == 'Bottle' ? value.toDouble() : null,
+                      breastSide: selectedSide,
+                      loggedAt: loggedAt,
+                    );
                     Navigator.pop(dialogContext);
                   },
                   style: ElevatedButton.styleFrom(

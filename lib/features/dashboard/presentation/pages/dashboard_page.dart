@@ -1,6 +1,11 @@
 // lib/features/dashboard/presentation/pages/dashboard_page.dart
-import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gestanea/core/database/db_helper.dart';
+import 'package:gestanea/features/baby/data/datasources/baby_local_data_source.dart';
+import 'package:gestanea/features/baby/logic/cubit/baby_cubit.dart';
+import 'package:gestanea/features/baby/logic/repositories/baby_repository.dart';
+import 'package:gestanea/features/dashboard/logic/cubit/dashboard_cubit.dart';
 import 'package:gestanea/features/dashboard/presentation/pages/home_screen.dart';
 import 'package:gestanea/features/dashboard/presentation/widgets/navbar.dart';
 import 'postpartum_dashboard_page.dart';
@@ -42,75 +47,47 @@ class _DashboardPageState extends State<DashboardPage> {
       const MarketplacePage(),
     ];
     final double h = MediaQuery.of(context).size.height *0.09;
-    return Scaffold(
-      body: Stack(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(bottom: h),
-            child: IndexedStack(index: _currentIndex, children: pages),
-          ),
-
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: FancyNavBar(
-              currentIndex: _currentIndex,
-              onTap: (i) => setState(() => _currentIndex = i),
-              items: [
-                NavBarItem(icon: "assets/icons/home.svg", label: "Home"),
-                NavBarItem(icon: "assets/icons/track.svg", label: "Track"),
-                NavBarItem(icon: "assets/icons/health.svg", label: "Health"),
-                NavBarItem(icon: "assets/icons/plan.svg", label: "Plan"),
-                NavBarItem(icon: "assets/icons/market.svg", label: "Market"),
-              ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<DashboardCubit>(
+          create: (context) => DashboardCubit(),
+        ),
+        BlocProvider<BabyCubit>(
+          create: (context) => BabyCubit(
+            repository: BabyRepository(
+              BabyLocalDataSource(DatabaseHelper.instance),
             ),
+            userId: 'current_user', // TODO: Get actual user ID from auth
           ),
-        ],
+        ),
+      ],
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(bottom: h),
+              child: IndexedStack(index: _currentIndex, children: pages),
+            ),
+
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: FancyNavBar(
+                currentIndex: _currentIndex,
+                onTap: (i) => setState(() => _currentIndex = i),
+                items: [
+                  NavBarItem(icon: "assets/icons/home.svg", label: "Home"),
+                  NavBarItem(icon: "assets/icons/track.svg", label: "Track"),
+                  NavBarItem(icon: "assets/icons/health.svg", label: "Health"),
+                  NavBarItem(icon: "assets/icons/plan.svg", label: "Plan"),
+                  NavBarItem(icon: "assets/icons/market.svg", label: "Market"),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
-    ;
   }
 }
-
-  // void _showModeDialog() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       title: const Text('Change Mode'),
-  //       content: Column(
-  //         mainAxisSize: MainAxisSize.min,
-  //         children: [
-  //           ListTile(
-  //             title: const Text('Pregnancy Mode'),
-  //             onTap: () {
-  //               setState(() => isPregnant = true);
-  //               Navigator.pop(context);
-  //             },
-  //           ),
-  //           ListTile(
-  //             title: const Text('Postpartum Mode (Girl)'),
-  //             onTap: () {
-  //               setState(() {
-  //                 isPregnant = false;
-  //                 babyGender = 'girl';
-  //               });
-  //               Navigator.pop(context);
-  //             },
-  //           ),
-  //           ListTile(
-  //             title: const Text('Postpartum Mode (Boy)'),
-  //             onTap: () {
-  //               setState(() {
-  //                 isPregnant = false;
-  //                 babyGender = 'boy';
-  //               });
-  //               Navigator.pop(context);
-  //             },
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
