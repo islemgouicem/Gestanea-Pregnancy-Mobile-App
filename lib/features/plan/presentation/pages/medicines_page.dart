@@ -5,7 +5,6 @@ import 'package:gestanea/l10n/app_localizations.dart';
 import 'package:gestanea/features/plan/presentation/widgets/medicine_card.dart';
 import 'package:gestanea/core/database/models/medicine_model.dart';
 import 'package:gestanea/core/database/models/medicine_logged_model.dart';
-import 'package:gestanea/features/plan/data/repositories/plan_local_data_source.dart';
 import 'package:gestanea/features/plan/data/mock_data/plan_mock_data.dart';
 import 'package:uuid/uuid.dart';
 
@@ -20,7 +19,7 @@ class _MedicinesPageState extends State<MedicinesPage> {
   String selectedFilter = 'All'; // All, Taken, Missed
   bool _showFilters = true;
   final ScrollController _scrollController = ScrollController();
-  final PlanLocalDataSource _dataSource = PlanLocalDataSource();
+
   List<MedicineModel> _medicines = [];
   List<MedicineLoggedModel> _medicineLogs = [];
   bool _isLoading = true;

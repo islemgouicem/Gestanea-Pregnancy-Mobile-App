@@ -1,7 +1,6 @@
 // Today's Medicine Progress Card
 import 'package:flutter/material.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
-import 'package:gestanea/core/widgets/header.dart';
 import 'package:gestanea/l10n/app_localizations.dart';
 import '../widgets/medicine_progress_card.dart';
 import '../widgets/upcoming_appointments_card.dart';
@@ -10,6 +9,8 @@ import 'package:gestanea/features/plan/data/mock_data/plan_mock_data.dart';
 import 'package:gestanea/core/database/models/medicine_model.dart';
 import 'package:gestanea/core/database/models/medicine_logged_model.dart';
 import 'package:gestanea/core/database/models/appointment_model.dart';
+import 'add_medicine_flow.dart';
+import 'add_appointment_flow.dart';
 
 class MainContent extends StatefulWidget {
   final double screenWidth;
@@ -95,7 +96,12 @@ class _MainContentState extends State<MainContent> {
             screenHeight: widget.screenHeight,
             text: localization.addNewMedicine,
             onPressed: () {
-              // Add medicine action
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddMedicineFlow(),
+                ),
+              );
             },
             icon: const Icon(Icons.add, color: AppColors.white, size: 24),
             color: AppColors.main500,
@@ -120,7 +126,12 @@ class _MainContentState extends State<MainContent> {
             screenHeight: widget.screenHeight,
             text: localization.addNewAppointment,
             onPressed: () {
-              // Add appointment action
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddAppointmentFlow(),
+                ),
+              );
             },
             icon: const Icon(Icons.add, color: AppColors.white, size: 24),
             color: AppColors.main500,
