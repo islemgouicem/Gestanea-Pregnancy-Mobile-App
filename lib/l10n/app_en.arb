@@ -1,9 +1,28 @@
-
-
-
 {
-    "plan": "Plan",
-    "sundayShort": "S",
+  "security": "Security",
+  "i_gave_birth": "I gave birth",
+  "no_longer_pregnant": "No longer pregnant",
+  "help_support": "Help & Support",
+  "contact_us": "Contact us",
+  "privacy_policy": "Privacy policy",
+  "about_app": "About App",
+  "change": "Change",
+  "save": "Save",
+  "save_changes": "Save changes",
+  "logout_confirmation": "Are you sure you want to log out?",
+  "cancel": "Cancel",
+  "unknown": "Unknown",
+  "profile": "Profile",
+  "profile_updated": "Profile updated",
+  "edit_profile": "Edit Profile",
+  "change_profile_photo": "Change profile photo",
+  "full_name": "Full name",
+  "enable_notifications": "Enable notifications",
+  "phone":"Phone",
+  "country":"Country",
+
+  "plan": "Plan",
+  "sundayShort": "S",
   "mondayShort": "M",
   "tuesdayShort": "T",
   "wednesdayShort": "W",

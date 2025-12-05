@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
+import 'package:gestanea/features/auth/logic/auth_bloc.dart';
+import 'package:gestanea/features/auth/logic/auth_state.dart';
 import 'package:gestanea/features/dashboard/presentation/pages/notificationsPage.dart';
 import 'package:gestanea/features/dashboard/presentation/pages/tips_page.dart';
 import 'package:gestanea/features/dashboard/presentation/widgets/cards.dart';
@@ -55,13 +57,23 @@ class HomeScreen extends StatelessWidget {
                             child: Image.asset("assets/images/profile.png"),
                           ),
                           SizedBox(width: screenWidth * 0.03),
-                          Text(
-                            'Hello Sara!',
-                            style: TextStyle(
-                              fontSize: screenWidth * 0.045,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black87,
-                            ),
+                          BlocBuilder<AuthBloc, AuthState>(
+                            builder: (context, state) {
+                              String greeting = 'Hello!';
+                              String nameText = '';
+                              if (state is AuthAuthenticated) {
+                                nameText = state.user.name;
+                                greeting = 'Hello';
+                              }
+                              return Text(
+                                '$greeting ${nameText.isNotEmpty ? nameText : ''}',
+                                style: TextStyle(
+                                  fontSize: screenWidth * 0.05,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black87,
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),

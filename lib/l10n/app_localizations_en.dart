@@ -9,6 +9,69 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get security => 'Security';
+
+  @override
+  String get i_gave_birth => 'I gave birth';
+
+  @override
+  String get no_longer_pregnant => 'No longer pregnant';
+
+  @override
+  String get help_support => 'Help & Support';
+
+  @override
+  String get contact_us => 'Contact us';
+
+  @override
+  String get privacy_policy => 'Privacy policy';
+
+  @override
+  String get about_app => 'About App';
+
+  @override
+  String get change => 'Change';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get save_changes => 'Save changes';
+
+  @override
+  String get logout_confirmation => 'Are you sure you want to log out?';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get profile_updated => 'Profile updated';
+
+  @override
+  String get edit_profile => 'Edit Profile';
+
+  @override
+  String get change_profile_photo => 'Change profile photo';
+
+  @override
+  String get full_name => 'Full name';
+
+  @override
+  String get enable_notifications => 'Enable notifications';
+
+  @override
+  String get phone => 'Phone';
+
+  @override
+  String get country => 'Country';
+
+  @override
   String get plan => 'Plan';
 
   @override
@@ -360,9 +423,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String atLeastReviews(int count) {
     return 'At least $count reviews';
   }
-
-  @override
-  String get cancel => 'Cancel';
 
   @override
   String get applyFilters => 'Apply Filters';
