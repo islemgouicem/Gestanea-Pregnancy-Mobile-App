@@ -7,7 +7,6 @@ import 'package:gestanea/features/baby/logic/cubit/baby_cubit.dart';
 import 'package:gestanea/features/baby/logic/cubit/baby_cubit_factory.dart';
 import 'package:gestanea/features/dashboard/logic/cubit/dashboard_cubit.dart';
 import 'package:gestanea/features/dashboard/logic/cubit/dashboard_state.dart';
-import 'package:gestanea/features/dashboard/domain/entities/postpartum_dashboard.dart';
 import 'package:gestanea/features/dashboard/presentation/pages/home_screen.dart';
 import 'package:gestanea/features/dashboard/presentation/widgets/navbar.dart';
 import 'postpartum_dashboard_page.dart';
@@ -113,17 +112,10 @@ class _DashboardPageState extends State<DashboardPage> with WidgetsBindingObserv
         builder: (context, dashboardState) {
           // Determine mode based on dashboard state
           final bool isPregnant = dashboardState is PregnancyDashboardLoaded;
-          final bool isPostpartum = dashboardState is PostpartumDashboardLoaded;
           final bool isError = dashboardState is DashboardError;
           final bool isLoading = dashboardState is DashboardLoading;
 
-          // Get postpartum dashboard data if available
-          PostpartumDashboard? postpartumDashboard;
           String currentBabyGender = babyGender;
-          if (isPostpartum) {
-            postpartumDashboard = (dashboardState).dashboard;
-            // TODO: Extract baby gender from dashboard if available
-          }
 
           // Show loading indicator only during actual loading
           // For initial state or error, show pregnancy dashboard as default
@@ -146,7 +138,6 @@ class _DashboardPageState extends State<DashboardPage> with WidgetsBindingObserv
                 ? HomeScreen(onNavigate: _setPageIndex)
                 : PostpartumDashboardPage(
                     babyGender: currentBabyGender,
-                    dashboard: postpartumDashboard,
                   ),
             showPregnancyMode
                 ? const WeekTrackerPage()
