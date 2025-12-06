@@ -9,6 +9,8 @@ import 'package:gestanea/features/baby/logic/repositories/baby_repository.dart';
 import 'package:gestanea/features/dashboard/domain/entities/postpartum_dashboard.dart';
 import 'package:gestanea/features/doctors/presentation/pages/doctors_page.dart' show DoctorsScreen;
 import 'package:gestanea/features/dashboard/presentation/pages/tips_page.dart' as tips;
+import 'package:gestanea/features/dashboard/presentation/pages/notificationsPage.dart';
+import 'package:gestanea/features/dashboard/presentation/pages/baby_settings_page.dart';
 import 'package:intl/intl.dart';
 import 'postpartum_track_page.dart';
 
@@ -28,6 +30,8 @@ class PostpartumDashboardPage extends StatefulWidget {
 }
 
 class _PostpartumDashboardPageState extends State<PostpartumDashboardPage> {
+  int _selectedNavIndex = 0;
+  
   Color get primaryColor =>
       widget.babyGender == 'girl' ? const Color(0xFFFF9EC9) : const Color(0xFF87CEEB);
 
@@ -114,6 +118,51 @@ class _PostpartumDashboardPageState extends State<PostpartumDashboardPage> {
     );
   }
 
+  void _navigateToBabySettings() {
+    final userId = _getUserId();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => BlocProvider(
+          create: (_) => BabyCubit(
+            repository: BabyRepository(
+              BabyLocalDataSource(DatabaseHelper.instance),
+            ),
+            userId: userId,
+          )..loadBabyProfile(),
+          child: BabySettingsPage(
+            babyGender: widget.babyGender,
+            babyId: userId,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _handleNavigation(int index) {
+    switch (index) {
+      case 0:
+        // Stay on home
+        setState(() => _selectedNavIndex = 0);
+        break;
+      case 1:
+        _navigateToTrackPage();
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const DoctorsScreen()),
+        );
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const tips.Tips()),
+        );
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final dashboard = widget.dashboard;
@@ -136,11 +185,15 @@ class _PostpartumDashboardPageState extends State<PostpartumDashboardPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Hello $userName!',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                  GestureDetector(
+                    onTap: _navigateToBabySettings,
+                    child: Text(
+                      'Hello $userName!',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: primaryColor,
+                      ),
                     ),
                   ),
                   Container(
@@ -155,8 +208,18 @@ class _PostpartumDashboardPageState extends State<PostpartumDashboardPage> {
                       ],
                     ),
                     padding: const EdgeInsets.all(8),
-                    child: Icon(Icons.notifications_none,
-                        color: primaryColor, size: 22),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const NotificationsPage(),
+                          ),
+                        );
+                      },
+                      child: Icon(Icons.notifications_none,
+                          color: primaryColor, size: 22),
+                    ),
                   ),
                 ],
               ),
@@ -366,6 +429,37 @@ class _PostpartumDashboardPageState extends State<PostpartumDashboardPage> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedNavIndex,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        selectedItemColor: primaryColor,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          setState(() {
+            _selectedNavIndex = index;
+          });
+          _handleNavigation(index);
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.track_changes),
+            label: 'Track',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.health_and_safety),
+            label: 'Doctors',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu_book),
+            label: 'Tips',
+          ),
+        ],
       ),
     );
   }
