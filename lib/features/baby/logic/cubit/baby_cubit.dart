@@ -144,6 +144,7 @@ class BabyCubit extends Cubit<BabyState> {
   Future<void> addGrowthRecord({
     required DateTime recordedDate,
     double? weight,
+    double? height,
     int? weightPercentile,
     int? heightPercentile,
     String? growthStatus,
@@ -160,6 +161,7 @@ class BabyCubit extends Cubit<BabyState> {
         babyId: _currentBabyId!,
         recordedDate: recordedDate,
         weight: weight,
+        height: height,
         weightPercentile: weightPercentile,
         heightPercentile: heightPercentile,
         growthStatus: growthStatus,

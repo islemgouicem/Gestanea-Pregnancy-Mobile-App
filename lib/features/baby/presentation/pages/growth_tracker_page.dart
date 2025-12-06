@@ -7,6 +7,7 @@ import 'package:gestanea/core/database/models/baby_growth_model.dart';
 import 'package:gestanea/features/baby/logic/cubit/baby_cubit.dart';
 import 'package:gestanea/features/baby/logic/cubit/baby_state.dart';
 import 'package:intl/intl.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class GrowthTrackerPage extends StatefulWidget {
   final String? babyId;
@@ -26,7 +27,6 @@ class _GrowthTrackerPageState extends State<GrowthTrackerPage> {
   @override
   void initState() {
     super.initState();
-    // Check if baby profile is already loaded
     final cubit = context.read<BabyCubit>();
     if (cubit.currentBabyId != null) {
       cubit.loadGrowthRecords();
@@ -40,22 +40,39 @@ class _GrowthTrackerPageState extends State<GrowthTrackerPage> {
     super.dispose();
   }
 
+  List<FlSpot> _getChartSpots(List<BabyGrowthModel> records, bool isWeight) {
+    final sortedRecords = records
+        .where((r) => isWeight ? r.weight != null : r.height != null)
+        .toList()
+      ..sort((a, b) => a.recordedDate.compareTo(b.recordedDate));
+
+    return List.generate(
+      sortedRecords.length,
+      (index) => FlSpot(
+        index.toDouble(),
+        (isWeight ? sortedRecords[index].weight : sortedRecords[index].height)?.toDouble() ?? 0,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: AppColors.bg_1,
       body: SafeArea(
         child: BlocConsumer<BabyCubit, BabyState>(
           listener: (context, state) {
-            // When baby profile is loaded, load growth records
             if (state is BabyLoaded && !_hasLoadedData) {
               _hasLoadedData = true;
               context.read<BabyCubit>().loadGrowthRecords();
             }
+            if (state is BabyOperationSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.message)),
+              );
+            }
           },
           builder: (context, state) {
-            // Handle loading and error states
             if (state is BabyLoading || state is GrowthLoading) {
               return const Center(child: CircularProgressIndicator());
             }
@@ -87,21 +104,26 @@ class _GrowthTrackerPageState extends State<GrowthTrackerPage> {
               growthRecords = state.growthRecords;
             }
             
-            // Filter records based on current view (weight only - model has no height)
-            final filteredRecords = growthRecords
+            final weightRecords = growthRecords
                 .where((r) => r.weight != null)
                 .toList()
               ..sort((a, b) => b.recordedDate.compareTo(a.recordedDate));
             
-            // Get latest record
+            final heightRecords = growthRecords
+                .where((r) => r.height != null)
+                .toList()
+              ..sort((a, b) => b.recordedDate.compareTo(a.recordedDate));
+            
+            final filteredRecords = showWeight ? weightRecords : heightRecords;
+            final chartSpots = _getChartSpots(growthRecords, showWeight);
+            
             final latestValue = filteredRecords.isNotEmpty
-                ? filteredRecords.first.weight
+                ? (showWeight ? filteredRecords.first.weight : filteredRecords.first.height)
                 : null;
             final latestDate = filteredRecords.isNotEmpty ? filteredRecords.first.recordedDate : null;
 
             return Column(
               children: [
-                // Header
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   child: Row(
@@ -130,12 +152,74 @@ class _GrowthTrackerPageState extends State<GrowthTrackerPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Current Stats
+                          Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: AppColors.shadow1,
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () => setState(() => showWeight = true),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 12),
+                                      decoration: BoxDecoration(
+                                        color: showWeight ? AppColors.main500 : Colors.transparent,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(12),
+                                          bottomLeft: Radius.circular(12),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'Weight',
+                                          style: AppTextStyles.subtitle1.copyWith(
+                                            color: showWeight ? AppColors.white : AppColors.textPrimary,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () => setState(() => showWeight = false),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 12),
+                                      decoration: BoxDecoration(
+                                        color: !showWeight ? AppColors.main500 : Colors.transparent,
+                                        borderRadius: const BorderRadius.only(
+                                          topRight: Radius.circular(12),
+                                          bottomRight: Radius.circular(12),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'Height',
+                                          style: AppTextStyles.subtitle1.copyWith(
+                                            color: !showWeight ? AppColors.white : AppColors.textPrimary,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+
                           Container(
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                colors: [AppColors.pink500, AppColors.pink300],
+                              gradient: LinearGradient(
+                                colors: showWeight 
+                                    ? [AppColors.pink500, AppColors.pink300]
+                                    : [AppColors.blue500, AppColors.blue300],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
@@ -145,13 +229,13 @@ class _GrowthTrackerPageState extends State<GrowthTrackerPage> {
                             child: Column(
                               children: [
                                 Text(
-                                  'Current Weight',
+                                  showWeight ? 'Current Weight' : 'Current Height',
                                   style: AppTextStyles.body1.copyWith(color: AppColors.white.withValues(alpha: 0.7)),
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
                                   latestValue != null 
-                                      ? '$latestValue kg'
+                                      ? '${latestValue.toStringAsFixed(1)} ${showWeight ? 'kg' : 'cm'}'
                                       : 'No data',
                                   style: AppTextStyles.numberHighlight.copyWith(fontSize: 36),
                                 ),
@@ -167,40 +251,148 @@ class _GrowthTrackerPageState extends State<GrowthTrackerPage> {
                           ),
                           const SizedBox(height: 24),
 
-                          // Chart Placeholder
-                          Container(
-                            height: 250,
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(16),
-                              boxShadow: AppColors.shadow1,
-                            ),
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Weight Progress Chart',
-                                  style: AppTextStyles.subtitle1.copyWith(
-                                    color: AppColors.textPrimary,
-                                    fontWeight: FontWeight.w600,
+                          if (chartSpots.isNotEmpty)
+                            Container(
+                              height: 280,
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: AppColors.shadow1,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    showWeight ? 'Weight Progress' : 'Height Progress',
+                                    style: AppTextStyles.subtitle1.copyWith(
+                                      color: AppColors.textPrimary,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 20),
-                                Expanded(
-                                  child: Center(
-                                    child: Icon(Icons.show_chart, size: 80, color: AppColors.textSecondary),
+                                  const SizedBox(height: 16),
+                                  Expanded(
+                                    child: LineChart(
+                                      LineChartData(
+                                        gridData: FlGridData(
+                                          show: true,
+                                          drawVerticalLine: true,
+                                          horizontalInterval: null,
+                                          verticalInterval: null,
+                                          getDrawingHorizontalLine: (value) {
+                                            return FlLine(
+                                              color: Colors.grey.withValues(alpha: 0.1),
+                                              strokeWidth: 1,
+                                            );
+                                          },
+                                          getDrawingVerticalLine: (value) {
+                                            return FlLine(
+                                              color: Colors.grey.withValues(alpha: 0.1),
+                                              strokeWidth: 1,
+                                            );
+                                          },
+                                        ),
+                                        titlesData: FlTitlesData(
+                                          show: true,
+                                          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                                          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                                          bottomTitles: AxisTitles(
+                                            sideTitles: SideTitles(
+                                              showTitles: true,
+                                              reservedSize: 30,
+                                              interval: chartSpots.length > 5 ? (chartSpots.length / 5).ceilToDouble() : 1,
+                                              getTitlesWidget: (value, meta) {
+                                                if (value.toInt() >= chartSpots.length) return const SizedBox();
+                                                return Text(
+                                                  '${value.toInt() + 1}',
+                                                  style: AppTextStyles.smallLabel,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          leftTitles: AxisTitles(
+                                            sideTitles: SideTitles(
+                                              showTitles: true,
+                                              interval: null,
+                                              getTitlesWidget: (value, meta) {
+                                                return Text(
+                                                  '${value.toInt()}',
+                                                  style: AppTextStyles.smallLabel,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        borderData: FlBorderData(show: true),
+                                        lineBarsData: [
+                                          LineChartBarData(
+                                            spots: chartSpots,
+                                            isCurved: true,
+                                            color: showWeight ? AppColors.pink500 : AppColors.blue500,
+                                            barWidth: 3,
+                                            isStrokeCapRound: true,
+                                            dotData: FlDotData(
+                                              show: true,
+                                              getDotPainter: (spot, percent, barData, index) {
+                                                return FlDotCirclePainter(
+                                                  radius: 4,
+                                                  color: showWeight ? AppColors.pink500 : AppColors.blue500,
+                                                  strokeWidth: 2,
+                                                  strokeColor: AppColors.white,
+                                                );
+                                              },
+                                            ),
+                                            belowBarData: BarAreaData(
+                                              show: true,
+                                              color: (showWeight ? AppColors.pink500 : AppColors.blue500).withValues(alpha: 0.1),
+                                            ),
+                                          ),
+                                        ],
+                                        minY: null,
+                                        maxY: null,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  'Chart visualization would go here',
-                                  style: AppTextStyles.smallLabel,
-                                ),
-                              ],
+                                ],
+                              ),
+                            )
+                          else
+                            Container(
+                              height: 250,
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: AppColors.shadow1,
+                              ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'No Data Yet',
+                                    style: AppTextStyles.subtitle1.copyWith(
+                                      color: AppColors.textPrimary,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Expanded(
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.show_chart,
+                                        size: 80,
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    'Add records to see chart visualization',
+                                    style: AppTextStyles.smallLabel,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
                           const SizedBox(height: 24),
 
-                          // Recent Logs
                           Text(
                             'Recent Logs',
                             style: AppTextStyles.headline2,
@@ -211,28 +403,28 @@ class _GrowthTrackerPageState extends State<GrowthTrackerPage> {
                               child: Padding(
                                 padding: const EdgeInsets.all(20),
                                 child: Text(
-                                  'No weight records yet',
+                                  showWeight ? 'No weight records yet' : 'No height records yet',
                                   style: AppTextStyles.body1.copyWith(color: AppColors.textSecondary),
                                 ),
                               ),
                             )
                           else
-                            ...filteredRecords.take(5).map((record) => _buildLogItem(
-                              '${record.weight} kg',
+                            ...filteredRecords.take(10).map((record) => _buildLogItem(
+                              '${(showWeight ? record.weight : record.height)?.toStringAsFixed(1)} ${showWeight ? 'kg' : 'cm'}',
                               DateFormat('MMM d, yyyy').format(record.recordedDate),
                               record == filteredRecords.first,
+                              showWeight,
                             )),
                           const SizedBox(height: 24),
 
-                          // Add Log Button
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton.icon(
                               onPressed: () => _showAddLogDialog(context),
                               icon: const Icon(Icons.add),
-                              label: const Text('Add Weight Log'),
+                              label: Text(showWeight ? 'Add Weight Log' : 'Add Height Log'),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.main500,
+                                backgroundColor: showWeight ? AppColors.pink500 : AppColors.blue500,
                                 foregroundColor: AppColors.white,
                                 padding: const EdgeInsets.symmetric(vertical: 16),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -252,15 +444,17 @@ class _GrowthTrackerPageState extends State<GrowthTrackerPage> {
     );
   }
 
-  Widget _buildLogItem(String value, String date, bool isLatest) {
+  Widget _buildLogItem(String value, String date, bool isLatest, bool isWeight) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isLatest ? AppColors.pink300.withValues(alpha: 0.3) : AppColors.white,
+        color: isLatest 
+            ? (isWeight ? AppColors.pink300 : AppColors.blue300).withValues(alpha: 0.3)
+            : AppColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isLatest ? AppColors.pink500 : Colors.transparent,
+          color: isLatest ? (isWeight ? AppColors.pink500 : AppColors.blue500) : Colors.transparent,
           width: 2,
         ),
         boxShadow: AppColors.shadow1,
@@ -273,7 +467,9 @@ class _GrowthTrackerPageState extends State<GrowthTrackerPage> {
               Icon(
                 Icons.circle,
                 size: 8,
-                color: isLatest ? AppColors.pink500 : AppColors.textSecondary,
+                color: isLatest 
+                    ? (isWeight ? AppColors.pink500 : AppColors.blue500)
+                    : AppColors.textSecondary,
               ),
               const SizedBox(width: 12),
               Text(
@@ -304,7 +500,7 @@ class _GrowthTrackerPageState extends State<GrowthTrackerPage> {
               backgroundColor: AppColors.bg_1,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
               title: Text(
-                'Add Weight Log',
+                showWeight ? 'Add Weight Log' : 'Add Height Log',
                 style: AppTextStyles.headline2,
               ),
               content: Column(
@@ -312,10 +508,11 @@ class _GrowthTrackerPageState extends State<GrowthTrackerPage> {
                 children: [
                   TextField(
                     controller: _valueController,
-                    keyboardType: TextInputType.number,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
-                      labelText: 'Weight (kg)',
+                      labelText: showWeight ? 'Weight (kg)' : 'Height (cm)',
                       labelStyle: AppTextStyles.body1,
+                      hintText: showWeight ? 'e.g., 5.5' : 'e.g., 65',
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -362,15 +559,22 @@ class _GrowthTrackerPageState extends State<GrowthTrackerPage> {
                   onPressed: () {
                     final value = double.tryParse(_valueController.text);
                     if (value != null) {
-                      context.read<BabyCubit>().addGrowthRecord(
-                        recordedDate: _selectedDate,
-                        weight: value,
-                      );
+                      if (showWeight) {
+                        context.read<BabyCubit>().addGrowthRecord(
+                          recordedDate: _selectedDate,
+                          weight: value,
+                        );
+                      } else {
+                        context.read<BabyCubit>().addGrowthRecord(
+                          recordedDate: _selectedDate,
+                          height: value,
+                        );
+                      }
                       Navigator.pop(dialogContext);
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.main500,
+                    backgroundColor: showWeight ? AppColors.pink500 : AppColors.blue500,
                     foregroundColor: AppColors.white,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
