@@ -1,8 +1,6 @@
 // lib/features/dashboard/presentation/pages/dashboard_page.dart
-import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/features/dashboard/presentation/pages/home_screen.dart';
 import 'package:gestanea/features/dashboard/presentation/widgets/navbar.dart';
 import 'postpartum_dashboard_page.dart';
@@ -48,7 +46,8 @@ class _DashboardPageState extends State<DashboardPage> {
         child: const MarketplacePage(),
       ),
     ];
-    final double h = MediaQuery.of(context).size.height * 0.09;
+    final height = MediaQuery.of(context).size.height;
+    final double h = height * 0.09;
     return Scaffold(
       body: Stack(
         children: [
@@ -62,6 +61,7 @@ class _DashboardPageState extends State<DashboardPage> {
             right: 0,
             bottom: 0,
             child: FancyNavBar(
+              barHeight: h,
               currentIndex: _currentIndex,
               onTap: (i) => setState(() => _currentIndex = i),
               items: [

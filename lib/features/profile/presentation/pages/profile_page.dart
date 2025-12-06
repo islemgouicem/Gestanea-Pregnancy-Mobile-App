@@ -60,9 +60,6 @@ class HeaderCurveClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
 
-const Color kLightPurple = Color(0xFFEFE8F5);
-const Color kDangerRed = Color(0xFFD62A2A);
-const Color kInactiveText = Color(0xFFAC5DCC);
 
 class ProfileSettingsScreen extends StatelessWidget {
   const ProfileSettingsScreen({super.key});
@@ -73,16 +70,6 @@ class ProfileSettingsScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.bg_1,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.main500, size: 24),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        elevation: 0,
-      ),
       body: Column(
         children: [
           // Header Section (Curved Background and Profile Info)
@@ -184,32 +171,42 @@ class ProfileSettingsScreen extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     // Determines the appropriate header height based on screen size for responsiveness
     final double screenHeight = MediaQuery.of(context).size.height;
-    final double headerHeight = screenHeight * 0.3;
+    final double headerHeight = screenHeight * 0.38;
 
     return ClipPath(
       clipper: HeaderCurveClipper(),
       child: Container(
         height: headerHeight,
         width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xFFF8D9F8), Color(0xFFF1C0F2)],
+          ),
+        ),
         child: SafeArea(
           bottom: false,
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.bg_1,
-                  const Color(0xFFBAA0D2),
-                  const Color(0xFFB599CE),
-                ],
-                stops: [0.0, 0.5529, 1.0],
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: AppColors.main500,
+                        size: 24,
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [_ProfileHeaderContent()],
-            ),
+
+              Center(child: _ProfileHeaderContent()),
+            ],
           ),
         ),
       ),
@@ -476,7 +473,7 @@ class _LogoutButton extends StatelessWidget {
       listener: (context, state) {
         if (state is AuthUnauthenticated) {
           // route to login page
-          Navigator.pushReplacementNamed(context, AppRoutes.auth);
+          Navigator.pushReplacementNamed(context, AppRoutes.login);
         } else if (state is AuthFailure) {
           final msg = state.message.replaceAll('Exception: ', '');
           ScaffoldMessenger.of(
