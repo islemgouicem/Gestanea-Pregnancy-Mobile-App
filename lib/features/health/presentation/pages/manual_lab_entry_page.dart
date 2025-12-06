@@ -97,7 +97,7 @@ class _ManualLabEntryPageState extends State<ManualLabEntryPage> {
             children: [
               Text(
                 'Enter Lab Result Details',
-                style: AppTextStyles.headline2. copyWith(fontSize: 18),
+                style: AppTextStyles.headline2.copyWith(fontSize: 18, color: Colors.black),
               ),
               const SizedBox(height: 20),
               
@@ -144,7 +144,7 @@ class _ManualLabEntryPageState extends State<ManualLabEntryPage> {
               // Normal Range
               Text(
                 'Normal Range',
-                style: AppTextStyles.subtitle1.copyWith(fontSize: 14),
+                style: AppTextStyles.subtitle1.copyWith(fontSize: 14, color: Colors.black87),
               ),
               const SizedBox(height: 8),
               Row(
@@ -173,7 +173,7 @@ class _ManualLabEntryPageState extends State<ManualLabEntryPage> {
               // Date
               Text(
                 'Test Date',
-                style: AppTextStyles.subtitle1.copyWith(fontSize: 14),
+                style: AppTextStyles.subtitle1.copyWith(fontSize: 14, color: Colors.black87),
               ),
               const SizedBox(height: 8),
               GestureDetector(
@@ -237,7 +237,7 @@ class _ManualLabEntryPageState extends State<ManualLabEntryPage> {
       children: [
         Text(
           label,
-          style: AppTextStyles.subtitle1.copyWith(fontSize: 14),
+          style: AppTextStyles.subtitle1.copyWith(fontSize: 14, color: Colors.black),
         ),
         const SizedBox(height: 8),
         TextFormField(
