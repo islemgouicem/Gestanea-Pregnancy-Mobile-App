@@ -10,6 +10,7 @@ import 'main_content.dart';
 import 'medicines_page.dart';
 import 'appointments_page.dart';
 import '../../logic/plan_bloc.dart';
+import '../../logic/medicines_bloc.dart';
 import '../../data/repositories/medicine_repository.dart';
 import '../../data/repositories/appointment_repository.dart';
 
@@ -125,8 +126,11 @@ class _PlanMainPageContentState extends State<_PlanMainPageContent> {
     if (section == PlanSection.medicines) {
       await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => BlocProvider.value(
-            value: bloc,
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: bloc),
+              BlocProvider(create: (context) => MedicinesBloc()),
+            ],
             child: MedicinesPage(userId: widget.userId),
           ),
         ),
