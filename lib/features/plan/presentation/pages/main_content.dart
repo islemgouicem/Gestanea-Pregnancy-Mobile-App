@@ -41,7 +41,7 @@ class _MainContentState extends State<MainContent> {
   }
 
   Map<String, int> _getMedicineStats(medicines, medicineLogs) {
-    final total = medicineLogs.where((log) => log.status == 'All').length;
+    final total = medicines.length;
     final taken = medicineLogs.where((log) => log.status == 'taken').length;
     return {'total': total, 'taken': taken};
   }

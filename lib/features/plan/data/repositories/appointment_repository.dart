@@ -73,12 +73,14 @@ class AppointmentDB extends AppointmentRepository {
   Future<List<AppointmentModel>> getUpcomingAppointments(String userId) async {
     try {
       final db = await DatabaseHelper.instance.database;
-      final now = DateTime.now().toIso8601String();
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day).toIso8601String();
 
       final result = await db.query(
         'appointments',
-        where: 'user_id = ? AND appointment_date >= ? AND is_completed = 0',
-        whereArgs: [userId, now],
+        where:
+            'user_id = ? AND DATE(appointment_date) >= DATE(?) AND is_completed = 0',
+        whereArgs: [userId, today],
         orderBy: 'appointment_date ASC',
         limit: 10,
       );

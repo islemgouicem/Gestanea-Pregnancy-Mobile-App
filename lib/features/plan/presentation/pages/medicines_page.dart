@@ -8,6 +8,7 @@ import 'package:gestanea/core/database/models/medicine_model.dart';
 import 'package:gestanea/core/database/models/medicine_logged_model.dart';
 import 'package:uuid/uuid.dart';
 import '../../logic/plan_bloc.dart';
+import '../../logic/medicines_bloc.dart';
 
 class MedicinesPage extends StatefulWidget {
   final String userId;
@@ -19,76 +20,32 @@ class MedicinesPage extends StatefulWidget {
 }
 
 class _MedicinesPageState extends State<MedicinesPage> {
-  String selectedFilter = 'All'; // All, Taken, Missed
-  bool _showFilters = true;
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    _loadMedicines();
-  }
-
-  void _loadMedicines() {
     context.read<PlanBloc>().add(LoadMedicines(userId: widget.userId));
   }
 
-  List<MedicineModel> _getFilteredMedicines(
-    List<MedicineModel> medicines,
-    List<MedicineLoggedModel> logs,
-  ) {
-    if (selectedFilter == 'All') {
-      return medicines;
-    } else if (selectedFilter == 'Taken') {
-      return medicines.where((med) {
-        final log = logs.firstWhere(
-          (l) => l.medicineId == med.id,
-          orElse: () => MedicineLoggedModel(
-            id: '',
-            medicineId: '',
-            userId: '',
-            loggedDate: DateTime.now(),
-            status: '',
-            loggedAt: DateTime.now(),
-          ),
-        );
-        return log.status == 'taken';
-      }).toList();
-    } else {
-      // Missed
-      return medicines.where((med) {
-        final log = logs.firstWhere(
-          (l) => l.medicineId == med.id,
-          orElse: () => MedicineLoggedModel(
-            id: '',
-            medicineId: '',
-            userId: '',
-            loggedDate: DateTime.now(),
-            status: '',
-            loggedAt: DateTime.now(),
-          ),
-        );
-        return log.status == 'missed';
-      }).toList();
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final medicinesBloc = context.read<MedicinesBloc>();
+    if (_scrollController.offset > 50) {
+      medicinesBloc.add(const UpdateScrollVisibility(false));
+    } else if (_scrollController.offset <= 50) {
+      medicinesBloc.add(const UpdateScrollVisibility(true));
     }
   }
 
-  int _getFilterCount(
-    String filter,
-    List<MedicineModel> medicines,
-    List<MedicineLoggedModel> logs,
-  ) {
-    if (filter == 'All') {
-      return medicines.length;
-    } else if (filter == 'Taken') {
-      return logs.where((l) => l.status == 'taken').length;
-    } else {
-      return logs.where((l) => l.status == 'missed').length;
-    }
-  }
-
-  Future<void> _handleTakeMedicine(MedicineModel medicine) async {
+  void _handleTakeMedicine(MedicineModel medicine) {
     final uuid = Uuid();
     final log = MedicineLoggedModel(
       id: uuid.v4(),
@@ -100,25 +57,6 @@ class _MedicinesPageState extends State<MedicinesPage> {
     );
 
     context.read<PlanBloc>().add(LogMedicineEvent(log: log));
-  }
-
-  @override
-  void dispose() {
-    _scrollController.removeListener(_onScroll);
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _onScroll() {
-    if (_scrollController.offset > 50 && _showFilters) {
-      setState(() {
-        _showFilters = false;
-      });
-    } else if (_scrollController.offset <= 50 && !_showFilters) {
-      setState(() {
-        _showFilters = true;
-      });
-    }
   }
 
   @override
@@ -141,153 +79,175 @@ class _MedicinesPageState extends State<MedicinesPage> {
               },
             ),
             Expanded(
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Filter Pills (All, Taken, Missed) - with animation
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      height: _showFilters ? null : 0,
-                      curve: Curves.easeInOut,
-                      child: AnimatedOpacity(
-                        duration: const Duration(milliseconds: 300),
-                        opacity: _showFilters ? 1.0 : 0.0,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.05,
-                          ),
-                          child: BlocBuilder<PlanBloc, PlanState>(
-                            builder: (context, state) {
-                              List<MedicineModel> medicines = [];
-                              List<MedicineLoggedModel> logs = [];
+              child: BlocListener<PlanBloc, PlanState>(
+                listener: (context, state) {
+                  if (state is MedicinesLoaded || state is PlanLoaded) {
+                    final medicines = state is MedicinesLoaded
+                        ? state.medicines
+                        : (state as PlanLoaded).medicines;
+                    final logs = state is MedicinesLoaded
+                        ? state.medicineLogs
+                        : (state as PlanLoaded).medicineLogs;
 
-                              if (state is MedicinesLoaded) {
-                                medicines = state.medicines;
-                                logs = state.medicineLogs;
-                              } else if (state is PlanLoaded) {
-                                medicines = state.medicines;
-                                logs = state.medicineLogs;
-                              }
-
-                              return Row(
-                                children: [
-                                  _buildFilterPill('All', medicines, logs),
-                                  SizedBox(width: 12),
-                                  _buildFilterPill('Taken', medicines, logs),
-                                  SizedBox(width: 12),
-                                  _buildFilterPill('Missed', medicines, logs),
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: screenHeight * 0.025),
-
-                    // Medicine List
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.05,
-                      ),
-                      child: BlocBuilder<PlanBloc, PlanState>(
+                    context.read<MedicinesBloc>().add(
+                      LoadMedicinesWithLogs(medicines: medicines, logs: logs),
+                    );
+                  }
+                },
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Filter Pills (All, Taken, Missed) - with animation
+                      BlocBuilder<MedicinesBloc, MedicinesState>(
                         builder: (context, state) {
-                          if (state is PlanLoading) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.main500,
-                              ),
-                            );
+                          if (state is! MedicinesDisplayState) {
+                            return const SizedBox.shrink();
                           }
 
-                          if (state is PlanError) {
-                            return Center(
+                          return AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            height: state.showFilters ? null : 0,
+                            curve: Curves.easeInOut,
+                            child: AnimatedOpacity(
+                              duration: const Duration(milliseconds: 300),
+                              opacity: state.showFilters ? 1.0 : 0.0,
                               child: Padding(
-                                padding: EdgeInsets.all(screenHeight * 0.05),
-                                child: Text(
-                                  'Error: ${state.message}',
-                                  style: TextStyle(
-                                    fontSize: screenWidth * 0.04,
-                                    color: Colors.red,
-                                  ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.05,
+                                ),
+                                child: Row(
+                                  children: [
+                                    _buildFilterPill(
+                                      'All',
+                                      state.allCount,
+                                      state.selectedFilter == 'All',
+                                    ),
+                                    SizedBox(width: 12),
+                                    _buildFilterPill(
+                                      'Taken',
+                                      state.takenCount,
+                                      state.selectedFilter == 'Taken',
+                                    ),
+                                    SizedBox(width: 12),
+                                    _buildFilterPill(
+                                      'Missed',
+                                      state.missedCount,
+                                      state.selectedFilter == 'Missed',
+                                    ),
+                                  ],
                                 ),
                               ),
-                            );
-                          }
-
-                          List<MedicineModel> medicines = [];
-                          List<MedicineLoggedModel> logs = [];
-
-                          if (state is MedicinesLoaded) {
-                            medicines = state.medicines;
-                            logs = state.medicineLogs;
-                          } else if (state is PlanLoaded) {
-                            medicines = state.medicines;
-                            logs = state.medicineLogs;
-                          }
-
-                          final filteredMedicines = _getFilteredMedicines(
-                            medicines,
-                            logs,
-                          );
-
-                          if (filteredMedicines.isEmpty) {
-                            return Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(screenHeight * 0.05),
-                                child: Text(
-                                  'No medicines found',
-                                  style: TextStyle(
-                                    fontSize: screenWidth * 0.04,
-                                    color: Colors.grey.shade600,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-
-                          return Column(
-                            children: filteredMedicines.map((medicine) {
-                              final log = logs.firstWhere(
-                                (l) => l.medicineId == medicine.id,
-                                orElse: () => MedicineLoggedModel(
-                                  id: '',
-                                  medicineId: '',
-                                  userId: '',
-                                  loggedDate: DateTime.now(),
-                                  status: '',
-                                  loggedAt: DateTime.now(),
-                                ),
-                              );
-                              final hasLog = log.id.isNotEmpty;
-
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                  bottom: screenHeight * 0.015,
-                                ),
-                                child: MedicineCard(
-                                  medicine: medicine,
-                                  log: hasLog ? log : null,
-                                  scheduledTime:
-                                      medicine.scheduledTimes?.first ?? '00:00',
-                                  screenWidth: screenWidth,
-                                  screenHeight: screenHeight,
-                                  onTakeMedicine: () =>
-                                      _handleTakeMedicine(medicine),
-                                ),
-                              );
-                            }).toList(),
+                            ),
                           );
                         },
                       ),
-                    ),
 
-                    SizedBox(height: screenHeight * 0.1),
-                  ],
+                      SizedBox(height: screenHeight * 0.025),
+
+                      // Medicine List
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.05,
+                        ),
+                        child: BlocBuilder<PlanBloc, PlanState>(
+                          builder: (context, planState) {
+                            if (planState is PlanLoading) {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: AppColors.main500,
+                                ),
+                              );
+                            }
+
+                            if (planState is PlanError) {
+                              return Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(screenHeight * 0.05),
+                                  child: Text(
+                                    'Error: ${planState.message}',
+                                    style: TextStyle(
+                                      fontSize: screenWidth * 0.04,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+
+                            return BlocBuilder<MedicinesBloc, MedicinesState>(
+                              builder: (context, medicinesState) {
+                                if (medicinesState is! MedicinesDisplayState) {
+                                  return const SizedBox.shrink();
+                                }
+
+                                if (medicinesState.filteredMedicines.isEmpty) {
+                                  return Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(
+                                        screenHeight * 0.05,
+                                      ),
+                                      child: Text(
+                                        'No medicines found',
+                                        style: TextStyle(
+                                          fontSize: screenWidth * 0.04,
+                                          color: Colors.grey.shade600,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+
+                                return Column(
+                                  children: medicinesState.filteredMedicines
+                                      .map((medicine) {
+                                        final log = medicinesState.logs
+                                            .firstWhere(
+                                              (l) =>
+                                                  l.medicineId == medicine.id,
+                                              orElse: () => MedicineLoggedModel(
+                                                id: '',
+                                                medicineId: '',
+                                                userId: '',
+                                                loggedDate: DateTime.now(),
+                                                status: '',
+                                                loggedAt: DateTime.now(),
+                                              ),
+                                            );
+                                        final hasLog = log.id.isNotEmpty;
+
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                            bottom: screenHeight * 0.015,
+                                          ),
+                                          child: MedicineCard(
+                                            medicine: medicine,
+                                            log: hasLog ? log : null,
+                                            scheduledTime:
+                                                medicine
+                                                    .scheduledTimes
+                                                    ?.first ??
+                                                '00:00',
+                                            screenWidth: screenWidth,
+                                            screenHeight: screenHeight,
+                                            onTakeMedicine: () =>
+                                                _handleTakeMedicine(medicine),
+                                          ),
+                                        );
+                                      })
+                                      .toList(),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ),
+
+                      SizedBox(height: screenHeight * 0.1),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -297,18 +257,10 @@ class _MedicinesPageState extends State<MedicinesPage> {
     );
   }
 
-  Widget _buildFilterPill(
-    String label,
-    List<MedicineModel> medicines,
-    List<MedicineLoggedModel> logs,
-  ) {
-    final isSelected = selectedFilter == label;
-    final count = _getFilterCount(label, medicines, logs);
+  Widget _buildFilterPill(String label, int count, bool isSelected) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          selectedFilter = label;
-        });
+        context.read<MedicinesBloc>().add(SelectFilter(label));
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -366,6 +318,4 @@ class _MedicinesPageState extends State<MedicinesPage> {
       ),
     );
   }
-
-  // ...existing code...
 }
