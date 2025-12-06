@@ -77,9 +77,9 @@ class _GrowthTrackerPageState extends State<GrowthTrackerPage> {
               _hasLoadedData = true;
               context.read<BabyCubit>().loadGrowthRecords();
             }
-            if (state is BabyOperationSuccess) {
+            if (state is GrowthLoaded) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
+                const SnackBar(content: Text('Record saved successfully')),
               );
             }
           },

@@ -170,7 +170,7 @@ class BabyCubit extends Cubit<BabyState> {
       );
 
       await _repository.addGrowthRecord(growth);
-      emit(const BabyOperationSuccess('Growth record added successfully'));
+      // Reload growth records to update the UI
       await loadGrowthRecords();
     } catch (e) {
       emit(BabyError('Failed to add growth record: ${e.toString()}'));
