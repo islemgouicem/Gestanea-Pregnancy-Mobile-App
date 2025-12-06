@@ -129,10 +129,17 @@ class BabyCubit extends Cubit<BabyState> {
 
     emit(GrowthLoading());
     try {
+      final baby = await _repository.getBabyById(_currentBabyId!);
+      if (baby == null) {
+        emit(const BabyError('Baby profile not found'));
+        return;
+      }
+      
       final records = await _repository.getGrowthRecords(_currentBabyId!);
       final latest = await _repository.getLatestGrowthRecord(_currentBabyId!);
 
       emit(GrowthLoaded(
+        baby: baby,
         growthRecords: records,
         latestGrowth: latest,
       ));
@@ -144,7 +151,6 @@ class BabyCubit extends Cubit<BabyState> {
   Future<void> addGrowthRecord({
     required DateTime recordedDate,
     double? weight,
-    double? height,
     int? weightPercentile,
     int? heightPercentile,
     String? growthStatus,
@@ -161,7 +167,6 @@ class BabyCubit extends Cubit<BabyState> {
         babyId: _currentBabyId!,
         recordedDate: recordedDate,
         weight: weight,
-        height: height,
         weightPercentile: weightPercentile,
         heightPercentile: heightPercentile,
         growthStatus: growthStatus,
