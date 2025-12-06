@@ -48,7 +48,7 @@ class NeumorphicButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final buttonHeight = minHeight ?? size.height * 0.08;
+    final buttonHeight = minHeight ?? size.height * 0.07;
 
     final verticalPadding = size.height * 0.012;
     final horizontalPadding = size.width * 0.04;
@@ -95,7 +95,7 @@ class NeumorphicButton extends StatelessWidget {
                     text,
                     style: AppTextStyles.headline2.copyWith(
                       color: AppColors.white,
-                      fontSize: 16,
+                      fontSize: size.width * 0.04,
                       fontWeight: FontWeight.w600,
                     ),
                     maxLines: 1,

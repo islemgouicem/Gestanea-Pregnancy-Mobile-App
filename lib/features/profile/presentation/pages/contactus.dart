@@ -3,6 +3,7 @@ import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/core/constants/app_text_styles.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:gestanea/core/widgets/neumorphic_button.dart';
+import 'package:gestanea/l10n/app_localizations.dart';
 
 class NeumorphicContainer extends StatelessWidget {
   final Widget child;
@@ -117,6 +118,7 @@ class ContactUsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     final screenWidth = MediaQuery.of(context).size.width;
     final horizontalPadding = screenWidth * 0.05;
 
@@ -131,7 +133,7 @@ class ContactUsScreen extends StatelessWidget {
           },
         ),
         title: Text(
-          'Contacts',
+          t.contact_us,
           style: AppTextStyles.headline1.copyWith(
             color: AppColors.main500,
             fontSize: 32,
@@ -162,7 +164,7 @@ class ContactUsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Get in Touch",
+                    t.getInTouch,
                     style: TextStyle(
                       color: AppColors.textPrimary,
                       fontSize: 20,
@@ -171,7 +173,7 @@ class ContactUsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Have a question or feedback? We'd love to hear from you. Fill out the form below and we'll get back to you within 24 hours.",
+                    t.contactFormDescription,
                     style: TextStyle(
                       color: AppColors.main700.withOpacity(0.7),
                       fontSize: 14,
@@ -179,42 +181,36 @@ class ContactUsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   // Contact details
-                  _buildContactDetail(
-                    Icons.email_outlined,
-                    'support@momcare.com',
-                  ),
-                  _buildContactDetail(
-                    Icons.phone_outlined,
-                    '+1 (800) 123-4567',
-                  ),
-                  _buildContactDetail(Icons.schedule, 'Mon-Fri, 9AM-6PM EST'),
+                  _buildContactDetail(Icons.email_outlined, t.supportEmail),
+                  _buildContactDetail(Icons.phone_outlined, t.supportPhone),
+                  _buildContactDetail(Icons.schedule, t.supportHours),
                 ],
               ),
             ),
             const SizedBox(height: 20),
 
             // 2. Contact Form Fields
-            NeumorphicTextField(label: 'Your Name', hint: 'Enter your name'),
+            NeumorphicTextField(label: t.yourNameLabel, hint: t.enterYourName),
             const SizedBox(height: 15),
             NeumorphicTextField(
-              label: 'Email Address',
-              hint: 'your.email@example.com',
+              label: t.emailAddressLabel,
+              hint: t.emailPlaceholder,
             ),
             const SizedBox(height: 15),
-            NeumorphicTextField(label: 'Subject', hint: 'What is this about?'),
+            NeumorphicTextField(label: t.subjectLabel, hint: t.whatIsThisAbout),
             const SizedBox(height: 15),
             NeumorphicTextField(
-              label: 'Message',
-              hint: 'Tell us how we can help...',
+              label: t.messageLabel,
+              hint: t.tellUsHowWeCanHelp,
               maxLines: 6,
             ),
             const SizedBox(height: 30),
 
             // 3. Submit Button
             NeumorphicButton(
-              text: "Send Message",
+              text: t.sendMessage,
               onPressed: () {},
-              prefixIcon: const Icon(Icons.send, color: AppColors.white, size: 24),
+              prefixIcon: Icons.send,
               color: AppColors.main500,
             ),
             const SizedBox(height: 30),
@@ -238,29 +234,6 @@ class ContactUsScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-// --- Main App Setup (for demonstration) ---
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Contact Us Neumorphism Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.background,
-        fontFamily: 'Roboto',
-        useMaterial3: true,
-      ),
-      home: const ContactUsScreen(),
     );
   }
 }

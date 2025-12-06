@@ -9,6 +9,338 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get hello => 'Hello';
+
+  @override
+  String get ourDoctors => 'Our Doctors';
+
+  @override
+  String get findTheBestDoctor => 'find the best doctor';
+
+  @override
+  String get upComing => 'Up coming';
+
+  @override
+  String get seeAll => 'see all';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get tomorrow => 'Tomorrow';
+
+  @override
+  String get at => 'at';
+
+  @override
+  String get overdue => 'Overdue';
+
+  @override
+  String get in_ => 'In';
+
+  @override
+  String get minutes => 'minutes';
+
+  @override
+  String get hours => 'hours';
+
+  @override
+  String get noUpcomingEvents => 'No upcoming events';
+
+  @override
+  String get addAppointmentsInPlan => 'Add appointments in Plan';
+
+  @override
+  String get getInTouch => 'Get in Touch';
+
+  @override
+  String get contactFormDescription =>
+      'Have a question or feedback? We\'d love to hear from you. Fill out the form below and we\'ll get back to you within 24 hours.';
+
+  @override
+  String get supportEmail => 'support@momcare.com';
+
+  @override
+  String get supportPhone => '+1 (800) 123-4567';
+
+  @override
+  String get supportHours => 'Mon-Fri, 9AM-6PM EST';
+
+  @override
+  String get yourNameLabel => 'Your Name';
+
+  @override
+  String get enterYourName => 'Enter your name';
+
+  @override
+  String get emailAddressLabel => 'Email Address';
+
+  @override
+  String get emailPlaceholder => 'your.email@example.com';
+
+  @override
+  String get subjectLabel => 'Subject';
+
+  @override
+  String get whatIsThisAbout => 'What is this about?';
+
+  @override
+  String get messageLabel => 'Message';
+
+  @override
+  String get tellUsHowWeCanHelp => 'Tell us how we can help...';
+
+  @override
+  String get sendMessage => 'Send Message';
+
+  @override
+  String get appName => 'Gestanéa';
+
+  @override
+  String get appVersion => 'Version 2.1.0';
+
+  @override
+  String get appDescription =>
+      'Your trusted companion through pregnancy and motherhood. Track your journey, get personalized insights, and connect with a supportive community.';
+
+  @override
+  String get activeUsersCount => '100K+';
+
+  @override
+  String get activeUsers => 'Active Users';
+
+  @override
+  String get appRatingValue => '4.8★';
+
+  @override
+  String get appRating => 'App Rating';
+
+  @override
+  String get versionInfo => 'Version Info';
+
+  @override
+  String get versionBuild => 'Build 2.1.0 (245)';
+
+  @override
+  String get madeWithLove => 'Made with Love';
+
+  @override
+  String get forMomsEverywhere => 'For moms everywhere';
+
+  @override
+  String get copyrightText => '© 2025 Gestanéa. All rights reserved.';
+
+  @override
+  String get faqIntroText => 'Choose your preferred language';
+
+  @override
+  String get faqQuestion1 => 'How do I set appointment reminders?';
+
+  @override
+  String get faqAnswer1 =>
+      'You can set appointment reminders by navigating to the \"Appointments\" section, selecting your scheduled visit, and tapping the \"Set Reminder\" option. You will be able to choose a time interval (e.g., 1 day or 1 hour before).';
+
+  @override
+  String get faqQuestion2 => 'Is my health data secure?';
+
+  @override
+  String get faqAnswer2 =>
+      'Yes. We use industry-leading encryption and follow HIPAA/GDPR compliance guidelines to ensure your personal health information remains private and secure. Data is stored anonymously on secure servers.';
+
+  @override
+  String get faqQuestion3 => 'How do I change my due date?';
+
+  @override
+  String get faqAnswer3 =>
+      'If you are tracking a pregnancy, you can change your estimated due date (EDD) in the \"Profile\" or \"Tracking\" settings. Tap on the current due date field to manually enter a new date based on your latest ultrasound or doctor\'s recommendation.';
+
+  @override
+  String get faqQuestion4 => 'Can I export my health records?';
+
+  @override
+  String get faqAnswer4 =>
+      'Yes! Go to Settings > Data & Privacy > Download My Data to export all your information in a readable format.';
+
+  @override
+  String get faqQuestion5 => 'How do I contact support?';
+
+  @override
+  String get faqAnswer5 =>
+      'You can contact support via the \"Contact Support\" button at the bottom of this screen, or you can email us directly at support@appname.com. We typically respond within 24 hours.';
+
+  @override
+  String get faqQuestion6 => 'What languages are supported?';
+
+  @override
+  String get faqAnswer6 =>
+      'Currently, the app supports English, Spanish, French, and German. You can change your preferred language in the \"App Settings\" menu.';
+
+  @override
+  String get stillHaveQuestions => 'Still have questions?';
+
+  @override
+  String get contactSupport => 'Contact Support';
+
+  @override
+  String get faq => 'FAQ';
+
+  @override
+  String get yourPrivacyMatters => 'Your Privacy Matters';
+
+  @override
+  String get privacyCommitmentDescription =>
+      'We are committed to protecting your personal information and ensuring transparency about how we use your data.';
+
+  @override
+  String get lastUpdatedPrivacy => 'Last Updated: December 4, 2025';
+
+  @override
+  String get dataCollection => 'Data Collection';
+
+  @override
+  String get dataCollectionDescription =>
+      'We collect only essential information needed to provide you with the best health tracking experience. This includes your profile information, health metrics, and app usage data.';
+
+  @override
+  String get dataSecurity => 'Data Security';
+
+  @override
+  String get dataSecurityDescription =>
+      'Your data is encrypted using industry-standard protocols. We employ multiple layers of security to protect your personal health information from unauthorized access.';
+
+  @override
+  String get dataUsage => 'Data Usage';
+
+  @override
+  String get dataUsageDescription =>
+      'We use your data to personalize your app experience, provide relevant health insights, and improve. We do not sell personal data to third parties.';
+
+  @override
+  String get yourRights => 'Your Rights';
+
+  @override
+  String get yourRightsDescription =>
+      'You have the right to access, or update, or request deletion of your data. You can manage privacy settings within the app or contact support.';
+
+  @override
+  String get weAreHereToHelp => 'We\'re Here to Help';
+
+  @override
+  String get chooseSupportOptionDescription =>
+      'Choose the support option that works best for you. Our team is available 24/7 to assist you.';
+
+  @override
+  String get knowledgeBase => 'Knowledge Base';
+
+  @override
+  String get browseArticlesAndGuides => 'Browse articles and guides';
+
+  @override
+  String get liveChat => 'Live Chat';
+
+  @override
+  String get chatWithSupportTeam => 'Chat with our support team';
+
+  @override
+  String get videoTutorials => 'Video Tutorials';
+
+  @override
+  String get watchStepByStepGuides => 'Watch step-by-step guides';
+
+  @override
+  String get emailSupport => 'Email Support';
+
+  @override
+  String get emailSupportAddress => 'support@momcare.com';
+
+  @override
+  String get phoneSupport => 'Phone Support';
+
+  @override
+  String get phoneSupportNumber => '1-800-MOM-CARE';
+
+  @override
+  String get communityForum => 'Community Forum';
+
+  @override
+  String get connectWithOtherUsers => 'Connect with other users';
+
+  @override
+  String get secureYourAccount => 'Secure Your Account';
+
+  @override
+  String get enableSecurityFeaturesDescription =>
+      'Enable additional security features to protect your personal health information';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get lastChangedDaysAgo => 'Last changed 30 days ago';
+
+  @override
+  String get biometricAuthentication => 'Biometric Authentication';
+
+  @override
+  String get useFingerprintOrFaceId => 'Use fingerprint or Face ID to unlock';
+
+  @override
+  String get twoFactorAuthentication => 'Two-Factor Authentication';
+
+  @override
+  String get addExtraLayerSecurity => 'Add an extra layer of security';
+
+  @override
+  String get autoLock => 'Auto-Lock';
+
+  @override
+  String get lockAppAfterInactivity => 'Lock app after 5 minutes of inactivity';
+
+  @override
+  String get manageNotificationPreferences =>
+      'Manage your notification preferences';
+
+  @override
+  String get pushNotifications => 'Push Notifications';
+
+  @override
+  String get receiveNotificationsOnDevice =>
+      'Receive notifications on your device';
+
+  @override
+  String get emailNotifications => 'Email Notifications';
+
+  @override
+  String get getUpdatesViaEmail => 'Get updates via email';
+
+  @override
+  String get appointmentReminders => 'Appointment Reminders';
+
+  @override
+  String get neverMissAppointment => 'Never miss a doctor\'s appointment';
+
+  @override
+  String get healthTips => 'Health Tips';
+
+  @override
+  String get dailyWellnessRecommendations => 'Daily wellness recommendations';
+
+  @override
+  String get weeklyReports => 'Weekly Reports';
+
+  @override
+  String get healthProgressSummary => 'Summary of your health progress';
+
+  @override
+  String get vitaminReminders => 'Vitamin Reminders';
+
+  @override
+  String get dontForgetSupplements => 'Don\'t forget your supplements';
+
+  @override
+  String get choosePreferredLanguage => 'Choose your preferred language';
+
+  @override
   String get security => 'Security';
 
   @override
@@ -40,9 +372,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logout_confirmation => 'Are you sure you want to log out?';
-
-  @override
-  String get cancel => 'Cancel';
 
   @override
   String get unknown => 'Unknown';
@@ -183,9 +512,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login => 'Login';
 
   @override
-  String get signup => 'Sign Up';
-
-  @override
   String get password => 'Password';
 
   @override
@@ -235,6 +561,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createAccount => 'Create an Account';
 
   @override
+  String get signup => 'Sign Up';
+
+  @override
   String get your_name => 'Your Name';
 
   @override
@@ -279,9 +608,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get skinCare => 'Skin Care';
-
-  @override
-  String get pregnancyPillow => 'Pregnancy Pillow';
 
   @override
   String get backSupportBelt => 'Back Support Belt';
@@ -425,6 +751,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get cancel => 'Cancel';
+
+  @override
   String get applyFilters => 'Apply Filters';
 
   @override
@@ -490,4 +819,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get callNow => 'Call Now';
+
+  @override
+  String get pregnancyPillow => 'Pregnancy Pillow';
+
+  @override
+  String get essentialNutrientsMealPlanning =>
+      'Essential nutrients and meal planning for a healthy pregnancy';
+
+  @override
+  String get fiveMinRead => '5 min read';
 }

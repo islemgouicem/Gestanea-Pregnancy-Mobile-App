@@ -9,6 +9,337 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
+  String get hello => 'مرحباً';
+
+  @override
+  String get ourDoctors => 'أطبائنا';
+
+  @override
+  String get findTheBestDoctor => 'ابحثي عن أفضل طبيب';
+
+  @override
+  String get upComing => 'قادم';
+
+  @override
+  String get seeAll => 'عرض الكل';
+
+  @override
+  String get today => 'اليوم';
+
+  @override
+  String get tomorrow => 'غداً';
+
+  @override
+  String get at => 'في';
+
+  @override
+  String get overdue => 'متأخر';
+
+  @override
+  String get in_ => 'في';
+
+  @override
+  String get minutes => 'دقائق';
+
+  @override
+  String get hours => 'ساعات';
+
+  @override
+  String get noUpcomingEvents => 'لا توجد أحداث قادمة';
+
+  @override
+  String get addAppointmentsInPlan => 'أضيفي المواعيد في الخطة';
+
+  @override
+  String get getInTouch => 'تواصلي معنا';
+
+  @override
+  String get contactFormDescription =>
+      'هل لديك سؤال أو ملاحظة؟ نود سماع آرائك. ملي النموذج أدناه وسنرد عليك خلال 24 ساعة.';
+
+  @override
+  String get supportEmail => 'support@momcare.com';
+
+  @override
+  String get supportPhone => '+1 (800) 123-4567';
+
+  @override
+  String get supportHours => 'الاثنين-الجمعة، 9 صباحاً-6 مساءً';
+
+  @override
+  String get yourNameLabel => 'اسمك';
+
+  @override
+  String get enterYourName => 'أدخلي اسمك';
+
+  @override
+  String get emailAddressLabel => 'عنوان البريد الإلكتروني';
+
+  @override
+  String get emailPlaceholder => 'بريدك@example.com';
+
+  @override
+  String get subjectLabel => 'الموضوع';
+
+  @override
+  String get whatIsThisAbout => 'ما هو موضوع هذا؟';
+
+  @override
+  String get messageLabel => 'الرسالة';
+
+  @override
+  String get tellUsHowWeCanHelp => 'أخبرينا كيف يمكننا مساعدتك...';
+
+  @override
+  String get sendMessage => 'إرسال الرسالة';
+
+  @override
+  String get appName => 'جيستانيا';
+
+  @override
+  String get appVersion => 'الإصدار 2.1.0';
+
+  @override
+  String get appDescription =>
+      'رفيقك الموثوق به عبر الحمل والأمومة. تابعي رحلتك واحصلي على رؤى شخصية والتقطي بمجتمع داعم.';
+
+  @override
+  String get activeUsersCount => '100K+';
+
+  @override
+  String get activeUsers => 'المستخدمون النشطون';
+
+  @override
+  String get appRatingValue => '4.8★';
+
+  @override
+  String get appRating => 'تقييم التطبيق';
+
+  @override
+  String get versionInfo => 'معلومات الإصدار';
+
+  @override
+  String get versionBuild => 'Build 2.1.0 (245)';
+
+  @override
+  String get madeWithLove => 'مصنوع بحب';
+
+  @override
+  String get forMomsEverywhere => 'لجميع الأمهات في كل مكان';
+
+  @override
+  String get copyrightText => '© 2025 جيستانيا. جميع الحقوق محفوظة.';
+
+  @override
+  String get faqIntroText => 'اختر لغتك المفضلة';
+
+  @override
+  String get faqQuestion1 => 'كيف يمكنني تعيين تذكيرات المواعيد؟';
+
+  @override
+  String get faqAnswer1 =>
+      'يمكنك تعيين تذكيرات المواعيد بالانتقال إلى قسم \"المواعيد\" وتحديد زيارتك المجدولة والنقر على خيار \"تعيين تذكير\". ستتمكن من اختيار فترة زمنية (على سبيل المثال، يوم واحد أو ساعة واحدة قبل).';
+
+  @override
+  String get faqQuestion2 => 'هل بيانات صحتي آمنة؟';
+
+  @override
+  String get faqAnswer2 =>
+      'نعم. نحن نستخدم التشفير الرائد في الصناعة ونتابع إرشادات التوافق مع HIPAA / GDPR لضمان بقاء معلومات صحتك الشخصية خاصة وآمنة. يتم تخزين البيانات بشكل مجهول على خوادم آمنة.';
+
+  @override
+  String get faqQuestion3 => 'كيف يمكنني تغيير موعد ولادتي المتوقع؟';
+
+  @override
+  String get faqAnswer3 =>
+      'إذا كنت تتابعين الحمل، يمكنك تغيير موعد الولادة المتوقع (EDD) في إعدادات \"الملف الشخصي\" أو \"التتبع\". اضغطي على حقل التاريخ الحالي لإدخال تاريخ جديد يدويًا بناءً على آخر الموجات فوق الصوتية أو توصية طبيبك.';
+
+  @override
+  String get faqQuestion4 => 'هل يمكنني تصدير سجلاتي الطبية؟';
+
+  @override
+  String get faqAnswer4 =>
+      'نعم! انتقلي إلى الإعدادات > البيانات والخصوصية > تنزيل بياناتي لتصدير جميع معلوماتك بصيغة قابلة للقراءة.';
+
+  @override
+  String get faqQuestion5 => 'كيف يمكنني الاتصال بالدعم؟';
+
+  @override
+  String get faqAnswer5 =>
+      'يمكنك الاتصال بالدعم من خلال زر \"الاتصال بالدعم\" في أسفل هذه الشاشة، أو يمكنك إرسال بريد إلكتروني مباشرة إلى support@appname.com. نحن عادة ما نرد خلال 24 ساعة.';
+
+  @override
+  String get faqQuestion6 => 'ما هي اللغات المدعومة؟';
+
+  @override
+  String get faqAnswer6 =>
+      'حاليًا، يدعم التطبيق اللغة الإنجليزية والإسبانية والفرنسية والألمانية. يمكنك تغيير لغتك المفضلة في قائمة \"إعدادات التطبيق\".';
+
+  @override
+  String get stillHaveQuestions => 'هل لديك أسئلة أخرى؟';
+
+  @override
+  String get contactSupport => 'الاتصال بالدعم';
+
+  @override
+  String get faq => 'الأسئلة المتكررة';
+
+  @override
+  String get yourPrivacyMatters => 'خصوصيتك مهمة لنا';
+
+  @override
+  String get privacyCommitmentDescription =>
+      'نحن ملتزمون بحماية معلوماتك الشخصية وضمان الشفافية حول كيفية استخدام بيانتك.';
+
+  @override
+  String get lastUpdatedPrivacy => 'آخر تحديث: 4 ديسمبر 2025';
+
+  @override
+  String get dataCollection => 'جمع البيانات';
+
+  @override
+  String get dataCollectionDescription =>
+      'نحن نجمع فقط المعلومات الضرورية المطلوبة لتوفير أفضل تجربة تتبع صحي لك. يتضمن ذلك معلومات ملفك الشخصي ومقاييس صحتك وبيانات استخدام التطبيق.';
+
+  @override
+  String get dataSecurity => 'أمان البيانات';
+
+  @override
+  String get dataSecurityDescription =>
+      'يتم تشفير بيانتك باستخدام بروتوكولات معيارية في الصناعة. نستخدم عدة طبقات من الأمان لحماية معلوماتك الصحية الشخصية من الوصول غير المصرح به.';
+
+  @override
+  String get dataUsage => 'استخدام البيانات';
+
+  @override
+  String get dataUsageDescription =>
+      'نستخدم بياناتك لتخصيص تجربة تطبيقك وتوفير رؤى صحية ذات صلة وتحسينها. نحن لا نبيع البيانات الشخصية لأطراف ثالثة.';
+
+  @override
+  String get yourRights => 'حقوقك';
+
+  @override
+  String get yourRightsDescription =>
+      'لديك الحق في الوصول أو تحديث أو طلب حذف بيانتك. يمكنك إدارة إعدادات الخصوصية في التطبيق أو الاتصال بالدعم.';
+
+  @override
+  String get weAreHereToHelp => 'نحن هنا لمساعدتك';
+
+  @override
+  String get chooseSupportOptionDescription =>
+      'اختر خيار الدعم الذي يناسبك بشكل أفضل. فريقنا متاح 24/7 لمساعدتك.';
+
+  @override
+  String get knowledgeBase => 'قاعدة المعرفة';
+
+  @override
+  String get browseArticlesAndGuides => 'تصفح المقالات والأدلة';
+
+  @override
+  String get liveChat => 'دردشة مباشرة';
+
+  @override
+  String get chatWithSupportTeam => 'تحدث مع فريق الدعم الخاص بنا';
+
+  @override
+  String get videoTutorials => 'دروس فيديو';
+
+  @override
+  String get watchStepByStepGuides => 'شاهد الأدلة خطوة بخطوة';
+
+  @override
+  String get emailSupport => 'دعم البريد الإلكتروني';
+
+  @override
+  String get emailSupportAddress => 'support@momcare.com';
+
+  @override
+  String get phoneSupport => 'دعم الهاتف';
+
+  @override
+  String get phoneSupportNumber => '1-800-MOM-CARE';
+
+  @override
+  String get communityForum => 'منتدى المجتمع';
+
+  @override
+  String get connectWithOtherUsers => 'تواصل مع المستخدمين الآخرين';
+
+  @override
+  String get secureYourAccount => 'أمّن حسابك';
+
+  @override
+  String get enableSecurityFeaturesDescription =>
+      'فعّل ميزات الأمان الإضافية لحماية معلومات صحتك الشخصية';
+
+  @override
+  String get changePassword => 'تغيير كلمة المرور';
+
+  @override
+  String get lastChangedDaysAgo => 'تم التغيير آخر مرة قبل 30 يوماً';
+
+  @override
+  String get biometricAuthentication => 'المصادقة البيومترية';
+
+  @override
+  String get useFingerprintOrFaceId => 'استخدم بصمة الإصبع أو Face ID للفتح';
+
+  @override
+  String get twoFactorAuthentication => 'المصادقة ذات العاملين';
+
+  @override
+  String get addExtraLayerSecurity => 'أضف طبقة أمان إضافية';
+
+  @override
+  String get autoLock => 'القفل التلقائي';
+
+  @override
+  String get lockAppAfterInactivity =>
+      'قفل التطبيق بعد 5 دقائق من عدم الاستخدام';
+
+  @override
+  String get manageNotificationPreferences => 'إدارة تفضيلات الإشعارات';
+
+  @override
+  String get pushNotifications => 'إشعارات الدفع';
+
+  @override
+  String get receiveNotificationsOnDevice => 'تلقي الإشعارات على جهازك';
+
+  @override
+  String get emailNotifications => 'إشعارات البريد الإلكتروني';
+
+  @override
+  String get getUpdatesViaEmail => 'احصل على التحديثات عبر البريد الإلكتروني';
+
+  @override
+  String get appointmentReminders => 'تذكيرات المواعيد';
+
+  @override
+  String get neverMissAppointment => 'لا تفوت موعد الطبيب أبداً';
+
+  @override
+  String get healthTips => 'نصائح صحية';
+
+  @override
+  String get dailyWellnessRecommendations => 'توصيات العافية اليومية';
+
+  @override
+  String get weeklyReports => 'التقارير الأسبوعية';
+
+  @override
+  String get healthProgressSummary => 'ملخص تقدمك الصحي';
+
+  @override
+  String get vitaminReminders => 'تذكيرات الفيتامينات';
+
+  @override
+  String get dontForgetSupplements => 'لا تنسى المكملات الغذائية';
+
+  @override
+  String get choosePreferredLanguage => 'اختر لغتك المفضلة';
+
+  @override
   String get security => 'الأمان';
 
   @override
@@ -40,9 +371,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get logout_confirmation => 'هل أنت متأكد أنك تريد تسجيل الخروج؟';
-
-  @override
-  String get cancel => 'إلغاء';
 
   @override
   String get unknown => 'غير معروف';
@@ -183,9 +511,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get login => 'تسجيل الدخول';
 
   @override
-  String get signup => 'إنشاء حساب';
-
-  @override
   String get password => 'كلمة المرور';
 
   @override
@@ -234,6 +559,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get createAccount => 'إنشاء حساب';
 
   @override
+  String get signup => 'إنشاء حساب';
+
+  @override
   String get your_name => 'اسمك';
 
   @override
@@ -278,9 +606,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get skinCare => 'العناية بالبشرة';
-
-  @override
-  String get pregnancyPillow => 'وسادة الحمل';
 
   @override
   String get backSupportBelt => 'حزام دعم الظهر';
@@ -424,6 +749,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get cancel => 'إلغاء';
+
+  @override
   String get applyFilters => 'تطبيق التصفية';
 
   @override
@@ -489,4 +817,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get callNow => 'اتصل الآن';
+
+  @override
+  String get pregnancyPillow => 'وسادة الحمل';
+
+  @override
+  String get essentialNutrientsMealPlanning =>
+      'العناصر الغذائية الأساسية وتخطيط الوجبات لحمل صحي';
+
+  @override
+  String get fiveMinRead => 'قراءة 5 دقائق';
 }
