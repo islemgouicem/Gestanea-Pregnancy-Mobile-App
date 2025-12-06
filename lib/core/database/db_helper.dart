@@ -2,6 +2,15 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class DatabaseHelper {
+    Future<void> insertMood(Map<String, dynamic> mood) async {
+      final db = await instance.database;
+      await db.insert('moods', mood);
+    }
+
+    Future<List<Map<String, dynamic>>> getMoods(String userId) async {
+      final db = await instance.database;
+      return await db.query('moods', where: 'user_id = ?', whereArgs: [userId], orderBy: 'recorded_at DESC');
+    }
   static final DatabaseHelper instance = DatabaseHelper._init();
   static Database? _database;
 

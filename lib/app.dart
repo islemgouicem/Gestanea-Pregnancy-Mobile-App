@@ -9,10 +9,10 @@ import 'package:gestanea/features/auth/logic/auth_bloc.dart';
 import 'package:gestanea/features/auth/logic/auth_event.dart';
 import 'package:gestanea/l10n/app_localizations.dart';
 import 'package:gestanea/routes.dart';
+import 'package:gestanea/features/health/logic/bloc/mood_bloc.dart';
 
 // Core / auth imports
 import 'package:gestanea/core/database/db_helper.dart';
-
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -37,6 +37,7 @@ class _MyAppState extends State<MyApp> {
   late final SessionManager _sessionManager;
   late final AuthRepositoryImpl _authRepository;
   late final AuthBloc _authBloc;
+  late final MoodBloc _moodBloc;
 
   @override
   void initState() {
@@ -52,11 +53,13 @@ class _MyAppState extends State<MyApp> {
       sessionManager: _sessionManager,
     );
     _authBloc = AuthBloc(repository: _authRepository)..add(AppStarted());
+    _moodBloc = MoodBloc();
   }
 
   @override
   void dispose() {
     _authBloc.close();
+    _moodBloc.close();
     super.dispose();
   }
 
@@ -71,18 +74,19 @@ class _MyAppState extends State<MyApp> {
     // Wrap MaterialApp with repository & bloc providers so all routes can access them.
     return RepositoryProvider<AuthRepositoryImpl>.value(
       value: _authRepository,
-      child: BlocProvider<AuthBloc>.value(
-        value: _authBloc,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>.value(value: _authBloc),
+          BlocProvider<MoodBloc>(create: (_) => _moodBloc),
+        ],
         child: MaterialApp(
           title: 'Gestanéa',
           debugShowCheckedModeBanner: false,
-
           theme: ThemeData(
             fontFamily: 'Lato',
             primarySwatch: Colors.purple,
             useMaterial3: true,
           ),
-
           // app language
           locale: _locale,
           supportedLocales: AppLocalizations.supportedLocales,
@@ -101,7 +105,6 @@ class _MyAppState extends State<MyApp> {
             }
             return supportedLocales.first;
           },
-
           //routing - proper flow with splash → onboarding → login → dashboard
           initialRoute: AppRoutes.dashboard, // ✅ Start with splash screen
           routes: appRoutes,

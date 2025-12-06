@@ -3,9 +3,14 @@ import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/core/constants/app_text_styles.dart';
 import 'package:gestanea/core/widgets/custom_button.dart';
 import 'package:gestanea/l10n/app_localizations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gestanea/core/database/models/mood_model.dart';
+import '../../../logic/bloc/mood_bloc.dart';
+import '../../../logic/bloc/mood_event.dart';
 
 class AddMoodDialog extends StatefulWidget {
-  const AddMoodDialog({super.key});
+  final String? initialMood;
+  const AddMoodDialog({super.key, this.initialMood});
 
   @override
   State<AddMoodDialog> createState() => _AddMoodDialogState();
@@ -16,6 +21,11 @@ class _AddMoodDialogState extends State<AddMoodDialog> {
   final _notesController = TextEditingController();
   
   String? _selectedMood;
+    @override
+    void initState() {
+      super.initState();
+      _selectedMood = widget.initialMood;
+    }
   double _energyLevel = 3;
   int _sleepQuality = 3;
   DateTime _selectedDate = DateTime.now();
@@ -38,8 +48,7 @@ class _AddMoodDialogState extends State<AddMoodDialog> {
   }
 
   void _handleSave() {
-    final l10n = AppLocalizations. of(context)!;
-    
+    final l10n = AppLocalizations.of(context)!;
     if (_selectedMood == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(l10n.pleaseSelectMood)),
@@ -47,20 +56,34 @@ class _AddMoodDialogState extends State<AddMoodDialog> {
       return;
     }
 
-    print('Mood: $_selectedMood');
-    print('Energy Level: $_energyLevel');
-    print('Sleep Quality: $_sleepQuality');
-    print('Notes: ${_notesController.text}');
-    print('Date: $_selectedDate');
-    
-    Navigator.pop(context);
-    
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(l10n.moodLoggedSuccessfully),
-        backgroundColor: Colors.green,
-      ),
+    // Save mood using MoodBloc
+    final moodEntry = MoodModel(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      userId: 'current_user',
+      mood: _selectedMood!,
+      intensity: _energyLevel.toInt(),
+      notes: _notesController.text.isNotEmpty ? _notesController.text : null,
+      recordedAt: _selectedDate,
+      createdAt: DateTime.now(),
     );
+    try {
+      // Use context.read if MoodBloc is provided above
+      context.read<MoodBloc>().add(AddMood(moodEntry));
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l10n.moodLoggedSuccessfully),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error saving mood: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   Future<void> _selectDateTime() async {
