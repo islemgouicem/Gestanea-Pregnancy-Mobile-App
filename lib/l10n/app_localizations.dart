@@ -23,9 +23,37 @@ class AppLocalizations {
   // Basic fallback translation function
   String t(String key) => _localizedValues[key] ?? key;
 
+  // Convenience getters used across the app (auth/login)
+  String get auth => t('auth');
+  String get auth2 => t('auth2');
+  String get or => t('or');
+  String get register => t('register');
+  String get welcome_back => t('welcome_back');
+  String get login => t('login');
+  String get email => t('email');
+  String get enter_email => t('enter_email');
+  String get password => t('password');
+  String get rememberMe => t('rememberMe');
+  String get forgot => t('forgot');
+  String get notRegistered => t('notRegistered');
+  String get createAccount => t('createAccount');
+
   // Example values map; populate as needed
   static const Map<String, String> _localizedValues = {
     'app_title': 'Gestanéa',
+    'auth': 'Welcome to Gestanéa',
+    'auth2': 'Join us to track pregnancy and baby care',
+    'or': 'OR',
+    'register': 'Create Account',
+    'welcome_back': 'Welcome Back',
+    'login': 'LOG IN',
+    'email': 'Email Address',
+    'enter_email': 'Enter your email',
+    'password': 'Password',
+    'rememberMe': 'Remember me',
+    'forgot': 'Forgot Password?',
+    'notRegistered': "Don't have an account?",
+    'createAccount': 'Create an Account',
   };
 
   static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
