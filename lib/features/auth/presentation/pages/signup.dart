@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/core/constants/app_routes.dart';
 
+final LinearGradient gradient1 = LinearGradient(
+  begin: Alignment.bottomCenter,
+  end: Alignment.topCenter,
+  colors: [Color(0xff9D42E8), Color(0xffB077E5)],
+);
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -38,40 +43,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   const SizedBox(height: 32),
 
-                  // Feature Cards
-                  const _FeatureCard(
-                    icon: Icons.access_time_filled,
-                    title: 'Track Your Pregnancy',
-                    subtitle: 'Week-by-week insights',
-                    iconColor: AppColors.main600,
-                  ),
-                  const SizedBox(height: 16),
-                  const _FeatureCard(
-                    icon: Icons.calendar_today,
-                    title: 'Health & Appointments',
-                    subtitle: 'Never miss a checkup',
-                    iconColor: AppColors.main600,
-                  ),
-                  const SizedBox(height: 16),
-                  const _FeatureCard(
-                    icon: Icons.people,
-                    title: 'Community Support',
-                    subtitle: 'Connect with others',
-                    iconColor: AppColors.main600,
-                  ),
-                  const SizedBox(height: 40),
-
-                  const _PrimaryButton(),
-                  const SizedBox(height: 12),
-
-                  const Text(
-                    'Takes less than a minute',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
+                  
                 ],
               ),
             ),
@@ -138,81 +110,7 @@ class _HeroSection extends StatelessWidget {
   }
 }
 
-class _FeatureCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final Color iconColor;
 
-  const _FeatureCard({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.iconColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColors.main300,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: AppColors.shadow1,
-      ),
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Color(0xff000000).withOpacity(0.2),
-                  blurRadius: 6,
-                  offset: Offset(0, 3),
-                  spreadRadius: 0,
-                ),
-              ],
-              gradient: AppColors.onboarding,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Icon(icon, color: AppColors.white, size: 24),
-          ),
-          const SizedBox(width: 16),
-          // Text Content
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                subtitle,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// The main CTA button with a gradient.
 class _PrimaryButton extends StatefulWidget {
   const _PrimaryButton();
 
@@ -225,7 +123,7 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
     // final prefs = await SharedPreferences.getInstance();
     // await prefs.setBool('onboardingCompleted', true);
     // if (mounted) {
-    Navigator.pushReplacementNamed(context, AppRoutes.signup);
+    Navigator.pushReplacementNamed(context, AppRoutes.auth);
     // }
   }
 
@@ -236,7 +134,7 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
       height: 60,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        gradient: AppColors.onboarding,
+        gradient: gradient1,
         boxShadow: const [
           BoxShadow(
             color: Color(0x00000040),
