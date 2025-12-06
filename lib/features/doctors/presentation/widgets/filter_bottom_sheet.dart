@@ -300,7 +300,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
         ),
         const SizedBox(height: 8),
         Text(
-          l10n.atLeastReviews(_minReviews.toInt().toString()),
+          l10n.atLeastReviews(_minReviews.toInt()),
           style: AppTextStyles.body1.copyWith(
             fontFamily: 'Lato',
             fontSize: 14,
