@@ -117,6 +117,261 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appointments => 'Rendez-vous';
 
   @override
+  String get appointmentName => 'Nom du rendez-vous';
+
+  @override
+  String get medicationName => 'Nom du médicament';
+
+  @override
+  String get nextLabel => 'Suivant';
+
+  @override
+  String get doneLabel => 'Terminé';
+
+  @override
+  String get uploadPicture => 'Télécharger une photo';
+
+  @override
+  String get camera => 'Caméra';
+
+  @override
+  String get gallery => 'Galerie';
+
+  @override
+  String get removeImage => 'Supprimer l\'image';
+
+  @override
+  String get tapToAddPicture => 'Appuyez pour ajouter une photo';
+
+  @override
+  String get optionalImageNote =>
+      'L\'ajout d\'une photo est facultatif. Vous pouvez ignorer cette étape.';
+
+  @override
+  String get selectFormDose => 'Choisir la forme et la dose';
+
+  @override
+  String get frequencySchedule => 'Fréquence et programme';
+
+  @override
+  String get frequencyType => 'Type de fréquence';
+
+  @override
+  String get frequencyValue => 'Valeur de la fréquence';
+
+  @override
+  String get scheduledTimesLabel => 'Heures planifiées';
+
+  @override
+  String get asNeeded => 'Selon les besoins';
+
+  @override
+  String get dosage => 'Dosage';
+
+  @override
+  String get dosageExample => 'ex.: 5 mg ou 10 ml';
+
+  @override
+  String get formPill => 'Comprimé';
+
+  @override
+  String get formInjection => 'Injection';
+
+  @override
+  String get formSpray => 'Spray';
+
+  @override
+  String get formDrop => 'Goutte';
+
+  @override
+  String get formSyrup => 'Sirop';
+
+  @override
+  String get formOthers => 'Autres';
+
+  @override
+  String medicinesTaken(int taken, int total) {
+    return '$taken sur $total pris';
+  }
+
+  @override
+  String get daily => 'Quotidien';
+
+  @override
+  String get weekly => 'Hebdomadaire';
+
+  @override
+  String get monthly => 'Mensuel';
+
+  @override
+  String get timesPerDayExample => 'ex.: 3 (fois par jour)';
+
+  @override
+  String get timesPerWeekExample => 'ex.: 2 (fois par semaine)';
+
+  @override
+  String get timesPerMonthExample => 'ex.: 1 (fois par mois)';
+
+  @override
+  String get appointmentDateTime => 'Date et heure du rendez-vous';
+
+  @override
+  String get appointmentLocation => 'Lieu du rendez-vous';
+
+  @override
+  String get selectDate => 'Sélectionner la date';
+
+  @override
+  String get selectTime => 'Sélectionner l\'heure';
+
+  @override
+  String get startDate => 'Date de début';
+
+  @override
+  String get endDate => 'Date de fin (Optionnel)';
+
+  @override
+  String get selectStartDate => 'Sélectionner la date de début';
+
+  @override
+  String get selectEndDate => 'Sélectionner la date de fin';
+
+  @override
+  String get addTime => 'Ajouter l\'heure';
+
+  @override
+  String get noScheduledTimesAdded => 'Aucune heure planifiée ajoutée';
+
+  @override
+  String get today => 'Aujourd\'hui';
+
+  @override
+  String get tomorrow => 'Demain';
+
+  @override
+  String get noAppointmentsFound => 'Aucun rendez-vous trouvé';
+
+  @override
+  String get appointment => 'Rendez-vous';
+
+  @override
+  String get pleaseAddScheduledTime =>
+      'Veuillez ajouter au moins une heure planifiée';
+
+  @override
+  String reviewsCount(Object count) {
+    return '$count avis';
+  }
+
+  @override
+  String get qty => 'Qté';
+
+  @override
+  String get noMedicines => 'Aucun médicament';
+
+  @override
+  String get schedule => 'Programme';
+
+  @override
+  String get availability => 'Disponibilité';
+
+  @override
+  String get specialty => 'Spécialité';
+
+  @override
+  String get bookAppointment => 'Réserver un rendez-vous';
+
+  @override
+  String get price => 'Prix';
+
+  @override
+  String get quantity => 'Quantité';
+
+  @override
+  String get checkout => 'Paiement';
+
+  @override
+  String get applyCoupon => 'Appliquer un coupon';
+
+  @override
+  String get popular => 'Populaire';
+
+  @override
+  String get offers => 'Offres';
+
+  @override
+  String get newLabel => 'Nouveau';
+
+  @override
+  String get contact => 'Contact';
+
+  @override
+  String get message => 'Message';
+
+  @override
+  String get location => 'Localisation';
+
+  @override
+  String get noResults => 'Aucun résultat';
+
+  @override
+  String get search => 'Recherche';
+
+  @override
+  String get sort => 'Trier';
+
+  @override
+  String get marketplace => 'Boutique';
+
+  @override
+  String get doctorsFeatureTitle => 'Médecins';
+
+  @override
+  String get planFeatureTitle => 'Plan';
+
+  @override
+  String get addMedicine => 'Ajouter un médicament';
+
+  @override
+  String get addAppointment => 'Ajouter un rendez-vous';
+
+  @override
+  String get error => 'Erreur';
+
+  @override
+  String get success => 'Succès';
+
+  @override
+  String get confirm => 'Confirmer';
+
+  @override
+  String get remove => 'Supprimer';
+
+  @override
+  String get apply => 'Appliquer';
+
+  @override
+  String get reviewsLabel => 'Avis';
+
+  @override
+  String get rating => 'Note';
+
+  @override
+  String get recommended => 'Recommandé';
+
+  @override
+  String get noReviews => 'Aucun avis';
+
+  @override
+  String get delivery => 'Livraison';
+
+  @override
+  String get shipping => 'Expédition';
+
+  @override
+  String get taxes => 'Taxes';
+
+  @override
   String get sunday => 'Dimanche';
 
   @override
@@ -409,9 +664,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get gender => 'Genre';
 
   @override
-  String get all => 'Tous';
-
-  @override
   String get male => 'Homme';
 
   @override
@@ -438,9 +690,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get noDoctorsFound => 'Aucun médecin trouvé';
-
-  @override
-  String get noResults => 'Aucun résultat';
 
   @override
   String noMatchingDoctors(String query) {
@@ -492,4 +741,129 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get callNow => 'Appeler maintenant';
+
+  @override
+  String get all => 'Tous';
+
+  @override
+  String get taken => 'Pris';
+
+  @override
+  String get missed => 'Manqué';
+
+  @override
+  String get take => 'Prendre';
+
+  @override
+  String get noMedicinesFound => 'Aucun médicament trouvé';
+
+  @override
+  String get pleaseLoginToViewPlan =>
+      'Veuillez vous connecter pour voir votre plan';
+
+  @override
+  String get selectColor => 'Sélectionnez la couleur';
+
+  @override
+  String get selectSize => 'Sélectionnez la taille';
+
+  @override
+  String get addToCart => 'Ajouter au panier';
+
+  @override
+  String get buyNow => 'Acheter maintenant';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get noDescriptionAvailable => 'Aucune description disponible';
+
+  @override
+  String get specifications => 'Spécifications';
+
+  @override
+  String get customerReviews => 'Avis des clientes';
+
+  @override
+  String get seeAll => 'voir tout';
+
+  @override
+  String get completeYourOrder => 'Complétez votre commande';
+
+  @override
+  String get orderSummary => 'Résumé de la commande';
+
+  @override
+  String get product => 'Produit';
+
+  @override
+  String get size => 'Taille';
+
+  @override
+  String get subtotal => 'Sous-total';
+
+  @override
+  String get deliveryFee => 'Frais de livraison';
+
+  @override
+  String get total => 'Total';
+
+  @override
+  String get deliveryInformation => 'Informations de livraison';
+
+  @override
+  String get fullName => 'Nom complet';
+
+  @override
+  String get enterYourFullName => 'Entrez votre nom complet';
+
+  @override
+  String get enterYourPhoneNumber => 'Entrez votre numéro de téléphone';
+
+  @override
+  String get deliveryAddress => 'Adresse de livraison';
+
+  @override
+  String get streetAddressApartment => 'Adresse, appartement, etc.';
+
+  @override
+  String get city => 'Ville';
+
+  @override
+  String get enterYourCity => 'Entrez votre ville';
+
+  @override
+  String get specialInstructions => 'Instructions spéciales (Facultatif)';
+
+  @override
+  String get addDeliveryNotes =>
+      'Ajoutez des notes de livraison, demandes spéciales...';
+
+  @override
+  String get paymentMethod => 'Méthode de paiement';
+
+  @override
+  String get cashOnDelivery => 'Paiement à la livraison';
+
+  @override
+  String get creditDebitCard => 'Carte de crédit / débit';
+
+  @override
+  String get digitalWallet => 'Portefeuille numérique';
+
+  @override
+  String get placeOrder => 'Passer la commande';
+
+  @override
+  String orderPlacedSuccessfully(String orderId) {
+    return 'Commande $orderId passée avec succès !';
+  }
+
+  @override
+  String get yourInformationIsSecure =>
+      'Vos informations sont sécurisées et cryptées';
+
+  @override
+  String get openNow => 'Ouvert maintenant';
 }

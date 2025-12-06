@@ -117,6 +117,259 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appointments => 'المواعيد';
 
   @override
+  String get appointmentName => 'اسم الموعد';
+
+  @override
+  String get medicationName => 'اسم الدواء';
+
+  @override
+  String get nextLabel => 'التالي';
+
+  @override
+  String get doneLabel => 'تم';
+
+  @override
+  String get uploadPicture => 'ارفعي صورة';
+
+  @override
+  String get camera => 'الكاميرا';
+
+  @override
+  String get gallery => 'المعرض';
+
+  @override
+  String get removeImage => 'إزالة الصورة';
+
+  @override
+  String get tapToAddPicture => 'اضغط لإضافة صورة';
+
+  @override
+  String get optionalImageNote => 'إضافة صورة اختيارية. يمكنك تخطي هذه الخطوة.';
+
+  @override
+  String get selectFormDose => 'اختاري الشكل والجرعة';
+
+  @override
+  String get frequencySchedule => 'التكرار والجدول';
+
+  @override
+  String get frequencyType => 'نوع التكرار';
+
+  @override
+  String get frequencyValue => 'قيمة التكرار';
+
+  @override
+  String get scheduledTimesLabel => 'الأوقات المجدولة';
+
+  @override
+  String get asNeeded => 'عند الحاجة';
+
+  @override
+  String get dosage => 'الجرعة';
+
+  @override
+  String get dosageExample => 'مثال: 5mg أو 10ml';
+
+  @override
+  String get formPill => 'حبة دواء';
+
+  @override
+  String get formInjection => 'حقنة';
+
+  @override
+  String get formSpray => 'رذاذ';
+
+  @override
+  String get formDrop => 'قطرة';
+
+  @override
+  String get formSyrup => 'شراب';
+
+  @override
+  String get formOthers => 'أخرى';
+
+  @override
+  String medicinesTaken(int taken, int total) {
+    return '$taken من $total تم أخذها';
+  }
+
+  @override
+  String get daily => 'يوميًا';
+
+  @override
+  String get weekly => 'أسبوعيًا';
+
+  @override
+  String get monthly => 'شهريًا';
+
+  @override
+  String get timesPerDayExample => 'مثال: 3 مرات يوميًا';
+
+  @override
+  String get timesPerWeekExample => 'مثال: 2 مرتين أسبوعيًا';
+
+  @override
+  String get timesPerMonthExample => 'مثال: 1 مرة شهريًا';
+
+  @override
+  String get appointmentDateTime => 'تاريخ ووقت الموعد';
+
+  @override
+  String get appointmentLocation => 'مكان الموعد';
+
+  @override
+  String get selectDate => 'اختر التاريخ';
+
+  @override
+  String get selectTime => 'اختر الوقت';
+
+  @override
+  String get startDate => 'تاريخ البدء';
+
+  @override
+  String get endDate => 'تاريخ النهاية (اختياري)';
+
+  @override
+  String get selectStartDate => 'اختر تاريخ البدء';
+
+  @override
+  String get selectEndDate => 'اختر تاريخ النهاية';
+
+  @override
+  String get addTime => 'إضافة وقت';
+
+  @override
+  String get noScheduledTimesAdded => 'لم تتم إضافة أوقات مجدولة بعد';
+
+  @override
+  String get today => 'اليوم';
+
+  @override
+  String get tomorrow => 'غداً';
+
+  @override
+  String get noAppointmentsFound => 'لا توجد مواعيد';
+
+  @override
+  String get appointment => 'موعد';
+
+  @override
+  String get pleaseAddScheduledTime => 'يرجى إضافة وقت مجدول واحد على الأقل';
+
+  @override
+  String reviewsCount(Object count) {
+    return '$count تقييمات';
+  }
+
+  @override
+  String get qty => 'الكمية';
+
+  @override
+  String get noMedicines => 'لا توجد أدوية';
+
+  @override
+  String get schedule => 'الجدول';
+
+  @override
+  String get availability => 'التوفر';
+
+  @override
+  String get specialty => 'التخصص';
+
+  @override
+  String get bookAppointment => 'احجزي موعدًا';
+
+  @override
+  String get price => 'السعر';
+
+  @override
+  String get quantity => 'الكمية';
+
+  @override
+  String get checkout => 'إتمام الشراء';
+
+  @override
+  String get applyCoupon => 'تطبيق القسيمة';
+
+  @override
+  String get popular => 'شائع';
+
+  @override
+  String get offers => 'عروض';
+
+  @override
+  String get newLabel => 'جديد';
+
+  @override
+  String get contact => 'تواصل';
+
+  @override
+  String get message => 'رسالة';
+
+  @override
+  String get location => 'الموقع';
+
+  @override
+  String get noResults => 'لا توجد نتائج';
+
+  @override
+  String get search => 'بحث';
+
+  @override
+  String get sort => 'فرز';
+
+  @override
+  String get marketplace => 'المتجر';
+
+  @override
+  String get doctorsFeatureTitle => 'الأطباء';
+
+  @override
+  String get planFeatureTitle => 'الخطة';
+
+  @override
+  String get addMedicine => 'أضيفي دواء';
+
+  @override
+  String get addAppointment => 'أضيفي موعدًا';
+
+  @override
+  String get error => 'خطأ';
+
+  @override
+  String get success => 'نجاح';
+
+  @override
+  String get confirm => 'تأكيد';
+
+  @override
+  String get remove => 'إزالة';
+
+  @override
+  String get apply => 'تطبيق';
+
+  @override
+  String get reviewsLabel => 'تقييمات';
+
+  @override
+  String get rating => 'التقييم';
+
+  @override
+  String get recommended => 'موصى به';
+
+  @override
+  String get noReviews => 'لا توجد تقييمات';
+
+  @override
+  String get delivery => 'التسليم';
+
+  @override
+  String get shipping => 'الشحن';
+
+  @override
+  String get taxes => 'الضرائب';
+
+  @override
   String get sunday => 'الأحد';
 
   @override
@@ -268,7 +521,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get market => 'السوق';
+  String get market => 'المتجر';
 
   @override
   String get maternityWear => 'ملابس الحمل';
@@ -407,9 +660,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get gender => 'الجنس';
 
   @override
-  String get all => 'الكل';
-
-  @override
   String get male => 'ذكر';
 
   @override
@@ -436,9 +686,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noDoctorsFound => 'لم يتم العثور على أطباء';
-
-  @override
-  String get noResults => 'لا توجد نتائج';
 
   @override
   String noMatchingDoctors(String query) {
@@ -488,5 +735,127 @@ class AppLocalizationsAr extends AppLocalizations {
   String get openingHours => 'ساعات العمل';
 
   @override
-  String get callNow => 'اتصل الآن';
+  String get callNow => 'اتصلي الآن';
+
+  @override
+  String get all => 'الكل';
+
+  @override
+  String get taken => 'تم تناولها';
+
+  @override
+  String get missed => 'فاتت';
+
+  @override
+  String get take => 'تناولي';
+
+  @override
+  String get noMedicinesFound => 'لم يتم العثور على أدوية';
+
+  @override
+  String get pleaseLoginToViewPlan => 'يرجى تسجيل الدخول لعرض خطتك';
+
+  @override
+  String get selectColor => 'اختاري اللون';
+
+  @override
+  String get selectSize => 'اختاري المقاس';
+
+  @override
+  String get addToCart => 'أضيفي إلى السلة';
+
+  @override
+  String get buyNow => 'اشتري الآن';
+
+  @override
+  String get description => 'الوصف';
+
+  @override
+  String get noDescriptionAvailable => 'لا يوجد وصف متاح';
+
+  @override
+  String get specifications => 'المواصفات';
+
+  @override
+  String get customerReviews => 'تقييمات العملاء';
+
+  @override
+  String get seeAll => 'عرض الكل';
+
+  @override
+  String get completeYourOrder => 'أكملي طلبك';
+
+  @override
+  String get orderSummary => 'ملخص الطلب';
+
+  @override
+  String get product => 'المنتج';
+
+  @override
+  String get size => 'المقاس';
+
+  @override
+  String get subtotal => 'المجموع الفرعي';
+
+  @override
+  String get deliveryFee => 'رسوم التوصيل';
+
+  @override
+  String get total => 'المجموع';
+
+  @override
+  String get deliveryInformation => 'معلومات التوصيل';
+
+  @override
+  String get fullName => 'الاسم الكامل';
+
+  @override
+  String get enterYourFullName => 'أدخلي اسمك الكامل';
+
+  @override
+  String get enterYourPhoneNumber => 'أدخلي رقم هاتفك';
+
+  @override
+  String get deliveryAddress => 'عنوان التوصيل';
+
+  @override
+  String get streetAddressApartment => 'عنوان الشارع، الشقة، إلخ.';
+
+  @override
+  String get city => 'المدينة';
+
+  @override
+  String get enterYourCity => 'أدخلي مدينتك';
+
+  @override
+  String get specialInstructions => 'تعليمات خاصة (اختياري)';
+
+  @override
+  String get addDeliveryNotes => 'أضيفي ملاحظات التوصيل، طلبات خاصة...';
+
+  @override
+  String get paymentMethod => 'طريقة الدفع';
+
+  @override
+  String get cashOnDelivery => 'الدفع عند الاستلام';
+
+  @override
+  String get creditDebitCard => 'بطاقة ائتمان / خصم';
+
+  @override
+  String get digitalWallet => 'محفظة رقمية';
+
+  @override
+  String get placeOrder => 'إتمام الطلب';
+
+  @override
+  String orderPlacedSuccessfully(String orderId) {
+    return 'تم تقديم الطلب $orderId بنجاح!';
+  }
+
+  @override
+  String get yourInformationIsSecure => 'معلوماتك آمنة ومشفرة';
+
+  @override
+  String get openNow => 'مفتوح الآن';
 }
