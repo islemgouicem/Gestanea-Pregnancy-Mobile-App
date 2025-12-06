@@ -165,7 +165,10 @@ class _PlanMainPageContentState extends State<_PlanMainPageContent> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Header(title: 'Plan', showBackButton: false),
+            Header(
+              title: AppLocalizations.of(context)!.plan,
+              showBackButton: false,
+            ),
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),

@@ -128,7 +128,7 @@ class AppointmentDateTimePageState extends State<AppointmentDateTimePage> {
                         ? DateFormat(
                             'MMMM dd, yyyy',
                           ).format(widget.selectedDate!)
-                        : 'Select Date',
+                        : AppLocalizations.of(context)!.selectDate,
                     style: TextStyle(
                       fontSize: 16,
                       color: widget.selectedDate != null
@@ -179,7 +179,7 @@ class AppointmentDateTimePageState extends State<AppointmentDateTimePage> {
                   Text(
                     widget.selectedTime != null
                         ? '${widget.selectedTime!.hour.toString().padLeft(2, '0')}:${widget.selectedTime!.minute.toString().padLeft(2, '0')}'
-                        : 'Select Time',
+                        : AppLocalizations.of(context)!.selectTime,
                     style: TextStyle(
                       fontSize: 16,
                       color: widget.selectedTime != null
@@ -224,9 +224,12 @@ class AppointmentDateTimePageState extends State<AppointmentDateTimePage> {
                 disabledBackgroundColor: const Color(0xFFE0E0E0),
                 disabledForegroundColor: Colors.white,
               ),
-              child: const Text(
-                'Next',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              child: Text(
+                AppLocalizations.of(context)!.nextLabel,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -276,9 +279,12 @@ class _AppointmentCalendarWidgetState extends State<AppointmentCalendarWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Select date',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              Text(
+                AppLocalizations.of(context)!.selectDate,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               IconButton(
                 icon: const Icon(Icons.close),
@@ -360,9 +366,12 @@ class _AppointmentCalendarWidgetState extends State<AppointmentCalendarWidget> {
                 ),
                 elevation: 0,
               ),
-              child: const Text(
-                'Done',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              child: Text(
+                AppLocalizations.of(context)!.doneLabel,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -520,9 +529,12 @@ class _AppointmentTimeWidgetState extends State<AppointmentTimeWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Select time',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              Text(
+                AppLocalizations.of(context)!.selectTime,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               IconButton(
                 icon: const Icon(Icons.close),
@@ -630,9 +642,12 @@ class _AppointmentTimeWidgetState extends State<AppointmentTimeWidget> {
                 ),
                 elevation: 0,
               ),
-              child: const Text(
-                'Done',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              child: Text(
+                AppLocalizations.of(context)!.doneLabel,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),

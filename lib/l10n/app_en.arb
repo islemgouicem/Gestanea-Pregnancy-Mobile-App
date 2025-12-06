@@ -41,6 +41,11 @@
   "nextLabel": "Next",
   "doneLabel": "Done",
   "uploadPicture": "Upload a picture",
+  "camera": "Camera",
+  "gallery": "Gallery",
+  "removeImage": "Remove Image",
+  "tapToAddPicture": "Tap to add picture",
+  "optionalImageNote": "Adding a picture is optional. You can skip this step.",
   "selectFormDose": "Select Form & Dose",
   "frequencySchedule": "Frequency & Schedule",
   "frequencyType": "Frequency Type",
@@ -49,6 +54,20 @@
   "asNeeded": "As Needed",
   "dosage": "Dosage",
   "dosageExample": "e.g., 5mg or 10ml",
+  "formPill": "Pill",
+  "formInjection": "Injection",
+  "formSpray": "Spray",
+  "formDrop": "Drop",
+  "formSyrup": "Syrup",
+  "formOthers": "Others",
+  "medicinesTaken": "{taken} of {total} taken",
+  "@medicinesTaken": {
+    "description": "Medicine taken status",
+    "placeholders": {
+      "taken": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
   "daily": "Daily",
   "weekly": "Weekly",
   "monthly": "Monthly",
@@ -57,6 +76,20 @@
   "timesPerMonthExample": "e.g., 1 (times per month)",
 
   "appointmentDateTime": "Appointment Date & Time",
+  "appointmentLocation": "Appointment location",
+  "selectDate": "Select Date",
+  "selectTime": "Select time",
+  "startDate": "Start Date",
+  "endDate": "End Date (Optional)",
+  "selectStartDate": "Select Start Date",
+  "selectEndDate": "Select End Date",
+  "addTime": "Add Time",
+  "noScheduledTimesAdded": "No scheduled times added yet",
+  "today": "Today",
+  "tomorrow": "Tomorrow",
+  "noAppointmentsFound": "No appointments found",
+  "appointment": "Appointment",
+  
   "pleaseAddScheduledTime": "Please add at least one scheduled time",
   "reviewsCount": "{count} reviews",
   "@reviewsCount": {"placeholders": {"count": {"type": "Object"}}},
@@ -262,7 +295,6 @@
       "count": {"type": "int"}
     }
   },
-  "cancel": "Cancel",
   "applyFilters": "Apply Filters",
   "kmAway": "{distance} km away",
   "@kmAway": {
@@ -311,7 +343,6 @@
   "specifications": "Specifications",
   "customerReviews": "Customer Reviews",
   "seeAll": "see all",
-  "reviews": "reviews",
 
   "completeYourOrder": "Complete Your Order",
   "orderSummary": "Order Summary",

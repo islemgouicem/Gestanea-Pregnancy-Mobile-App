@@ -178,7 +178,7 @@ class ProductDetailPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          '${state.product.discountPercentage}% OFF',
+                          '-${state.product.discountPercentage}%',
                           style: AppTextStyles.smallLabel.copyWith(
                             color: AppColors.white,
                             fontWeight: FontWeight.w600,
@@ -237,7 +237,7 @@ class ProductDetailPage extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          '\$${state.product.price.toStringAsFixed(2)}',
+                          '${state.product.price.toStringAsFixed(0)} DA',
                           style: AppTextStyles.headline1.copyWith(
                             fontSize: 32,
                             fontWeight: FontWeight.w700,
@@ -247,7 +247,7 @@ class ProductDetailPage extends StatelessWidget {
                         const SizedBox(width: 12),
                         if (state.product.originalPrice != null)
                           Text(
-                            '\$${state.product.originalPrice!.toStringAsFixed(2)}',
+                            '${state.product.originalPrice!.toStringAsFixed(0)} DA',
                             style: AppTextStyles.body1.copyWith(
                               fontSize: 18,
                               decoration: TextDecoration.lineThrough,
@@ -261,7 +261,8 @@ class ProductDetailPage extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   // Select Color
-                  if (state.colorVariants.isNotEmpty)
+                  if (state.colorVariants.isNotEmpty &&
+                      state.product.categoryId != 'cat_3')
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: NeumorphicSection(
@@ -330,7 +331,8 @@ class ProductDetailPage extends StatelessWidget {
                   const SizedBox(height: 16),
 
                   // Select Size
-                  if (state.sizeVariants.isNotEmpty)
+                  if (state.sizeVariants.isNotEmpty &&
+                      state.product.categoryId != 'cat_3')
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: NeumorphicSection(

@@ -2,11 +2,10 @@
 
 
 {
-
-"full_name": "الاسم الكامل",
-"enable_notifications": "تفعيل الإشعارات",
-"phone": "الهاتف",
-"country": "البلد",
+  "full_name": "الاسم الكامل",
+  "enable_notifications": "تفعيل الإشعارات",
+  "phone": "الهاتف",
+  "country": "البلد",
   "logout_confirmation": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
   "cancel": "إلغاء",
   "unknown": "غير معروف",
@@ -14,10 +13,8 @@
   "profile_updated": "تم تحديث الملف الشخصي",
   "edit_profile": "تعديل الملف الشخصي",
   "change_profile_photo": "تغيير صورة الملف الشخصي",
-  "full_name": "الاسم الكامل",
-    "save_changes": "حفظ التغييرات",
+  "save_changes": "حفظ التغييرات",
   "save": "حفظ",
-  "enable_notifications": "تفعيل الإشعارات",
   "security": "الأمان",
   "i_gave_birth": "لقد ولدت",
   "no_longer_pregnant": "لم أعد حاملاً",
@@ -48,6 +45,11 @@
   "nextLabel": "التالي",
   "doneLabel": "تم",
   "uploadPicture": "ارفعي صورة",
+  "camera": "الكاميرا",
+  "gallery": "المعرض",
+  "removeImage": "إزالة الصورة",
+  "tapToAddPicture": "اضغط لإضافة صورة",
+  "optionalImageNote": "إضافة صورة اختيارية. يمكنك تخطي هذه الخطوة.",
   "selectFormDose": "اختاري الشكل والجرعة",
   "frequencySchedule": "التكرار والجدول",
   "frequencyType": "نوع التكرار",
@@ -56,6 +58,20 @@
   "asNeeded": "عند الحاجة",
   "dosage": "الجرعة",
   "dosageExample": "مثال: 5mg أو 10ml",
+  "formPill": "حبة دواء",
+  "formInjection": "حقنة",
+  "formSpray": "رذاذ",
+  "formDrop": "قطرة",
+  "formSyrup": "شراب",
+  "formOthers": "أخرى",
+  "medicinesTaken": "{taken} من {total} تم أخذها",
+  "@medicinesTaken": {
+    "description": "Medicine taken status",
+    "placeholders": {
+      "taken": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
   "daily": "يوميًا",
   "weekly": "أسبوعيًا",
   "monthly": "شهريًا",
@@ -64,6 +80,20 @@
   "timesPerMonthExample": "مثال: 1 مرة شهريًا",
 
   "appointmentDateTime": "تاريخ ووقت الموعد",
+  "appointmentLocation": "مكان الموعد",
+  "selectDate": "اختر التاريخ",
+  "selectTime": "اختر الوقت",
+  "startDate": "تاريخ البدء",
+  "endDate": "تاريخ النهاية (اختياري)",
+  "selectStartDate": "اختر تاريخ البدء",
+  "selectEndDate": "اختر تاريخ النهاية",
+  "addTime": "إضافة وقت",
+  "noScheduledTimesAdded": "لم تتم إضافة أوقات مجدولة بعد",
+  "today": "اليوم",
+  "tomorrow": "غداً",
+  "noAppointmentsFound": "لا توجد مواعيد",
+  "appointment": "موعد",
+ 
   "pleaseAddScheduledTime": "يرجى إضافة وقت مجدول واحد على الأقل",
   "reviewsCount": "{count} تقييمات",
   "@reviewsCount": {"placeholders": {"count": {"type": "Object"}}},
@@ -238,7 +268,6 @@
       "count": {"type": "int"}
     }
   },
-  "cancel": "إلغاء",
   "applyFilters": "تطبيق التصفية",
   "kmAway": "على بعد {distance} كم",
   "@kmAway": {
@@ -248,7 +277,6 @@
   },
   "reviews": "مراجعات",
   "noDoctorsFound": "لم يتم العثور على أطباء",
-  "noResults": "لا توجد نتائج",
   "noMatchingDoctors": "لا يوجد أطباء يطابقون \"{query}\"",
   "@noMatchingDoctors": {
     "placeholders": {
@@ -271,9 +299,6 @@
   "openingHours": "ساعات العمل",
   "callNow": "اتصلي الآن",
 
-  "all": "الكل",
-  "taken": "تم تناوله",
-  "missed": "فائت",
   "take": "تناولي",
   "noMedicinesFound": "لم يتم العثور على أدوية",
   "pleaseLoginToViewPlan": "يرجى تسجيل الدخول لعرض خطتك",
@@ -287,7 +312,6 @@
   "specifications": "المواصفات",
   "customerReviews": "تقييمات العملاء",
   "seeAll": "عرض الكل",
-  "reviews": "تقييمات",
 
   "completeYourOrder": "أكملي طلبك",
   "orderSummary": "ملخص الطلب",

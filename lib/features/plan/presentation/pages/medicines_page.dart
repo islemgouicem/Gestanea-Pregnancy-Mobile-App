@@ -169,7 +169,7 @@ class _MedicinesPageState extends State<MedicinesPage> {
                                 child: Padding(
                                   padding: EdgeInsets.all(screenHeight * 0.05),
                                   child: Text(
-                                    'Error: ${planState.message}',
+                                    '${localizations.error}: ${planState.message}',
                                     style: TextStyle(
                                       fontSize: screenWidth * 0.04,
                                       color: Colors.red,

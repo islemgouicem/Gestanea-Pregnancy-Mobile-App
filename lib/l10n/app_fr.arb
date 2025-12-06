@@ -2,10 +2,10 @@
 
 
 {
-"full_name": "Nom complet",
-"enable_notifications": "Activer les notifications",
-"phone": "Téléphone",
-"country": "Pays",
+  "full_name": "Nom complet",
+  "enable_notifications": "Activer les notifications",
+  "phone": "Téléphone",
+  "country": "Pays",
   "security": "Sécurité",
   "i_gave_birth": "J'ai accouché",
   "no_longer_pregnant": "Je ne suis plus enceinte",
@@ -22,10 +22,8 @@
   "profile_updated": "Profil mis à jour",
   "edit_profile": "Modifier le profil",
   "change_profile_photo": "Changer la photo de profil",
-  "full_name": "Nom complet",
   "save_changes": "Enregistrer les modifications",
   "save": "Enregistrer",
-  "enable_notifications": "Activer les notifications",
 
   "plan": "Plan",
   "sundayShort": "D",
@@ -47,6 +45,16 @@
   "nextLabel": "Suivant",
   "doneLabel": "Terminé",
   "uploadPicture": "Télécharger une photo",
+  "camera": "Caméra",
+  "gallery": "Galerie",
+  "removeImage": "Supprimer l'image",
+  "tapToAddPicture": "Appuyez pour ajouter une photo",
+  "optionalImageNote": "L'ajout d'une photo est facultatif. Vous pouvez ignorer cette étape.",
+  "camera": "Caméra",
+  "gallery": "Galerie",
+  "removeImage": "Supprimer l'image",
+  "tapToAddPicture": "Appuyez pour ajouter une photo",
+  "optionalImageNote": "L'ajout d'une photo est facultatif. Vous pouvez ignorer cette étape.",
   "selectFormDose": "Choisir la forme et la dose",
   "frequencySchedule": "Fréquence et programme",
   "frequencyType": "Type de fréquence",
@@ -55,6 +63,20 @@
   "asNeeded": "Selon les besoins",
   "dosage": "Dosage",
   "dosageExample": "ex.: 5 mg ou 10 ml",
+  "formPill": "Comprimé",
+  "formInjection": "Injection",
+  "formSpray": "Spray",
+  "formDrop": "Goutte",
+  "formSyrup": "Sirop",
+  "formOthers": "Autres",
+  "medicinesTaken": "{taken} sur {total} pris",
+  "@medicinesTaken": {
+    "description": "Medicine taken status",
+    "placeholders": {
+      "taken": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
   "daily": "Quotidien",
   "weekly": "Hebdomadaire",
   "monthly": "Mensuel",
@@ -62,6 +84,20 @@
   "timesPerWeekExample": "ex.: 2 (fois par semaine)",
   "timesPerMonthExample": "ex.: 1 (fois par mois)",
   "appointmentDateTime": "Date et heure du rendez-vous",
+  "appointmentLocation": "Lieu du rendez-vous",
+  "selectDate": "Sélectionner la date",
+  "selectTime": "Sélectionner l'heure",
+  "startDate": "Date de début",
+  "endDate": "Date de fin (Optionnel)",
+  "selectStartDate": "Sélectionner la date de début",
+  "selectEndDate": "Sélectionner la date de fin",
+  "addTime": "Ajouter l'heure",
+  "noScheduledTimesAdded": "Aucune heure planifiée ajoutée",
+  "today": "Aujourd'hui",
+  "tomorrow": "Demain",
+  "noAppointmentsFound": "Aucun rendez-vous trouvé",
+  "appointment": "Rendez-vous",
+
   "pleaseAddScheduledTime": "Veuillez ajouter au moins une heure planifiée",
   "reviewsCount": "{count} avis",
   "@reviewsCount": {"placeholders": {"count": {"type": "Object"}}},
@@ -236,7 +272,6 @@
       "count": {"type": "int"}
     }
   },
-  "cancel": "Annuler",
   "applyFilters": "Appliquer les filtres",
   "kmAway": "à {distance} km",
   "@kmAway": {
@@ -246,7 +281,6 @@
   },
   "reviews": "avis",
   "noDoctorsFound": "Aucun médecin trouvé",
-  "noResults": "Aucun résultat",
   "noMatchingDoctors": "Aucun médecin ne correspond à \"{query}\"",
   "@noMatchingDoctors": {
     "placeholders": {
@@ -269,9 +303,6 @@
   "openingHours": "Heures d'ouverture",
   "callNow": "Appeler maintenant",
 
-  "all": "Tous",
-  "taken": "Pris",
-  "missed": "Manqué",
   "take": "Prendre",
   "noMedicinesFound": "Aucun médicament trouvé",
   "pleaseLoginToViewPlan": "Veuillez vous connecter pour voir votre plan",
@@ -285,7 +316,6 @@
   "specifications": "Spécifications",
   "customerReviews": "Avis des clientes",
   "seeAll": "voir tout",
-  "reviews": "avis",
 
   "completeYourOrder": "Complétez votre commande",
   "orderSummary": "Résumé de la commande",

@@ -132,6 +132,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get uploadPicture => 'Télécharger une photo';
 
   @override
+  String get camera => 'Caméra';
+
+  @override
+  String get gallery => 'Galerie';
+
+  @override
+  String get removeImage => 'Supprimer l\'image';
+
+  @override
+  String get tapToAddPicture => 'Appuyez pour ajouter une photo';
+
+  @override
+  String get optionalImageNote =>
+      'L\'ajout d\'une photo est facultatif. Vous pouvez ignorer cette étape.';
+
+  @override
   String get selectFormDose => 'Choisir la forme et la dose';
 
   @override
@@ -156,6 +172,29 @@ class AppLocalizationsFr extends AppLocalizations {
   String get dosageExample => 'ex.: 5 mg ou 10 ml';
 
   @override
+  String get formPill => 'Comprimé';
+
+  @override
+  String get formInjection => 'Injection';
+
+  @override
+  String get formSpray => 'Spray';
+
+  @override
+  String get formDrop => 'Goutte';
+
+  @override
+  String get formSyrup => 'Sirop';
+
+  @override
+  String get formOthers => 'Autres';
+
+  @override
+  String medicinesTaken(int taken, int total) {
+    return '$taken sur $total pris';
+  }
+
+  @override
   String get daily => 'Quotidien';
 
   @override
@@ -175,6 +214,45 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get appointmentDateTime => 'Date et heure du rendez-vous';
+
+  @override
+  String get appointmentLocation => 'Lieu du rendez-vous';
+
+  @override
+  String get selectDate => 'Sélectionner la date';
+
+  @override
+  String get selectTime => 'Sélectionner l\'heure';
+
+  @override
+  String get startDate => 'Date de début';
+
+  @override
+  String get endDate => 'Date de fin (Optionnel)';
+
+  @override
+  String get selectStartDate => 'Sélectionner la date de début';
+
+  @override
+  String get selectEndDate => 'Sélectionner la date de fin';
+
+  @override
+  String get addTime => 'Ajouter l\'heure';
+
+  @override
+  String get noScheduledTimesAdded => 'Aucune heure planifiée ajoutée';
+
+  @override
+  String get today => 'Aujourd\'hui';
+
+  @override
+  String get tomorrow => 'Demain';
+
+  @override
+  String get noAppointmentsFound => 'Aucun rendez-vous trouvé';
+
+  @override
+  String get appointment => 'Rendez-vous';
 
   @override
   String get pleaseAddScheduledTime =>

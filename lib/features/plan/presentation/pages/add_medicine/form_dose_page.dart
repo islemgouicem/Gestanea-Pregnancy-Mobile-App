@@ -40,14 +40,14 @@ class _FormDosePageState extends State<FormDosePage> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final forms = [
-      {'name': 'Capsule', 'icon': '💊'},
-      {'name': 'Pill', 'icon': '💊'},
-      {'name': 'Injection', 'icon': '💉'},
-      {'name': 'Spray', 'icon': '🧴'},
-      {'name': 'Drop', 'icon': '💧'},
-      {'name': 'Syrup', 'icon': '🧪'},
-      {'name': 'Others', 'icon': '•••'},
+      {'name': localizations.formPill, 'icon': '💊'},
+      {'name': localizations.formInjection, 'icon': '💉'},
+      {'name': localizations.formSpray, 'icon': '🧴'},
+      {'name': localizations.formDrop, 'icon': '💧'},
+      {'name': localizations.formSyrup, 'icon': '🧪'},
+      {'name': localizations.formOthers, 'icon': '•••'},
     ];
 
     return Column(

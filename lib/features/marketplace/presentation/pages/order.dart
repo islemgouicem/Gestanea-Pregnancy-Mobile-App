@@ -350,14 +350,14 @@ class _CompleteOrderScreenState extends State<CompleteOrderScreen> {
                                     children: [
                                       _buildPriceRow(
                                         AppLocalizations.of(context)!.subtotal,
-                                        '\$${subtotal.toStringAsFixed(2)}',
+                                        "${subtotal.toStringAsFixed(0)}DA",
                                       ),
                                       const SizedBox(height: 8),
                                       _buildPriceRow(
                                         AppLocalizations.of(
                                           context,
                                         )!.deliveryFee,
-                                        '\$${deliveryFee.toStringAsFixed(2)}',
+                                        '${deliveryFee.toStringAsFixed(0)}DA',
                                       ),
                                       const SizedBox(height: 12),
                                       const Divider(
@@ -367,7 +367,7 @@ class _CompleteOrderScreenState extends State<CompleteOrderScreen> {
                                       const SizedBox(height: 12),
                                       _buildPriceRow(
                                         AppLocalizations.of(context)!.total,
-                                        '\$${total.toStringAsFixed(2)}',
+                                        '${total.toStringAsFixed(0)}DA',
                                         isBold: true,
                                       ),
                                     ],

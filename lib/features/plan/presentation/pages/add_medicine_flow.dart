@@ -167,6 +167,10 @@ class _AddMedicineFlowState extends State<AddMedicineFlow> {
 
                   UploadPicturePage(
                     onBack: _previousPage,
+                    initialImagePath: medicationImage,
+                    onImageSelected: (imagePath) {
+                      setState(() => medicationImage = imagePath);
+                    },
                     onDone: () async {
                       await _saveMedicine();
                     },

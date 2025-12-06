@@ -132,6 +132,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uploadPicture => 'Upload a picture';
 
   @override
+  String get camera => 'Camera';
+
+  @override
+  String get gallery => 'Gallery';
+
+  @override
+  String get removeImage => 'Remove Image';
+
+  @override
+  String get tapToAddPicture => 'Tap to add picture';
+
+  @override
+  String get optionalImageNote =>
+      'Adding a picture is optional. You can skip this step.';
+
+  @override
   String get selectFormDose => 'Select Form & Dose';
 
   @override
@@ -156,6 +172,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dosageExample => 'e.g., 5mg or 10ml';
 
   @override
+  String get formPill => 'Pill';
+
+  @override
+  String get formInjection => 'Injection';
+
+  @override
+  String get formSpray => 'Spray';
+
+  @override
+  String get formDrop => 'Drop';
+
+  @override
+  String get formSyrup => 'Syrup';
+
+  @override
+  String get formOthers => 'Others';
+
+  @override
+  String medicinesTaken(int taken, int total) {
+    return '$taken of $total taken';
+  }
+
+  @override
   String get daily => 'Daily';
 
   @override
@@ -175,6 +214,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appointmentDateTime => 'Appointment Date & Time';
+
+  @override
+  String get appointmentLocation => 'Appointment location';
+
+  @override
+  String get selectDate => 'Select Date';
+
+  @override
+  String get selectTime => 'Select time';
+
+  @override
+  String get startDate => 'Start Date';
+
+  @override
+  String get endDate => 'End Date (Optional)';
+
+  @override
+  String get selectStartDate => 'Select Start Date';
+
+  @override
+  String get selectEndDate => 'Select End Date';
+
+  @override
+  String get addTime => 'Add Time';
+
+  @override
+  String get noScheduledTimesAdded => 'No scheduled times added yet';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get tomorrow => 'Tomorrow';
+
+  @override
+  String get noAppointmentsFound => 'No appointments found';
+
+  @override
+  String get appointment => 'Appointment';
 
   @override
   String get pleaseAddScheduledTime => 'Please add at least one scheduled time';

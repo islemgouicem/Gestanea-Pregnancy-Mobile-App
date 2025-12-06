@@ -132,6 +132,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uploadPicture => 'ارفعي صورة';
 
   @override
+  String get camera => 'الكاميرا';
+
+  @override
+  String get gallery => 'المعرض';
+
+  @override
+  String get removeImage => 'إزالة الصورة';
+
+  @override
+  String get tapToAddPicture => 'اضغط لإضافة صورة';
+
+  @override
+  String get optionalImageNote => 'إضافة صورة اختيارية. يمكنك تخطي هذه الخطوة.';
+
+  @override
   String get selectFormDose => 'اختاري الشكل والجرعة';
 
   @override
@@ -156,6 +171,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dosageExample => 'مثال: 5mg أو 10ml';
 
   @override
+  String get formPill => 'حبة دواء';
+
+  @override
+  String get formInjection => 'حقنة';
+
+  @override
+  String get formSpray => 'رذاذ';
+
+  @override
+  String get formDrop => 'قطرة';
+
+  @override
+  String get formSyrup => 'شراب';
+
+  @override
+  String get formOthers => 'أخرى';
+
+  @override
+  String medicinesTaken(int taken, int total) {
+    return '$taken من $total تم أخذها';
+  }
+
+  @override
   String get daily => 'يوميًا';
 
   @override
@@ -175,6 +213,45 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get appointmentDateTime => 'تاريخ ووقت الموعد';
+
+  @override
+  String get appointmentLocation => 'مكان الموعد';
+
+  @override
+  String get selectDate => 'اختر التاريخ';
+
+  @override
+  String get selectTime => 'اختر الوقت';
+
+  @override
+  String get startDate => 'تاريخ البدء';
+
+  @override
+  String get endDate => 'تاريخ النهاية (اختياري)';
+
+  @override
+  String get selectStartDate => 'اختر تاريخ البدء';
+
+  @override
+  String get selectEndDate => 'اختر تاريخ النهاية';
+
+  @override
+  String get addTime => 'إضافة وقت';
+
+  @override
+  String get noScheduledTimesAdded => 'لم تتم إضافة أوقات مجدولة بعد';
+
+  @override
+  String get today => 'اليوم';
+
+  @override
+  String get tomorrow => 'غداً';
+
+  @override
+  String get noAppointmentsFound => 'لا توجد مواعيد';
+
+  @override
+  String get appointment => 'موعد';
 
   @override
   String get pleaseAddScheduledTime => 'يرجى إضافة وقت مجدول واحد على الأقل';
@@ -605,7 +682,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get reviews => 'تقييمات';
+  String get reviews => 'مراجعات';
 
   @override
   String get noDoctorsFound => 'لم يتم العثور على أطباء';
@@ -664,10 +741,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get all => 'الكل';
 
   @override
-  String get taken => 'تم تناوله';
+  String get taken => 'تم تناولها';
 
   @override
-  String get missed => 'فائت';
+  String get missed => 'فاتت';
 
   @override
   String get take => 'تناولي';

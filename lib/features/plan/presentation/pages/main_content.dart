@@ -75,7 +75,7 @@ class _MainContentState extends State<MainContent> {
         final total = stats['total'] ?? 0;
         final taken = stats['taken'] ?? 0;
         final progress = total > 0 ? taken / total : 0.0;
-        final takenText = '$taken of $total taken';
+        final takenText = localization.medicinesTaken(taken, total);
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -346,6 +346,36 @@ abstract class AppLocalizations {
   /// **'Upload a picture'**
   String get uploadPicture;
 
+  /// No description provided for @camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get camera;
+
+  /// No description provided for @gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get gallery;
+
+  /// No description provided for @removeImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Image'**
+  String get removeImage;
+
+  /// No description provided for @tapToAddPicture.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to add picture'**
+  String get tapToAddPicture;
+
+  /// No description provided for @optionalImageNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding a picture is optional. You can skip this step.'**
+  String get optionalImageNote;
+
   /// No description provided for @selectFormDose.
   ///
   /// In en, this message translates to:
@@ -394,6 +424,48 @@ abstract class AppLocalizations {
   /// **'e.g., 5mg or 10ml'**
   String get dosageExample;
 
+  /// No description provided for @formPill.
+  ///
+  /// In en, this message translates to:
+  /// **'Pill'**
+  String get formPill;
+
+  /// No description provided for @formInjection.
+  ///
+  /// In en, this message translates to:
+  /// **'Injection'**
+  String get formInjection;
+
+  /// No description provided for @formSpray.
+  ///
+  /// In en, this message translates to:
+  /// **'Spray'**
+  String get formSpray;
+
+  /// No description provided for @formDrop.
+  ///
+  /// In en, this message translates to:
+  /// **'Drop'**
+  String get formDrop;
+
+  /// No description provided for @formSyrup.
+  ///
+  /// In en, this message translates to:
+  /// **'Syrup'**
+  String get formSyrup;
+
+  /// No description provided for @formOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'Others'**
+  String get formOthers;
+
+  /// Medicine taken status
+  ///
+  /// In en, this message translates to:
+  /// **'{taken} of {total} taken'**
+  String medicinesTaken(int taken, int total);
+
   /// No description provided for @daily.
   ///
   /// In en, this message translates to:
@@ -435,6 +507,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Appointment Date & Time'**
   String get appointmentDateTime;
+
+  /// No description provided for @appointmentLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment location'**
+  String get appointmentLocation;
+
+  /// No description provided for @selectDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Date'**
+  String get selectDate;
+
+  /// No description provided for @selectTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Select time'**
+  String get selectTime;
+
+  /// No description provided for @startDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Date'**
+  String get startDate;
+
+  /// No description provided for @endDate.
+  ///
+  /// In en, this message translates to:
+  /// **'End Date (Optional)'**
+  String get endDate;
+
+  /// No description provided for @selectStartDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Start Date'**
+  String get selectStartDate;
+
+  /// No description provided for @selectEndDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select End Date'**
+  String get selectEndDate;
+
+  /// No description provided for @addTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Time'**
+  String get addTime;
+
+  /// No description provided for @noScheduledTimesAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'No scheduled times added yet'**
+  String get noScheduledTimesAdded;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get tomorrow;
+
+  /// No description provided for @noAppointmentsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No appointments found'**
+  String get noAppointmentsFound;
+
+  /// No description provided for @appointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment'**
+  String get appointment;
 
   /// No description provided for @pleaseAddScheduledTime.
   ///

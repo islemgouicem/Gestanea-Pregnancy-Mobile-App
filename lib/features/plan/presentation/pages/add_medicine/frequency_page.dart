@@ -252,9 +252,9 @@ class _FrequencyPageState extends State<FrequencyPage> {
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: Colors.grey[300]!),
                     ),
-                    child: const Text(
-                      'No scheduled times added yet',
-                      style: TextStyle(color: Colors.black54),
+                    child: Text(
+                      AppLocalizations.of(context)!.noScheduledTimesAdded,
+                      style: const TextStyle(color: Colors.black54),
                     ),
                   )
                 else
@@ -275,7 +275,7 @@ class _FrequencyPageState extends State<FrequencyPage> {
                 OutlinedButton.icon(
                   onPressed: _showTimePicker,
                   icon: const Icon(Icons.access_time),
-                  label: const Text('Add Time'),
+                  label: Text(AppLocalizations.of(context)!.addTime),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: const Color(0xFFA67FF5),
                     side: const BorderSide(color: Color(0xFFA67FF5)),
@@ -287,9 +287,12 @@ class _FrequencyPageState extends State<FrequencyPage> {
                 const SizedBox(height: 24),
 
                 // Start Date Selector
-                const Text(
-                  'Start Date',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                Text(
+                  AppLocalizations.of(context)!.startDate,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 InkWell(
@@ -316,8 +319,9 @@ class _FrequencyPageState extends State<FrequencyPage> {
                           _selectedStartDate != null
                               ? DateFormat(
                                   'MMMM dd, yyyy',
+                                  Localizations.localeOf(context).toString(),
                                 ).format(_selectedStartDate!)
-                              : 'Select Start Date',
+                              : AppLocalizations.of(context)!.selectStartDate,
                           style: TextStyle(
                             fontSize: 16,
                             color: _selectedStartDate != null
@@ -341,9 +345,12 @@ class _FrequencyPageState extends State<FrequencyPage> {
                 const SizedBox(height: 24),
 
                 // End Date Selector
-                const Text(
-                  'End Date (Optional)',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                Text(
+                  AppLocalizations.of(context)!.endDate,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 InkWell(
@@ -370,8 +377,9 @@ class _FrequencyPageState extends State<FrequencyPage> {
                           _selectedEndDate != null
                               ? DateFormat(
                                   'MMMM dd, yyyy',
+                                  Localizations.localeOf(context).toString(),
                                 ).format(_selectedEndDate!)
-                              : 'Select End Date',
+                              : AppLocalizations.of(context)!.selectEndDate,
                           style: TextStyle(
                             fontSize: 16,
                             color: _selectedEndDate != null
@@ -418,9 +426,12 @@ class _FrequencyPageState extends State<FrequencyPage> {
                 disabledBackgroundColor: const Color(0xFFE0E0E0),
                 disabledForegroundColor: Colors.white,
               ),
-              child: const Text(
-                'Next',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              child: Text(
+                AppLocalizations.of(context)!.nextLabel,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -470,9 +481,12 @@ class _AppointmentCalendarWidgetState extends State<AppointmentCalendarWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Select date',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              Text(
+                AppLocalizations.of(context)!.selectDate,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               IconButton(
                 icon: const Icon(Icons.close),
@@ -554,9 +568,12 @@ class _AppointmentCalendarWidgetState extends State<AppointmentCalendarWidget> {
                 ),
                 elevation: 0,
               ),
-              child: const Text(
-                'Done',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              child: Text(
+                AppLocalizations.of(context)!.doneLabel,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -644,21 +661,36 @@ class _AppointmentCalendarWidgetState extends State<AppointmentCalendarWidget> {
   }
 
   String _getMonthName(int month) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return months[month - 1];
+    final l10n = AppLocalizations.of(context)!;
+
+    switch (month) {
+      case 1:
+        return l10n.jan;
+      case 2:
+        return l10n.feb;
+      case 3:
+        return l10n.mar;
+      case 4:
+        return l10n.apr;
+      case 5:
+        return l10n.may;
+      case 6:
+        return l10n.jun;
+      case 7:
+        return l10n.jul;
+      case 8:
+        return l10n.aug;
+      case 9:
+        return l10n.sep;
+      case 10:
+        return l10n.oct;
+      case 11:
+        return l10n.nov;
+      case 12:
+        return l10n.dec;
+      default:
+        return '';
+    }
   }
 }
 
@@ -705,9 +737,12 @@ class _MedicineTimeWidgetState extends State<MedicineTimeWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Select time',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              Text(
+                AppLocalizations.of(context)!.selectTime,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               IconButton(
                 icon: const Icon(Icons.close),
@@ -815,9 +850,12 @@ class _MedicineTimeWidgetState extends State<MedicineTimeWidget> {
                 ),
                 elevation: 0,
               ),
-              child: const Text(
-                'Done',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              child: Text(
+                AppLocalizations.of(context)!.doneLabel,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
