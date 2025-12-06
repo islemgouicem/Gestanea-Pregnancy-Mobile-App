@@ -19,7 +19,7 @@ class DatabaseHelper {
 
     return await openDatabase(
       path,
-      version: 2,
+      version: 3,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
       onConfigure: _onConfigure,
@@ -31,11 +31,27 @@ class DatabaseHelper {
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < 2) {
-      // Add wilaya column to doctors table
-      await db.execute('ALTER TABLE doctors ADD COLUMN wilaya TEXT');
-    }
+  if (oldVersion < 2) {
+    await db.execute('ALTER TABLE doctors ADD COLUMN wilaya TEXT');
   }
+  if (oldVersion < 3) {
+    // Add measurements table
+    await db.execute('''
+      CREATE TABLE measurements (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        weight REAL,
+        heart_rate INTEGER,
+        systolic INTEGER,
+        diastolic INTEGER,
+        recorded_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        notes TEXT,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+      )
+    ''');
+  }
+}
 
   Future<void> _createDB(Database db, int version) async {
     // Users table
@@ -493,6 +509,21 @@ class DatabaseHelper {
         FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
       )
     ''');
+    // Measurements table (combined vitals)
+await db.execute('''
+  CREATE TABLE measurements (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    weight REAL,
+    heart_rate INTEGER,
+    systolic INTEGER,
+    diastolic INTEGER,
+    recorded_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    notes TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+  )
+''');
   }
 
   Future<void> close() async {

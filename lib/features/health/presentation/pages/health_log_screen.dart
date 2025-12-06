@@ -9,6 +9,9 @@ import '../widgets/symptoms_tab_content.dart';
 import '../widgets/lab_results_tab_content.dart';
 import '../widgets/risk_alerts_tab_content.dart';
 import '../widgets/mood_tab_content.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../logic/bloc/measurements_bloc.dart';
+import '../../logic/bloc/measurements_event.dart';
 
 class HealthLogScreen extends StatefulWidget {
   const HealthLogScreen({super.key});
@@ -49,7 +52,9 @@ class _HealthLogScreenState extends State<HealthLogScreen> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    return Scaffold(
+    return BlocProvider(
+    create: (context) => MeasurementsBloc()..add(LoadMeasurements()),
+    child: Scaffold(
       backgroundColor: AppColors.bg_1,
       body: SafeArea(
         child: Column(
@@ -107,6 +112,6 @@ class _HealthLogScreenState extends State<HealthLogScreen> {
           ],
         ),
       ),
-    );
+    ));
   }
 }

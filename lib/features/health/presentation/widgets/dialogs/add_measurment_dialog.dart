@@ -4,7 +4,10 @@ import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/core/constants/app_text_styles.dart';
 import 'package:gestanea/core/widgets/custom_button.dart';
 import 'package:gestanea/l10n/app_localizations.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/database/models/measurement_model.dart';
+import '../../../logic/bloc/measurements_bloc.dart';
+import '../../../logic/bloc/measurements_event.dart';
 class AddMeasurementDialog extends StatefulWidget {
   const AddMeasurementDialog({super.key});
 
@@ -29,26 +32,41 @@ class _AddMeasurementDialogState extends State<AddMeasurementDialog> {
     super.dispose();
   }
 
-  void _handleSave() {
-    final l10n = AppLocalizations.of(context)!;
+ void _handleSave() {
+  final l10n = AppLocalizations.of(context)! ;
+  
+  if (_formKey.currentState!.validate()) {
+    final measurement = MeasurementModel(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      userId: 'current_user', // TODO: Get from session/auth
+      weight: _weightController.text.isNotEmpty 
+          ? double.tryParse(_weightController.text) 
+          : null,
+      heartRate: _heartRateController. text.isNotEmpty 
+          ? int.tryParse(_heartRateController.text) 
+          : null,
+      systolic: _systolicController. text.isNotEmpty 
+          ? int.tryParse(_systolicController.text) 
+          : null,
+      diastolic: _diastolicController.text.isNotEmpty 
+          ?  int.tryParse(_diastolicController.text) 
+          : null,
+      recordedAt: _selectedDate,
+      createdAt: DateTime.now(),
+    );
     
-    if (_formKey.currentState!.validate()) {
-      print('Weight: ${_weightController.text} kg');
-      print('Heart Rate: ${_heartRateController. text} bpm');
-      print('Blood Pressure: ${_systolicController.text}/${_diastolicController.text}');
-      print('Date: $_selectedDate');
-      
-      Navigator.pop(context);
-      
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l10n.measurementSavedSuccessfully),
-          backgroundColor: Colors.green,
-        ),
-      );
-    }
+    context.read<MeasurementsBloc>().add(AddMeasurement(measurement));
+    
+    Navigator.pop(context);
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(l10n.measurementSavedSuccessfully),
+        backgroundColor: Colors.green,
+      ),
+    );
   }
-
+}
   Future<void> _selectDateTime() async {
     final date = await showDatePicker(
       context: context,
