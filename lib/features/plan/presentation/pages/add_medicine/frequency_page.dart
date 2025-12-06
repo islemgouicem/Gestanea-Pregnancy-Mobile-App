@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:gestanea/l10n/app_localizations.dart';
 
 class FrequencyPage extends StatefulWidget {
   final VoidCallback onNext;
@@ -116,10 +117,13 @@ class _FrequencyPageState extends State<FrequencyPage> {
                 icon: const Icon(Icons.arrow_back_ios, size: 20),
                 onPressed: widget.onBack,
               ),
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Frequency & Schedule',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  AppLocalizations.of(context)!.frequencySchedule,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -136,9 +140,12 @@ class _FrequencyPageState extends State<FrequencyPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Frequency Type Dropdown
-                const Text(
-                  'Frequency Type',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                Text(
+                  AppLocalizations.of(context)!.frequencyType,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 DropdownButtonFormField<String>(
@@ -159,13 +166,22 @@ class _FrequencyPageState extends State<FrequencyPage> {
                       vertical: 16,
                     ),
                   ),
-                  items: const [
-                    DropdownMenuItem(value: 'daily', child: Text('Daily')),
-                    DropdownMenuItem(value: 'weekly', child: Text('Weekly')),
-                    DropdownMenuItem(value: 'monthly', child: Text('Monthly')),
+                  items: [
+                    DropdownMenuItem(
+                      value: 'daily',
+                      child: Text(AppLocalizations.of(context)!.daily),
+                    ),
+                    DropdownMenuItem(
+                      value: 'weekly',
+                      child: Text(AppLocalizations.of(context)!.weekly),
+                    ),
+                    DropdownMenuItem(
+                      value: 'monthly',
+                      child: Text(AppLocalizations.of(context)!.monthly),
+                    ),
                     DropdownMenuItem(
                       value: 'as-needed',
-                      child: Text('As Needed'),
+                      child: Text(AppLocalizations.of(context)!.asNeeded),
                     ),
                   ],
                   onChanged: (value) {
@@ -178,9 +194,12 @@ class _FrequencyPageState extends State<FrequencyPage> {
                 const SizedBox(height: 24),
 
                 // Frequency Value Input
-                const Text(
-                  'Frequency Value',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                Text(
+                  AppLocalizations.of(context)!.frequencyValue,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 TextField(
@@ -188,10 +207,10 @@ class _FrequencyPageState extends State<FrequencyPage> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     hintText: _frequencyType == 'daily'
-                        ? 'e.g., 3 (times per day)'
+                        ? AppLocalizations.of(context)!.timesPerDayExample
                         : _frequencyType == 'weekly'
-                        ? 'e.g., 2 (times per week)'
-                        : 'e.g., 1 (times per month)',
+                        ? AppLocalizations.of(context)!.timesPerWeekExample
+                        : AppLocalizations.of(context)!.timesPerMonthExample,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -217,9 +236,12 @@ class _FrequencyPageState extends State<FrequencyPage> {
                 const SizedBox(height: 24),
 
                 // Scheduled Times
-                const Text(
-                  'Scheduled Times',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                Text(
+                  AppLocalizations.of(context)!.scheduledTimesLabel,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 if (_scheduledTimes.isEmpty)

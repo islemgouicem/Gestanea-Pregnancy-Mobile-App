@@ -52,9 +52,11 @@ class _PlanMainPageState extends State<PlanMainPage> {
     }
 
     if (_userId == null) {
-      return const Scaffold(
+      return Scaffold(
         backgroundColor: AppColors.bg_1,
-        body: Center(child: Text('Please log in to view your plan')),
+        body: Center(
+          child: Text(AppLocalizations.of(context)!.pleaseLoginToViewPlan),
+        ),
       );
     }
 

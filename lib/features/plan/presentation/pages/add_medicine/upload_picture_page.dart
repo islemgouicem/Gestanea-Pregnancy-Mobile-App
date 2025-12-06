@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gestanea/l10n/app_localizations.dart';
 
 class UploadPicturePage extends StatelessWidget {
   final VoidCallback onBack;
@@ -22,10 +23,13 @@ class UploadPicturePage extends StatelessWidget {
                 icon: const Icon(Icons.arrow_back_ios, size: 20),
                 onPressed: onBack,
               ),
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Upload a picture',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  AppLocalizations.of(context)!.uploadPicture,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -65,9 +69,12 @@ class UploadPicturePage extends StatelessWidget {
                 ),
                 elevation: 0,
               ),
-              child: const Text(
-                'Done',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              child: Text(
+                AppLocalizations.of(context)!.doneLabel,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),

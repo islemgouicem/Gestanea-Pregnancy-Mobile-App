@@ -316,6 +316,354 @@ abstract class AppLocalizations {
   /// **'Appointments'**
   String get appointments;
 
+  /// No description provided for @appointmentName.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment Name'**
+  String get appointmentName;
+
+  /// No description provided for @medicationName.
+  ///
+  /// In en, this message translates to:
+  /// **'Medication Name'**
+  String get medicationName;
+
+  /// No description provided for @nextLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get nextLabel;
+
+  /// No description provided for @doneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get doneLabel;
+
+  /// No description provided for @uploadPicture.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a picture'**
+  String get uploadPicture;
+
+  /// No description provided for @selectFormDose.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Form & Dose'**
+  String get selectFormDose;
+
+  /// No description provided for @frequencySchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency & Schedule'**
+  String get frequencySchedule;
+
+  /// No description provided for @frequencyType.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency Type'**
+  String get frequencyType;
+
+  /// No description provided for @frequencyValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency Value'**
+  String get frequencyValue;
+
+  /// No description provided for @scheduledTimesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled Times'**
+  String get scheduledTimesLabel;
+
+  /// No description provided for @asNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'As Needed'**
+  String get asNeeded;
+
+  /// No description provided for @dosage.
+  ///
+  /// In en, this message translates to:
+  /// **'Dosage'**
+  String get dosage;
+
+  /// No description provided for @dosageExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 5mg or 10ml'**
+  String get dosageExample;
+
+  /// No description provided for @daily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get daily;
+
+  /// No description provided for @weekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get weekly;
+
+  /// No description provided for @monthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get monthly;
+
+  /// No description provided for @timesPerDayExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 3 (times per day)'**
+  String get timesPerDayExample;
+
+  /// No description provided for @timesPerWeekExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 2 (times per week)'**
+  String get timesPerWeekExample;
+
+  /// No description provided for @timesPerMonthExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 1 (times per month)'**
+  String get timesPerMonthExample;
+
+  /// No description provided for @appointmentDateTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment Date & Time'**
+  String get appointmentDateTime;
+
+  /// No description provided for @pleaseAddScheduledTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add at least one scheduled time'**
+  String get pleaseAddScheduledTime;
+
+  /// No description provided for @reviewsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} reviews'**
+  String reviewsCount(Object count);
+
+  /// No description provided for @qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get qty;
+
+  /// No description provided for @noMedicines.
+  ///
+  /// In en, this message translates to:
+  /// **'No medicines'**
+  String get noMedicines;
+
+  /// No description provided for @schedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule'**
+  String get schedule;
+
+  /// No description provided for @availability.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get availability;
+
+  /// No description provided for @specialty.
+  ///
+  /// In en, this message translates to:
+  /// **'Specialty'**
+  String get specialty;
+
+  /// No description provided for @bookAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Book Appointment'**
+  String get bookAppointment;
+
+  /// No description provided for @price.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get price;
+
+  /// No description provided for @quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get quantity;
+
+  /// No description provided for @checkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout'**
+  String get checkout;
+
+  /// No description provided for @applyCoupon.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply coupon'**
+  String get applyCoupon;
+
+  /// No description provided for @popular.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular'**
+  String get popular;
+
+  /// No description provided for @offers.
+  ///
+  /// In en, this message translates to:
+  /// **'Offers'**
+  String get offers;
+
+  /// No description provided for @newLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get newLabel;
+
+  /// No description provided for @contact.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get contact;
+
+  /// No description provided for @message.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get message;
+
+  /// No description provided for @location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get location;
+
+  /// No description provided for @noResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No results'**
+  String get noResults;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @sort.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort'**
+  String get sort;
+
+  /// No description provided for @marketplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketplace'**
+  String get marketplace;
+
+  /// No description provided for @doctorsFeatureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctors'**
+  String get doctorsFeatureTitle;
+
+  /// No description provided for @planFeatureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get planFeatureTitle;
+
+  /// No description provided for @addMedicine.
+  ///
+  /// In en, this message translates to:
+  /// **'Add medicine'**
+  String get addMedicine;
+
+  /// No description provided for @addAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Add appointment'**
+  String get addAppointment;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @success.
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get success;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// No description provided for @reviewsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get reviewsLabel;
+
+  /// No description provided for @rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating'**
+  String get rating;
+
+  /// No description provided for @recommended.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended'**
+  String get recommended;
+
+  /// No description provided for @noReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews'**
+  String get noReviews;
+
+  /// No description provided for @delivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery'**
+  String get delivery;
+
+  /// No description provided for @shipping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping'**
+  String get shipping;
+
+  /// No description provided for @taxes.
+  ///
+  /// In en, this message translates to:
+  /// **'Taxes'**
+  String get taxes;
+
   /// No description provided for @sunday.
   ///
   /// In en, this message translates to:
@@ -874,12 +1222,6 @@ abstract class AppLocalizations {
   /// **'Gender'**
   String get gender;
 
-  /// No description provided for @all.
-  ///
-  /// In en, this message translates to:
-  /// **'All'**
-  String get all;
-
   /// No description provided for @male.
   ///
   /// In en, this message translates to:
@@ -927,12 +1269,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No doctors found'**
   String get noDoctorsFound;
-
-  /// No description provided for @noResults.
-  ///
-  /// In en, this message translates to:
-  /// **'No results'**
-  String get noResults;
 
   /// No description provided for @noMatchingDoctors.
   ///
@@ -1029,6 +1365,246 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Call Now'**
   String get callNow;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @taken.
+  ///
+  /// In en, this message translates to:
+  /// **'Taken'**
+  String get taken;
+
+  /// No description provided for @missed.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed'**
+  String get missed;
+
+  /// No description provided for @take.
+  ///
+  /// In en, this message translates to:
+  /// **'Take'**
+  String get take;
+
+  /// No description provided for @noMedicinesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No medicines found'**
+  String get noMedicinesFound;
+
+  /// No description provided for @pleaseLoginToViewPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Please log in to view your plan'**
+  String get pleaseLoginToViewPlan;
+
+  /// No description provided for @selectColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Color'**
+  String get selectColor;
+
+  /// No description provided for @selectSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Size'**
+  String get selectSize;
+
+  /// No description provided for @addToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Cart'**
+  String get addToCart;
+
+  /// No description provided for @buyNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy Now'**
+  String get buyNow;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @noDescriptionAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No description available'**
+  String get noDescriptionAvailable;
+
+  /// No description provided for @specifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Specifications'**
+  String get specifications;
+
+  /// No description provided for @customerReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Reviews'**
+  String get customerReviews;
+
+  /// No description provided for @seeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'see all'**
+  String get seeAll;
+
+  /// No description provided for @completeYourOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Your Order'**
+  String get completeYourOrder;
+
+  /// No description provided for @orderSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Summary'**
+  String get orderSummary;
+
+  /// No description provided for @product.
+  ///
+  /// In en, this message translates to:
+  /// **'Product'**
+  String get product;
+
+  /// No description provided for @size.
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get size;
+
+  /// No description provided for @subtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get subtotal;
+
+  /// No description provided for @deliveryFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Fee'**
+  String get deliveryFee;
+
+  /// No description provided for @total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get total;
+
+  /// No description provided for @deliveryInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Information'**
+  String get deliveryInformation;
+
+  /// No description provided for @fullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get fullName;
+
+  /// No description provided for @enterYourFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your full name'**
+  String get enterYourFullName;
+
+  /// No description provided for @enterYourPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your phone number'**
+  String get enterYourPhoneNumber;
+
+  /// No description provided for @deliveryAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Address'**
+  String get deliveryAddress;
+
+  /// No description provided for @streetAddressApartment.
+  ///
+  /// In en, this message translates to:
+  /// **'Street address, apartment, etc.'**
+  String get streetAddressApartment;
+
+  /// No description provided for @city.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get city;
+
+  /// No description provided for @enterYourCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your city'**
+  String get enterYourCity;
+
+  /// No description provided for @specialInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Special Instructions (Optional)'**
+  String get specialInstructions;
+
+  /// No description provided for @addDeliveryNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Add delivery notes, special requests...'**
+  String get addDeliveryNotes;
+
+  /// No description provided for @paymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get paymentMethod;
+
+  /// No description provided for @cashOnDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash on Delivery'**
+  String get cashOnDelivery;
+
+  /// No description provided for @creditDebitCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit / Debit Card'**
+  String get creditDebitCard;
+
+  /// No description provided for @digitalWallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Digital Wallet'**
+  String get digitalWallet;
+
+  /// No description provided for @placeOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Place Order'**
+  String get placeOrder;
+
+  /// No description provided for @orderPlacedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Order {orderId} placed successfully!'**
+  String orderPlacedSuccessfully(String orderId);
+
+  /// No description provided for @yourInformationIsSecure.
+  ///
+  /// In en, this message translates to:
+  /// **'Your information is secure and encrypted'**
+  String get yourInformationIsSecure;
+
+  /// No description provided for @openNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Now'**
+  String get openNow;
 }
 
 class _AppLocalizationsDelegate

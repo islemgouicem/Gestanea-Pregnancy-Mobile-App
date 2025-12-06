@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/core/database/models/medicine_model.dart';
 import 'package:gestanea/core/database/models/medicine_logged_model.dart';
+import 'package:gestanea/l10n/app_localizations.dart';
 
 class MedicineCard extends StatelessWidget {
   final MedicineModel medicine;
@@ -24,10 +25,11 @@ class MedicineCard extends StatelessWidget {
   bool get isTaken => log?.status == 'taken';
   bool get isMissed => log?.status == 'missed';
 
-  String get buttonText {
-    if (isTaken) return 'Taken';
-    if (isMissed) return 'Missed';
-    return 'Take';
+  String buttonText(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    if (isTaken) return l10n.taken;
+    if (isMissed) return l10n.missed;
+    return l10n.take;
   }
 
   Color get buttonColor {
@@ -164,7 +166,7 @@ class MedicineCard extends StatelessWidget {
                           ],
                         ),
                         child: Text(
-                          buttonText,
+                          buttonText(context),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: screenWidth * 0.038,
@@ -197,7 +199,7 @@ class MedicineCard extends StatelessWidget {
                   ],
                 ),
                 child: Text(
-                  'Missed',
+                  AppLocalizations.of(context)!.missed,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,

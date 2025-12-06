@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'package:gestanea/l10n/app_localizations.dart';
+
 class AppointmentDateTimePage extends StatefulWidget {
   final DateTime? selectedDate;
   final TimeOfDay? selectedTime;
@@ -82,10 +84,13 @@ class AppointmentDateTimePageState extends State<AppointmentDateTimePage> {
                 icon: const Icon(Icons.arrow_back_ios, size: 20),
                 onPressed: widget.onBack,
               ),
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Appointment Date & Time',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  AppLocalizations.of(context)!.appointmentDateTime,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),
