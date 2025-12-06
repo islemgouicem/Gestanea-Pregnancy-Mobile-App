@@ -543,11 +543,7 @@ class ProductDetailPage extends StatelessWidget {
                         );
                       },
                       text: AppLocalizations.of(context)!.buyNow,
-                      icon: const Icon(
-                        Icons.shopping_bag_outlined,
-                        color: AppColors.white,
-                        size: 20,
-                      ),
+                      prefixIcon: Icons.shopping_bag_outlined,
                       color: AppColors.main600,
                     ),
                   ),
