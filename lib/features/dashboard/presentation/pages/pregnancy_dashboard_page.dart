@@ -14,11 +14,12 @@ class PregnancyDashboardPage extends StatefulWidget {
 }
 
 class _PregnancyDashboardPageState extends State<PregnancyDashboardPage> {
-  final DashboardProvider _provider = DashboardProvider();
+  late final DashboardProvider _provider;
 
   @override
   void initState() {
     super.initState();
+    _provider = DashboardProvider.getInstance();
     _loadData();
   }
 

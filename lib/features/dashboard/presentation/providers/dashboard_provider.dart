@@ -15,13 +15,27 @@ class DashboardProvider extends ChangeNotifier {
   String? _error;
   int _userId = 0;
 
-  DashboardProvider({
+  // Singleton pattern
+  static final DashboardProvider _instance = DashboardProvider._internal();
+
+  factory DashboardProvider({
+    GetPregnancyDashboardUseCase? getPregnancyDashboardUseCase,
+    GetPostpartumDashboardUseCase? getPostpartumDashboardUseCase,
+  }) {
+    return _instance;
+  }
+
+  DashboardProvider._internal({
     GetPregnancyDashboardUseCase? getPregnancyDashboardUseCase,
     GetPostpartumDashboardUseCase? getPostpartumDashboardUseCase,
   }) : _getPregnancyDashboardUseCase =
            getPregnancyDashboardUseCase ?? GetPregnancyDashboardUseCase(),
        _getPostpartumDashboardUseCase =
            getPostpartumDashboardUseCase ?? GetPostpartumDashboardUseCase();
+
+  static DashboardProvider getInstance() {
+    return _instance;
+  }
 
   PregnancyDashboard? get pregnancyDashboard => _pregnancyDashboard;
   PostpartumDashboard? get postpartumDashboard => _postpartumDashboard;
@@ -62,5 +76,18 @@ class DashboardProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  // Refresh methods for dashboard updates
+  Future<void> refreshPregnancyDashboard() async {
+    // Small delay to ensure database is updated
+    await Future.delayed(const Duration(milliseconds: 500));
+    await loadPregnancyDashboard();
+  }
+
+  Future<void> refreshPostpartumDashboard() async {
+    // Small delay to ensure database is updated
+    await Future.delayed(const Duration(milliseconds: 500));
+    await loadPostpartumDashboard();
   }
 }

@@ -6,6 +6,7 @@ import 'add_medicine/upload_picture_page.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/core/database/models/medicine_model.dart';
 import 'package:gestanea/features/plan/data/repositories/medicine_repository.dart';
+import 'package:gestanea/features/dashboard/presentation/providers/dashboard_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:gestanea/l10n/app_localizations.dart';
 
@@ -98,6 +99,10 @@ class _AddMedicineFlowState extends State<AddMedicineFlow> {
       final result = await _medicineRepository.insertMedicine(medicine);
 
       if (result.state) {
+        // Refresh pregnancy dashboard to show updated medicine reminders
+        final dashboardProvider = DashboardProvider.getInstance();
+        await dashboardProvider.refreshPregnancyDashboard();
+        
         if (mounted) {
           Navigator.pop(context, true); // Return true to indicate success
         }

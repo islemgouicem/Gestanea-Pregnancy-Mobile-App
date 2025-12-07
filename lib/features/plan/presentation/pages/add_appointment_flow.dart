@@ -5,6 +5,7 @@ import 'add_appointment/appointment_date_time.dart';
 import 'package:gestanea/core/database/models/appointment_model.dart';
 import 'package:gestanea/features/plan/data/repositories/appointment_repository.dart';
 import 'package:gestanea/features/dashboard/logic/cubit/upcoming_appointments_cubit.dart';
+import 'package:gestanea/features/dashboard/presentation/providers/dashboard_provider.dart';
 import 'package:uuid/uuid.dart';
 
 // Main Add Appointment Flow
@@ -93,8 +94,12 @@ class _AddAppointmentFlowState extends State<AddAppointmentFlow> {
       );
 
       if (result.state) {
-        // Refresh the dashboard's upcoming appointments
+        // Refresh both dashboards
         UpcomingAppointmentsCubit.getInstance().refreshUpcomingAppointments(widget.userId);
+        
+        // Also refresh pregnancy dashboard if using DashboardProvider
+        final dashboardProvider = DashboardProvider.getInstance();
+        await dashboardProvider.refreshPregnancyDashboard();
         
         if (mounted) {
           Navigator.pop(context, true); // Return true to indicate success
