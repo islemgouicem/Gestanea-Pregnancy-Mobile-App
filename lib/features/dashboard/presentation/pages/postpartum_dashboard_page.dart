@@ -631,14 +631,6 @@ class _PostpartumDashboardPageState extends State<PostpartumDashboardPage> {
     );
   }
 
-  String _getUserId() {
-    final authState = context.read<AuthBloc>().state;
-    if (authState is AuthAuthenticated) {
-      return authState.user.id;
-    }
-    return '';
-  }
-
   IconData _getAppointmentIcon(String appointmentType) {
     switch (appointmentType.toLowerCase()) {
       case 'vaccination':
