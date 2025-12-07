@@ -13,19 +13,24 @@ class DashboardProvider extends ChangeNotifier {
   PostpartumDashboard? _postpartumDashboard;
   bool _isLoading = false;
   String? _error;
+  int _userId = 0;
 
   DashboardProvider({
     GetPregnancyDashboardUseCase? getPregnancyDashboardUseCase,
     GetPostpartumDashboardUseCase? getPostpartumDashboardUseCase,
-  })  : _getPregnancyDashboardUseCase =
-            getPregnancyDashboardUseCase ?? GetPregnancyDashboardUseCase(),
-        _getPostpartumDashboardUseCase =
-            getPostpartumDashboardUseCase ?? GetPostpartumDashboardUseCase();
+  }) : _getPregnancyDashboardUseCase =
+           getPregnancyDashboardUseCase ?? GetPregnancyDashboardUseCase(),
+       _getPostpartumDashboardUseCase =
+           getPostpartumDashboardUseCase ?? GetPostpartumDashboardUseCase();
 
   PregnancyDashboard? get pregnancyDashboard => _pregnancyDashboard;
   PostpartumDashboard? get postpartumDashboard => _postpartumDashboard;
   bool get isLoading => _isLoading;
   String? get error => _error;
+
+  void setUserId(int userId) {
+    _userId = userId;
+  }
 
   Future<void> loadPregnancyDashboard() async {
     _isLoading = true;
@@ -33,7 +38,7 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _pregnancyDashboard = await _getPregnancyDashboardUseCase.call();
+      _pregnancyDashboard = await _getPregnancyDashboardUseCase.call(_userId);
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -49,7 +54,7 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _postpartumDashboard = await _getPostpartumDashboardUseCase.call();
+      _postpartumDashboard = await _getPostpartumDashboardUseCase.call(_userId);
       _isLoading = false;
       notifyListeners();
     } catch (e) {

@@ -1,11 +1,25 @@
 // lib/features/dashboard/presentation/pages/dashboard_page.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gestanea/core/database/db_helper.dart';
+import 'package:gestanea/features/auth/logic/auth_bloc.dart';
+import 'package:gestanea/features/auth/logic/auth_state.dart';
+import 'package:gestanea/features/baby/data/datasources/baby_local_data_source.dart';
+import 'package:gestanea/features/baby/logic/cubit/baby_cubit.dart';
+import 'package:gestanea/features/baby/logic/repositories/baby_repository.dart';
+import 'package:gestanea/features/dashboard/logic/cubit/dashboard_cubit.dart';
+import 'package:gestanea/features/dashboard/logic/cubit/dashboard_state.dart';
+import 'package:gestanea/features/dashboard/domain/entities/postpartum_dashboard.dart';
 import 'package:gestanea/features/dashboard/presentation/pages/home_screen.dart';
+import 'package:gestanea/features/dashboard/presentation/widgets/navbar.dart';
 import 'postpartum_dashboard_page.dart';
-import '../../../pregnancy/presentation/pages/week_tracker_page.dart';
+import 'package:gestanea/features/pregnancy/presentation/pages/week_tracker_page.dart';
 import 'postpartum_track_page.dart';
-import '../../../health/presentation/pages/health_log_screen.dart'; // ✅ Add this
-import '../../../marketplace/presentation/pages/marketplace_page.dart'; // ✅ Add this
+import 'package:gestanea/features/health/presentation/pages/health_log_screen.dart';
+import 'package:gestanea/features/plan/presentation/pages/plan_page.dart';
+import 'package:gestanea/features/marketplace/presentation/pages/marketplace_page.dart';
+import 'package:gestanea/features/marketplace/logic/marketplace_bloc.dart';
+import '../../../../main.dart' show routeObserver;
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -14,10 +28,52 @@ class DashboardPage extends StatefulWidget {
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardPageState extends State<DashboardPage>
+    with WidgetsBindingObserver, RouteAware {
   int _currentIndex = 0;
-  bool isPregnant = true;
   String babyGender = 'girl';
+  String? _userId;
+  DashboardCubit? _dashboardCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  // Called when returning to this page from another page
+  @override
+  void didPopNext() {
+    _refreshDashboard();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Refresh dashboard when app is resumed
+    if (state == AppLifecycleState.resumed) {
+      _refreshDashboard();
+    }
+  }
+
+  void _refreshDashboard() {
+    final userIdInt = int.tryParse(_userId ?? '0') ?? 0;
+    if (userIdInt > 0 && _dashboardCubit != null) {
+      _dashboardCubit!.loadDashboard(userIdInt);
+    }
+  }
 
   void _setPageIndex(index) {
     setState(() {
@@ -25,156 +81,132 @@ class _DashboardPageState extends State<DashboardPage> {
     });
   }
 
+  String _getUserId(BuildContext context) {
+    final authState = context.read<AuthBloc>().state;
+    if (authState is AuthAuthenticated) {
+      return authState.user.id;
+    }
+    return '0'; // Default if not authenticated
+  }
+
   @override
   Widget build(BuildContext context) {
-    final pages = [
-      isPregnant
-          ? HomeScreen(onNavigate: _setPageIndex)
-          : PostpartumDashboardPage(babyGender: babyGender),
-      isPregnant
-          ? const WeekTrackerPage()
-          : PostpartumTrackPage(babyGender: babyGender),
-      const HealthLogScreen(), // ✅ Replace placeholder with actual Health page
-      _buildPlaceholderPage('Plan', Icons.calendar_today),
-      const MarketplacePage(), // ✅ Replace placeholder with actual Market page
-    ];
+    _userId = _getUserId(context);
+    final height = MediaQuery.of(context).size.height;
+    final double h = height * 0.09;
 
-    return Scaffold(
-      body: IndexedStack(index: _currentIndex, children: pages),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, -2),
-            ),
-          ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<DashboardCubit>(
+          create: (context) {
+            final cubit = DashboardCubit();
+            _dashboardCubit = cubit;
+            // Load dashboard with user ID
+            final userIdInt = int.tryParse(_userId ?? '0') ?? 0;
+            if (userIdInt > 0) {
+              cubit.loadDashboard(userIdInt);
+            }
+            return cubit;
+          },
         ),
-        child: SafeArea(
-          child: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: (index) => _setPageIndex(index),
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.white,
-            selectedItemColor: const Color(0xFF9B7FDB),
-            unselectedItemColor: Colors.grey,
-            selectedLabelStyle: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
+        BlocProvider<BabyCubit>(
+          create: (context) => BabyCubit(
+            repository: BabyRepository(
+              BabyLocalDataSource(DatabaseHelper.instance),
             ),
-            unselectedLabelStyle: const TextStyle(fontSize: 12),
-            elevation: 0,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined, size: 26),
-                activeIcon: Icon(Icons.home, size: 26),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.show_chart, size: 26),
-                activeIcon: Icon(Icons.show_chart, size: 26),
-                label: 'Track',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_outline, size: 26),
-                activeIcon: Icon(Icons.favorite, size: 26),
-                label: 'Health',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_today_outlined, size: 26),
-                activeIcon: Icon(Icons.calendar_today, size: 26),
-                label: 'Plan',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_bag_outlined, size: 26),
-                activeIcon: Icon(Icons.shopping_bag, size: 26),
-                label: 'Market',
-              ),
-            ],
+            userId: _userId ?? '0',
           ),
         ),
+      ],
+      child: BlocBuilder<DashboardCubit, DashboardState>(
+        builder: (context, dashboardState) {
+          // Determine mode based on dashboard state
+          final bool isPregnant = dashboardState is PregnancyDashboardLoaded;
+          final bool isPostpartum = dashboardState is PostpartumDashboardLoaded;
+          final bool isError = dashboardState is DashboardError;
+          final bool isLoading = dashboardState is DashboardLoading;
+
+          // Get postpartum dashboard data if available
+          PostpartumDashboard? postpartumDashboard;
+          String currentBabyGender = babyGender;
+          if (isPostpartum) {
+            postpartumDashboard =
+                (dashboardState as PostpartumDashboardLoaded).dashboard;
+            // TODO: Extract baby gender from dashboard if available
+          }
+
+          // Show loading indicator only during actual loading
+          // For initial state or error, show pregnancy dashboard as default
+          if (isLoading) {
+            return Scaffold(
+              backgroundColor: const Color(0xFFF5F5F5),
+              body: const Center(
+                child: CircularProgressIndicator(color: Color(0xFF9B7FDB)),
+              ),
+            );
+          }
+
+          // Default to pregnancy mode if not explicitly in postpartum mode
+          final bool showPregnancyMode =
+              isPregnant || isError || dashboardState is DashboardInitial;
+
+          final pages = [
+            showPregnancyMode
+                ? HomeScreen(onNavigate: _setPageIndex)
+                : PostpartumDashboardPage(
+                    babyGender: currentBabyGender,
+                    dashboard: postpartumDashboard,
+                  ),
+            showPregnancyMode
+                ? const WeekTrackerPage()
+                : PostpartumTrackPage(babyGender: currentBabyGender),
+            const HealthLogScreen(),
+            const PlanMainPage(),
+            BlocProvider(
+              create: (context) =>
+                  MarketplaceBloc()..add(const LoadMarketplaceData()),
+              child: const MarketplacePage(),
+            ),
+          ];
+
+          return Scaffold(
+            body: Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: h),
+                  child: IndexedStack(index: _currentIndex, children: pages),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: FancyNavBar(
+                    barHeight: 80,
+                    currentIndex: _currentIndex,
+                    onTap: (i) => setState(() => _currentIndex = i),
+                    items: [
+                      NavBarItem(icon: "assets/icons/home.svg", label: "Home"),
+                      NavBarItem(
+                        icon: "assets/icons/track.svg",
+                        label: "Track",
+                      ),
+                      NavBarItem(
+                        icon: "assets/icons/health.svg",
+                        label: "Health",
+                      ),
+                      NavBarItem(icon: "assets/icons/plan.svg", label: "Plan"),
+                      NavBarItem(
+                        icon: "assets/icons/market.svg",
+                        label: "Market",
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
-      // floatingActionButton: _currentIndex == 0
-      //     ? FloatingActionButton(
-      //         onPressed: () {
-      //           _showModeDialog();
-      //         },
-      //         backgroundColor: const Color(0xFF9B7FDB),
-      //         child: const Icon(Icons.settings),
-      //       )
-      //     : null,
     );
   }
-
-  Widget _buildPlaceholderPage(String title, IconData icon) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 80, color: Colors.grey),
-            const SizedBox(height: 20),
-            Text(
-              '$title Page',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              'To be implemented',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // void _showModeDialog() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       title: const Text('Change Mode'),
-  //       content: Column(
-  //         mainAxisSize: MainAxisSize.min,
-  //         children: [
-  //           ListTile(
-  //             title: const Text('Pregnancy Mode'),
-  //             onTap: () {
-  //               setState(() => isPregnant = true);
-  //               Navigator.pop(context);
-  //             },
-  //           ),
-  //           ListTile(
-  //             title: const Text('Postpartum Mode (Girl)'),
-  //             onTap: () {
-  //               setState(() {
-  //                 isPregnant = false;
-  //                 babyGender = 'girl';
-  //               });
-  //               Navigator.pop(context);
-  //             },
-  //           ),
-  //           ListTile(
-  //             title: const Text('Postpartum Mode (Boy)'),
-  //             onTap: () {
-  //               setState(() {
-  //                 isPregnant = false;
-  //                 babyGender = 'boy';
-  //               });
-  //               Navigator.pop(context);
-  //             },
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }
