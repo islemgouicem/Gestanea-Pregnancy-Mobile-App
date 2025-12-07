@@ -66,7 +66,18 @@ class UpcomingAppointmentsCubit extends Cubit<UpcomingAppointmentsState> {
   final AppointmentRepository _appointmentRepository =
       AppointmentRepository.getInstance();
 
-  UpcomingAppointmentsCubit() : super(UpcomingAppointmentsInitial());
+  static final UpcomingAppointmentsCubit _instance =
+      UpcomingAppointmentsCubit._internal();
+
+  UpcomingAppointmentsCubit._internal() : super(UpcomingAppointmentsInitial());
+
+  factory UpcomingAppointmentsCubit() {
+    return _instance;
+  }
+
+  static UpcomingAppointmentsCubit getInstance() {
+    return _instance;
+  }
 
   Future<void> loadUpcomingAppointments(String userId) async {
     try {

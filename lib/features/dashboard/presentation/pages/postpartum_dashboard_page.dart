@@ -548,10 +548,10 @@ class _PostpartumDashboardPageState extends State<PostpartumDashboardPage> {
 
   Widget _buildUpcomingSection() {
     final userId = _getUserId();
+    final cubit = UpcomingAppointmentsCubit.getInstance();
     
-    return BlocProvider(
-      create: (context) => UpcomingAppointmentsCubit()
-        ..loadUpcomingAppointments(userId),
+    return BlocProvider<UpcomingAppointmentsCubit>.value(
+      value: cubit..loadUpcomingAppointments(userId),
       child: BlocBuilder<UpcomingAppointmentsCubit, UpcomingAppointmentsState>(
         builder: (context, state) {
           return Column(
