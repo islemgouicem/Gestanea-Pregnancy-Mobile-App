@@ -41,6 +41,7 @@ app.*.map.json
 # Generated code
 lib/generated/
 lib/.dart_tool/flutter_gen/
+lib/l10n/app_localizations*.dart
 
 # Environment variables
 .env
