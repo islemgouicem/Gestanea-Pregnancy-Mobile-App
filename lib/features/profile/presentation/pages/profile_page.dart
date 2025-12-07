@@ -6,7 +6,6 @@ import 'package:gestanea/core/constants/app_routes.dart';
 import 'package:gestanea/features/auth/logic/auth_bloc.dart';
 import 'package:gestanea/features/auth/logic/auth_event.dart';
 import 'package:gestanea/features/auth/logic/auth_state.dart';
-import 'package:gestanea/features/dashboard/logic/cubit/dashboard_cubit.dart';
 import 'package:gestanea/features/profile/presentation/pages/about_app.dart';
 import 'package:gestanea/features/profile/presentation/pages/contactus.dart';
 import 'package:gestanea/features/profile/presentation/pages/faq.dart';

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gestanea/core/constants/app_colors.dart';
 import 'package:gestanea/core/constants/app_text_styles.dart';
-import 'package:gestanea/l10n/app_localizations.dart';
 
 class LabResultsTabContent extends StatelessWidget {
   const LabResultsTabContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-
     return Stack(
       children: [
         Container(
